@@ -3,7 +3,7 @@
 ## Introdução
 Repositório destinado à disciplina Tópicos da Matemática Avançada A: Programação I. Os programas aqui desenvolvidos serão divididos pela linguagem de programação.
 
-### C++
+## C++
   #### Lista 1
   - Uma calculadora de equações do segundo grau
   - N primeiros múltiplos dos números 5 e 7 (ou de X e Y)
