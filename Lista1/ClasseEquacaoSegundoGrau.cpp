@@ -7,6 +7,7 @@ Equation::Equation (float a, float b, float c)
   _c = c;
 }
 
+
 void Equation::solveEquation()
 {
 	float delta = this->calculateDelta(_a, _b, _c);
