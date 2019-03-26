@@ -19,4 +19,4 @@ Repositório destinado à disciplina Tópicos da Matemática Avançada A: Progra
   - Soma dos termos ímpares de um valor da sequência de Fibonacci (que não exceda quatro milhões)
   - Maior fator primo de um número dado pelo usuário
   - Escrever por extenso um número dado pelo usuário de até cinco algarismos
-  - Criar um menu de opções para o usuário com as seguintes opções: soma de dois vetores, subtração de dois vetores e sair do programa
+  - Criar um menu de opções para o usuário com as seguintes opções: soma de dois vetores, subtração de dois vetores e sair do programa (essa implementação de um menu já está sendo feita para o usuário navegar entre as questões da lista).
