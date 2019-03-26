@@ -34,11 +34,15 @@ void sumDigitsFromPow (std::string input) {
 void sumOddTermsFromFibonacci (std::string input) {
     std::vector<float> arg = getNumbersFromInput(input, ' ');
     std::vector<long> fiboTerms;
-    long termsSum;
+    long long termsSum;
     int index = arg.at(0);
 
     if (arg.size() != 1 || index < 0)
       std::cout << "Quantidade invalida de argumentos ou valor de n invalido" << std::endl;
+    else if (index >= 4E6) {
+      std::cout << "Valor de n ultrapassou quatro milhoes";
+      return;
+    }
     else {
       /*Termos de Fibonacci de indice 0 e 1*/
       fiboTerms.push_back(0);
@@ -48,16 +52,15 @@ void sumOddTermsFromFibonacci (std::string input) {
 
       for (unsigned i = 2; i < index; i++) {
         fiboTerms.push_back(fiboTerms.at(i - 1) + fiboTerms.at(i - 2));
-
         /*Se nao for par*/
         if (i % 2 != 0)
           termsSum += fiboTerms.at(i);
       }
+      std::cout << "Soma dos termos impares: " << termsSum << std::endl;
     }
-    std::cout << "Soma dos termos impares: " << termsSum << std::endl;
 }
 
-void calculateLeastPrimeNumber(std::string input) {
+void calculateLargestPrimeNumber(std::string input) {
 
 }
 

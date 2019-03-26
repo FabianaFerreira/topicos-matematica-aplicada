@@ -11,7 +11,7 @@ void sumDigitsFromPow(std::string);
 
 void sumOddTermsFromFibonacci(std::string);
 
-void calculateLeastPrimeNumber(std::string);
+void calculateLargestPrimeNumber(std::string);
 
 void writeNumberInPortuguese(std::string);
 

@@ -12,7 +12,7 @@ using namespace std;
 int main () {
   string input;
 
-  printMenu();  
+  printMenu();
 
   cout << endl;
 
@@ -32,7 +32,7 @@ int main () {
       else if (input == "3") {
         cout << "Digite um numero para ter seu maior fator primo calculado: ";
         getline(cin, input);
-        calculateLeastPrimeNumber(input);
+        calculateLargestPrimeNumber(input);
       }
       else if (input == "4") {
         cout << "Digite um numero de ate cinco casas para ser escrito por extenso: ";
