@@ -1,3 +1,9 @@
+/* ---------------------------------------
+  Fabiana Ferreira Fonseca
+  Universidade Federal do Rio de Janeiro
+  DRE: 115037241
+----------------------------------------*/
+
 #include "ClasseEquacaoSegundoGrau.h"
 
 Equation::Equation (float a, float b, float c)
