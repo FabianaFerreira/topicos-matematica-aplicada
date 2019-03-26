@@ -39,7 +39,7 @@ int main () {
       else if (input == "2") {
         cout << "Digite os numeros x e y e a quantidade de multiplos a ser calculado (x, y, n): ";
         getline(cin, input);
-        calculateMultiples(input);      
+        calculateMultiples(input);
       }
       else if (input == "3") {
         cout << "Digite a dimensao dos vetores (n): ";

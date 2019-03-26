@@ -45,10 +45,6 @@ void sumOddTermsFromFibonacci (std::string input) {
 
     if (arg.size() != 1 || index < 0)
       std::cout << "Quantidade invalida de argumentos ou valor de n invalido" << std::endl;
-    else if (index >= 4E6) {
-      std::cout << "Valor de n ultrapassou quatro milhoes";
-      return;
-    }
     else {
       /*Termos de Fibonacci de indice 0 e 1*/
       fiboTerms.push_back(0);
@@ -58,6 +54,11 @@ void sumOddTermsFromFibonacci (std::string input) {
 
       for (unsigned i = 2; i < index; i++) {
         fiboTerms.push_back(fiboTerms.at(i - 1) + fiboTerms.at(i - 2));
+
+        if (fiboTerms.at(i) >= 4E6) {
+          std::cout << "Valor de n ultrapassou quatro milhoes";
+          return;
+        }
         /*Se nao for par*/
         if (i % 2 != 0)
           termsSum += fiboTerms.at(i);
@@ -70,8 +71,54 @@ void calculateLargestPrimeNumber(std::string input) {
 
 }
 
-void writeNumberInPortuguese (std::string input) {
+std::vector<int> getDigitsFromNumber (std::string input) {
+  std::vector<float> arg = getNumbersFromInput(input, ' ');
+  std::vector<int> digitsArray;
+  bool isQntCorrect = checkQuantityOfArguments(arg.size(), 1);
 
+  if (isQntCorrect) {
+    int number = (int) arg.at(0);
+    while (number != 0) {
+        int digit = number % 10;
+        std::cout << digit << std::endl;
+        digitsArray.push_back(digit);
+        number /= 10;
+    }
+  }
+
+  return digitsArray;
+}
+
+/*Recebe um vetor de digitos e gera uma string com os numeros por extenso*/
+void writeNumberInPortuguese (std::string input) {
+  unsigned counter = 0;
+  std::vector<int> digits = getDigitsFromNumber(input);
+  std::string literalNumber = "";
+  while (counter < digits.size()) {
+    if (digits.at(counter) != 0) {
+      if (counter < 3) {
+          if (counter == 0)
+            literalNumber = numbersInPortuguese[counter][digits.at(counter) - 1];
+          else
+            literalNumber = numbersInPortuguese[counter][digits.at(counter) - 1] + " e " + literalNumber;
+      }
+      else if (counter == 3)
+        literalNumber = numbersInPortuguese[0][digits.at(counter) - 1] + " mil " + literalNumber;
+      else
+        literalNumber = numbersInPortuguese[0][digits.at(counter) - 1] + " milhoes " + literalNumber;
+    }
+    counter++;
+  }
+  std::cout << literalNumber << std::endl;
+}
+
+/*Checa se a quantidade de argumentos eh valida*/
+bool checkQuantityOfArguments (unsigned length, unsigned n) {
+    if (length != n) {
+      std::cout << "Quantidade invalida de argumentos";
+      return false;
+    }
+    return true;
 }
 
 /*Funcao para printar o menu*/
