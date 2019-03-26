@@ -48,9 +48,9 @@ int main () {
         cout << "Digite a sua posicao e o raio em km (x, y e r): ";
         getline(cin, input);
 
-        // listPointsInRange(input);
+        listPointsInRange(input);
       }
-      else {
+      else if (input.compare("exit") != 0){
         cout << "Digite uma opcao valida" << endl;
       }
 

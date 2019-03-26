@@ -2,7 +2,7 @@
 #include <vector>
 #include <sstream>
 
-int mapCoordinates[10][2] = {
+const float mapCoordinates[10][2] = {
     {0, 1},
     {1.2, 0},
     {1.7, 1},
