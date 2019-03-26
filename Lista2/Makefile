@@ -2,8 +2,8 @@
 CC = g++
 CFLAGS  = -Wall
 
-OBJFILES = functions.o ClasseEquacaoSegundoGrau.o lista1.o
-TARGET = lista1.exe
+OBJFILES = functions.o lista2.o
+TARGET = lista2.exe
 
 all: $(TARGET)
 
