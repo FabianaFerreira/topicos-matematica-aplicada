@@ -30,7 +30,8 @@ int main () {
         sumDigitsFromPow(input);
       }
       else if (input == "2") {
-        cout << "Digite a ordem do termo Fibonacci a ser calculado para somar os termos impares: ";
+        cout << "Digite o valor maximo do termo Fibonacci a ser calculado para somar os "
+             << "impares: ";
         getline(cin, input);
         sumOddTermsFromFibonacci(input);
       }

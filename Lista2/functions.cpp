@@ -40,10 +40,12 @@ void sumDigitsFromPow (std::string input) {
 void sumOddTermsFromFibonacci (std::string input) {
     std::vector<float> arg = getNumbersFromInput(input, ' ');
     std::vector<long> fiboTerms;
+    std::string terms = "";
     long long termsSum;
-    int index = arg.at(0);
+    long long maxFibTerm = arg.at(0);
+    unsigned counter = 2;
 
-    if (arg.size() != 1 || index < 0)
+    if (arg.size() != 1 || maxFibTerm < 0)
       std::cout << "Quantidade invalida de argumentos ou valor de n invalido" << std::endl;
     else {
       /*Termos de Fibonacci de indice 0 e 1*/
@@ -52,17 +54,23 @@ void sumOddTermsFromFibonacci (std::string input) {
 
       termsSum = fiboTerms.at(1);
 
-      for (unsigned i = 2; i < index; i++) {
-        fiboTerms.push_back(fiboTerms.at(i - 1) + fiboTerms.at(i - 2));
+      /*Concatenando string para printar todos os termos*/
+      std::cout << "Termos Fibonacci: ";
+      terms = std::to_string(fiboTerms.at(0)) + " " + std::to_string(fiboTerms.at(1)) + " ";
 
-        if (fiboTerms.at(i) >= 4E6) {
-          std::cout << "Valor de n ultrapassou quatro milhoes";
-          return;
-        }
+      /*Itera para calcular os termos e a soma dos impares*/
+      while (termsSum <= maxFibTerm) {
+        fiboTerms.push_back(fiboTerms.at(counter - 1) + fiboTerms.at(counter - 2));
         /*Se nao for par*/
-        if (i % 2 != 0)
-          termsSum += fiboTerms.at(i);
+        if (counter % 2 != 0)
+          termsSum += fiboTerms.at(counter);
+
+        /*Concatenando string para printar todos os termos*/
+        terms += std::to_string(fiboTerms.at(counter)) + " ";
+
+        counter++;
       }
+      std::cout << terms << std::endl;
       std::cout << "Soma dos termos impares: " << termsSum << std::endl;
     }
 }

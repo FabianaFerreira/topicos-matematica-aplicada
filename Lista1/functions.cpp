@@ -49,16 +49,23 @@ void calculateMultiples (std::string input) {
     unsigned counter = 0;
     std::string multiplesX = "";
     std::string multiplesY = "";
+    long sum = 0;
 
     while (counter < n)
     {
-        multiplesX += " " + std::to_string(counter * x);
-        multiplesY += " " + std::to_string(counter * y);
+        int currentMulX = counter * x;
+        int currentMulY = counter * y;
+        sum += currentMulX + currentMulY;
+        multiplesX += " " + std::to_string(currentMulX);
+        multiplesY += " " + std::to_string(currentMulY);
         counter++;
   }
 
   std::cout << "Multiplos de x: " << multiplesX << std::endl
             << "Multiplos de y: " << multiplesY << std::endl;
+
+  std::cout << "Soma dos múltiplos: " << sum << std::endl;
+
 }
 
 /*Cria um vetor de dimensao n com valores aleatorios*/
