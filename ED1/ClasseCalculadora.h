@@ -14,34 +14,34 @@ class Calculator
 {
 
   public:
-    Calculator (unsigned);
+    Calculator (unsigned n = 3);
 
-    std::vector<int> currentResult;
+    std::vector<float> currentResult;
 
     unsigned getVectorDimension ();
 
     bool setVectorDimension (unsigned);
 
-    std::vector<int> getMemory ();
+    std::vector<float> getMemory ();
 
-    bool setMemory (std::vector<int>);
+    bool setMemory (std::vector<float>);
 
-    std::vector<int> sumVectors (std::vector<int>, std::vector<int>);
+    std::vector<float> sumVectors (std::vector<float>, std::vector<float>);
 
-    std::vector<int> scaleVector (std::vector<int>, int);
+    std::vector<float> scaleVector (std::vector<float>, int);
 
-    std::vector<int> calculateLinearCombination (std::vector<int>, std::vector<int>);
+    std::vector<float> calculateLinearCombination (std::vector<float>, std::vector<float>, int, int);
 
-    int calculateInnerProduct (std::vector<int>, std::vector<int>);
+    float calculateInnerProduct (std::vector<float>, std::vector<float>);
 
-    float calculateVectorNorm (std::vector<int>);
+    float calculateVectorNorm (std::vector<float>);
 
-    float calculateDistance (std::vector<int>, std::vector<int>);
+    float calculateDistance (std::vector<float>, std::vector<float>);
 
-    float calculateAngle (std::vector<int>, std::vector<int>);
+    float calculateAngle (std::vector<float>, std::vector<float>);
 
   private:
     unsigned vectorDimension;
 
-    std::vector<int> memory;
+    std::vector<float> memory;
 };

@@ -19,6 +19,14 @@ std::vector<float> getNumbersFromInput(std::string str, char delimiter) {
     return tokenVector;
 }
 
+int getUserOption (std::string option) {
+  if (option.compare("y") == 0)
+    return 1;
+  if (option.compare("n") == 0)
+    return 0;
+  return -1;
+}
+
 /*Funcao para printar o menu*/
 void printMenu () {
     std::cout << "-------- Calculadora Vetorial --------" << std::endl;
