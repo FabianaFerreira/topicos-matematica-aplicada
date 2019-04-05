@@ -36,9 +36,7 @@ int main () {
         sumOddTermsFromFibonacci(input);
       }
       else if (input == "3") {
-        cout << "Digite um numero para ter seu maior fator primo calculado: ";
-        getline(cin, input);
-        calculateLargestPrimeNumber(input);
+        calculateLargestPrimeNumber();
       }
       else if (input == "4") {
         cout << "Digite um numero de ate cinco casas para ser escrito por extenso: ";

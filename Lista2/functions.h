@@ -53,7 +53,7 @@ void sumDigitsFromPow(std::string);
 
 void sumOddTermsFromFibonacci(std::string);
 
-void calculateLargestPrimeNumber(std::string);
+void calculateLargestPrimeNumber();
 
 std::vector<int> getDigitsFromNumber (std::string);
 
