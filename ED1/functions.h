@@ -10,9 +10,8 @@
 #include <iostream>
 #include <math.h>
 
-
 std::vector<float> getNumbersFromInput(std::string, char);
 
-int getUserOption (std::string);
+int getUserOption(std::string);
 
 void printMenu();
