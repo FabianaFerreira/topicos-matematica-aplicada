@@ -9,7 +9,6 @@
 #include <vector>
 #include <sstream>
 #include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
 #include "functions.h"
 #include "ClasseCalculadora.h"
@@ -32,69 +31,54 @@ int main()
   {
     cout << "Digite uma opcao: ";
     getline(cin, input);
+    unsigned dimension = calculator->getVectorDimension();
 
     switch (atoi(input.c_str()))
     {
     case 1:
-      cout << input << endl;
+    {
+      std::vector<float> v1, v2;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
       {
-        std::vector<float> v1, v2;
-
-        /*Se quer usar o ultimo resultado armazenado*/
-        if (calculator->currentResult.size() != 0)
-        {
-          cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
-          getline(cin, values);
-          int option = getUserOption(values);
-          if (option < 0)
-          {
-            cout << "Opcao invalida. Tente novamente" << endl;
-            break;
-          }
-          /*Se quer usar, atribuo o valor do ultimo resultado ao v1*/
-          if (option == 1)
-          {
-            v1 = calculator->currentResult;
-          }
-          /*Se nao, peco para entrar com o v1*/
-          else
-          {
-            cout << "Digite as coordenadas do primeiro vetor separados por espaço: ";
-            getline(cin, values);
-            v1 = getNumbersFromInput(values, ' ');
-          }
-
-          cout << "Digite as coordenadas do segundo vetor separados por espaço: ";
-          getline(cin, values);
-          v2 = getNumbersFromInput(values, ' ');
-        }
-        /*Se nao quer usar o ultimo resultado armazenado*/
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
         else
-        {
-          cout << "Digite as coordenadas do primeiro vetor separados por espaço: ";
-          getline(cin, values);
-          v1 = getNumbersFromInput(values, ' ');
+          v1 = getVectorFromUser(true);
 
-          cout << "Digite as coordenadas do segundo vetor separados por espaço: ";
-          getline(cin, values);
-          v2 = getNumbersFromInput(values, ' ');
-        }
-
-        if (v1.size() != v2.size())
-          cout << "Vetores com tamanhos diferentes" << endl;
-        else
-        {
-          std::vector<float> result = calculator->sumVectors(v1, v2);
-          /*Printando resultado*/
-          cout << "Resultado: ";
-          for (unsigned i = 0; i < result.size(); i++)
-          {
-            cout << calculator->currentResult.at(i) << " ";
-          }
-          cout << endl;
-        }
+        v2 = getVectorFromUser(false);
       }
-      break;
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+      {
+        v1 = getVectorFromUser(true);
+        v2 = getVectorFromUser(false);
+      }
+
+      if (v1.size() != v2.size())
+        cout << "Vetores com tamanhos diferentes" << endl;
+      else if (v1.size() != dimension || v2.size() != dimension)
+        cout << "Vetores nao condizem com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        std::vector<float> result = calculator->sumVectors(v1, v2);
+        /*Printando resultado*/
+        cout << "Resultado: [";
+        for (unsigned i = 0; i < result.size(); i++)
+        {
+          cout << " " << calculator->currentResult.at(i) << " ";
+        }
+        cout << "]" << endl;
+      }
+    }
+    break;
 
     case 2:
     {
@@ -108,82 +92,313 @@ int main()
         getline(cin, values);
         int option = getUserOption(values);
         if (option < 0)
-        {
           cout << "Opcao invalida. Tente novamente" << endl;
-          break;
-        }
-        /*Se quer usar, atribuo o valor do ultimo resultado ao v1*/
+
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
         if (option == 1)
-        {
           v1 = calculator->currentResult;
-        }
-        /*Se nao, peco para entrar com o v1*/
         else
-        {
-          cout << "Digite as coordenadas do vetor separados por espaço: ";
-          getline(cin, values);
-          v1 = getNumbersFromInput(values, ' ');
-        }
+          v1 = getVectorFromUser(true);
       }
       /*Se nao quer usar o ultimo resultado armazenado*/
       else
-      {
-        cout << "Digite as coordenadas do primeiro vetor separados por espaço: ";
-        getline(cin, values);
-        v1 = getNumbersFromInput(values, ' ');        
-      }
+        v1 = getVectorFromUser(true);
 
       cout << "Digite o valor que você deseja multiplicar o seu vetor: ";
       getline(cin, values);
       scalar = getNumbersFromInput(values, ' ').at(0);
 
-      std::vector<float> result = calculator->scaleVector(v1, scalar);
-      /*Printando resultado*/
-      cout << "Resultado: ";
-      for (unsigned i = 0; i < result.size(); i++)
+      if (v1.size() != dimension)
+        cout << "Vetor nao condiz com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
       {
-        cout << calculator->currentResult.at(i) << " ";
+        std::vector<float> result = calculator->scaleVector(v1, scalar);
+        /*Printando resultado*/
+        cout << "Resultado: [";
+        for (unsigned i = 0; i < result.size(); i++)
+        {
+          cout << " " << calculator->currentResult.at(i) << " ";
+        }
+        cout << "]" << endl;
       }
-      cout << endl;
     }
 
     break;
 
     case 3:
-      cout << input << endl;
-      break;
+    {
+      std::vector<float> v1, v2;
+      float alpha, beta;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
+      {
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
+        else
+          v1 = getVectorFromUser(true);
+
+        v2 = getVectorFromUser(false);
+      }
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+      {
+        v1 = getVectorFromUser(true);
+        v2 = getVectorFromUser(false);
+      }
+
+      if (v1.size() != v2.size())
+        cout << "Vetores com tamanhos diferentes" << endl;
+      else if (v1.size() != dimension || v2.size() != dimension)
+        cout << "Vetores nao condizem com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        cout << "Digite os escalares alfa e beta para multiplicar separados por espaço: ";
+        getline(cin, values);
+        std::vector<float> arg = getNumbersFromInput(values, ' ');
+
+        if (arg.size() != 2)
+        {
+          cout << "Quantidade invalida de argumentos" << endl;
+        }
+        else
+        {
+          alpha = arg.at(0);
+          beta = arg.at(1);
+          std::vector<float> result = calculator->calculateLinearCombination(v1, v2, alpha, beta);
+          /*Printando resultado*/
+          cout << "Resultado: [";
+          for (unsigned i = 0; i < result.size(); i++)
+          {
+            cout << " " << calculator->currentResult.at(i) << " ";
+          }
+          cout << "]" << endl;
+        }
+      }
+    }
+    break;
 
     case 4:
-      cout << input << endl;
-      break;
+    {
+      std::vector<float> v1, v2;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
+      {
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
+        else
+          v1 = getVectorFromUser(true);
+
+        v2 = getVectorFromUser(false);
+      }
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+      {
+        v1 = getVectorFromUser(true);
+        v2 = getVectorFromUser(false);
+      }
+
+      if (v1.size() != v2.size())
+        cout << "Vetores com tamanhos diferentes" << endl;
+      else if (v1.size() != dimension || v2.size() != dimension)
+        cout << "Vetores nao condizem com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        float result = calculator->calculateInnerProduct(v1, v2);
+        /*Printando resultado*/
+        cout << "Resultado do produto interno: " << result << endl;
+      }
+    }
+    break;
 
     case 5:
-      cout << input << endl;
-      break;
+    {
+      std::vector<float> v1;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
+      {
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
+        else
+          v1 = getVectorFromUser(true);
+      }
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+        v1 = getVectorFromUser(true);
+
+      if (v1.size() != dimension)
+        cout << "Vetor nao condiz com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        float result = calculator->calculateVectorNorm(v1);
+        /*Printando resultado*/
+        cout << "Resultado da norma vetorial: " << result << endl;
+      }
+    }
+    break;
 
     case 6:
-      cout << input << endl;
-      break;
+    {
+      std::vector<float> v1, v2;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
+      {
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
+        else
+          v1 = getVectorFromUser(true);
+
+        v2 = getVectorFromUser(false);
+      }
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+      {
+        v1 = getVectorFromUser(true);
+        v2 = getVectorFromUser(false);
+      }
+
+      if (v1.size() != v2.size())
+        cout << "Vetores com tamanhos diferentes" << endl;
+      else if (v1.size() != dimension || v2.size() != dimension)
+        cout << "Vetores nao condizem com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        float result = calculator->calculateDistance(v1, v2);
+        /*Printando resultado*/
+        cout << "Distancia entre os vetores (u.m.): " << result << endl;
+      }
+    }
+    break;
 
     case 7:
-      cout << input << endl;
-      break;
+    {
+      std::vector<float> v1, v2;
+
+      /*Se quer usar o ultimo resultado armazenado*/
+      if (calculator->currentResult.size() != 0)
+      {
+        cout << "Voce deseja utilizar o ultimo resultado? (y/n) ";
+        getline(cin, values);
+        int option = getUserOption(values);
+        if (option < 0)
+          cout << "Opcao invalida. Tente novamente" << endl;
+        /*Se quer usar, atribuo o valor do ultimo resultado ao v1. Se nao, peco para entrar com o v1*/
+        if (option == 1)
+          v1 = calculator->currentResult;
+        else
+          v1 = getVectorFromUser(true);
+
+        v2 = getVectorFromUser(false);
+      }
+      /*Se nao quer usar o ultimo resultado armazenado*/
+      else
+      {
+        v1 = getVectorFromUser(true);
+        v2 = getVectorFromUser(false);
+      }
+
+      if (v1.size() != v2.size())
+        cout << "Vetores com tamanhos diferentes" << endl;
+      else if (v1.size() != dimension || v2.size() != dimension)
+        cout << "Vetores nao condizem com a dimensao definida na calculadora. Dimensao: " << dimension << endl;
+      else
+      {
+        float result = calculator->calculateAngle(v1, v2);
+        /*Printando resultado*/
+        cout << "Angulo (em radianos): " << result << endl;
+      }
+    }
+    break;
 
     case 8:
-      cout << input << endl;
-      break;
+    {
+      cout << "Digite o novo valor para a dimensao dos vetores (valor natural): ";
+      getline(cin, values);
+      std::vector<float> arg = getNumbersFromInput(values, ' ');
+
+      if (arg.size() != 1)
+      {
+        cout << "Quantidade de argumentos invalida" << endl;
+      }
+      else
+      {
+        float n = arg.at(0);
+
+        /*Testa se eh inteiro*/
+        if (fmod(n, 1) != 0)
+        {
+          cout << "Valor de dimensao nao inteiro" << endl;
+        }
+        else
+        {
+          cout << "valor: " << n << endl;
+          string message;
+          calculator->setVectorDimension(n) ? message = "Valor alterado com sucesso" : message = "Erro ao alterar valor, pois eh menor que zero.";
+          cout << message << endl;
+        }
+      }
+    }
+    break;
 
     case 9:
-      cout << input << endl;
-      break;
+    {
+      if (calculator->currentResult.size() == 0)
+        cout << "Nao ha um resultado armazenado na calculadora" << endl;
+      else if (calculator->setMemory(calculator->currentResult))
+        cout << "Resultado armazenado na memoria com sucesso" << endl;
+      else
+        cout << "Erro ao armazenar resultado na memoria" << endl;
+    }
+    break;
 
     case 10:
-      cout << input << endl;
+      if (calculator->currentResult.size() == 0)
+        cout << "Nao ha um resultado armazenado na calculadora" << endl;
+      else
+      {
+        cout << "O ultimo resultado na calculadora foi: [";
+        for (unsigned i = 0; i < calculator->currentResult.size(); i++)
+        {
+          cout << " " << calculator->currentResult.at(i) << " ";
+        }
+        cout << "]" << endl;
+      }
+
       break;
 
     default:
-      cout << "Opcao invalida. Por favor, tente novamente." << endl;
-      break;
+    {
+      if (!input.compare("exit") == 0)
+        cout << "Opcao invalida. Por favor, tente novamente." << endl;
+    }
+    break;
     }
   }
   cout << "Obrigada por testar!" << endl;

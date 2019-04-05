@@ -14,4 +14,6 @@ std::vector<float> getNumbersFromInput(std::string, char);
 
 int getUserOption(std::string);
 
-void printMenu();
+std::vector<float> getVectorFromUser(bool);
+
+    void printMenu();

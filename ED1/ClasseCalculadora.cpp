@@ -16,7 +16,12 @@ bool Calculator::setVectorDimension(unsigned n)
 {
   if (n > 0)
   {
-    vectorDimension = n;
+    /*Nao altero se for igual, pois eh redundancia*/
+    if (vectorDimension != n) {
+      /*Valor do resultado atual eh resetado, pois a dimensao foi alterada*/
+      currentResult = {};
+      vectorDimension = n;
+    }
     return true;
   }
   return false;
@@ -63,7 +68,7 @@ std::vector<float> Calculator::scaleVector(std::vector<float> vector, float mult
   return vector;
 };
 
-std::vector<float> Calculator::calculateLinearCombination(std::vector<float> v1, std::vector<float> v2, int alpha, int beta)
+std::vector<float> Calculator::calculateLinearCombination(std::vector<float> v1, std::vector<float> v2, float alpha, float beta)
 {
   unsigned counter = 0;
   std::vector<float> result;
@@ -72,6 +77,7 @@ std::vector<float> Calculator::calculateLinearCombination(std::vector<float> v1,
     result.push_back(v1.at(counter) * alpha + v2.at(counter) * beta);
     counter++;
   }
+  currentResult = result;
   return result;
 };
 

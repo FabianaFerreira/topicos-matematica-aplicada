@@ -30,7 +30,7 @@ public:
 
   std::vector<float> scaleVector(std::vector<float>, float);
 
-  std::vector<float> calculateLinearCombination(std::vector<float>, std::vector<float>, int, int);
+  std::vector<float> calculateLinearCombination(std::vector<float>, std::vector<float>, float, float);
 
   float calculateInnerProduct(std::vector<float>, std::vector<float>);
 

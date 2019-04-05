@@ -29,6 +29,17 @@ int getUserOption(std::string option)
   return -1;
 }
 
+std::vector<float> getVectorFromUser(bool isFirst)
+{
+  std::string values;
+  std::string whichVector = isFirst ? "primeiro" : "segundo";
+  std::cout << "Digite as coordenadas do " << whichVector << " vetor separados por espaço: ";
+  getline(std::cin, values);
+  std::vector<float> vector = getNumbersFromInput(values, ' ');
+
+  return vector;
+}
+
 /*Funcao para printar o menu*/
 void printMenu()
 {
