@@ -56,4 +56,5 @@ void printMenu()
   std::cout << "8. Alterar a dimensão dos vetores" << std::endl;
   std::cout << "9. Memorizar o último resultado" << std::endl;
   std::cout << "10. Acumular um resultado vetorial" << std::endl;
+  std::cout << "Digite 'exit' para sair do programa" << std::endl;
 }
