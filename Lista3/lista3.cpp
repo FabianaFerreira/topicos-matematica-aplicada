@@ -40,11 +40,11 @@ int main()
         /*Testa se eh inteiro*/
         if (fmod(element, 1) != 0)
         {
-          cout << "Valor do arggumento nao inteiro" << endl;
+          cout << "Valor do argumento nao inteiro" << endl;
         }
         else
         {
-          printAsciiTable(arg.at(0), arg.at(1), arg.at(2));
+          printAsciiTable((short int)arg.at(0), (unsigned)arg.at(2));
         }
       }
     }
