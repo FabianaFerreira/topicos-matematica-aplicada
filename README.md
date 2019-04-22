@@ -23,3 +23,9 @@ Repositório destinado à disciplina Tópicos da Matemática Avançada A: Progra
   
   #### Estudo Dirigido 1
   Desenvolvimento de uma calculadora vetorial simples. O programa irá apresentar um menu de opções, onde o usuário poderá escolher dentre uma lista de operações matemáticas com vetores ou de seleção de parâmetros para a calculadora.
+
+  #### Lista 3
+  - Tabela ASCII com possibilidade de entrada de usuário para o início, o fim e a quantidade de linhas por página, para melhor formatação
+  - Tabela Unicode com possibilidade de entrada de usuário para o início, o fim e a quantidade de linhas por página, para melhor formatação. O usuário também pode selecionar qual língua deseja exibir: russo, grego ou braille
+  - Leitura de arquivos com extensão `.txt` para contagem de ocorrências de palavras
+  - Leitura de um arquivo `.csv` para contagem do número de linhas e colunas
