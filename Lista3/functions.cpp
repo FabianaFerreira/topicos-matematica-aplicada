@@ -49,12 +49,11 @@ string decimalToBinary(unsigned n)
 
 int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
 {
-  unsigned pagesQnt = (end - begin + 1) / linesQnt;
-  unsigned counter1 = 0;
-  unsigned counter2 = begin;
+  unsigned totalLines = end - begin + 1;
+  unsigned pagesQnt = ceil((float)totalLines / linesQnt);
+  unsigned pageCounter = 0;
+  unsigned linesPerPageCounter = begin;
   unsigned currentNumber = begin;
-
-  cout << begin << "," << end << "," << linesQnt << "," << pagesQnt << endl;
 
   if (begin > end)
     return -1;
@@ -64,22 +63,35 @@ int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
   if (end > 127)
     end = 127;
 
-  while (counter1 < pagesQnt)
+  unsigned loopLimit;
+
+  while (pageCounter < pagesQnt)
   {
     cout << "+-----------+-----+-----+-----+-----+" << endl;
     cout << "|  Binário  | Oct | Hex | Dec | Chr |" << endl;
     cout << "+-----------+-----+-----+-----+-----+" << endl;
+    linesPerPageCounter = 0;
+    if (totalLines - pageCounter * linesQnt < linesQnt)
+      loopLimit = totalLines - pageCounter * linesQnt;
+    else
+      loopLimit = linesQnt;
 
-    while (counter2 <= (currentNumber + linesQnt - 1))
+    while (linesPerPageCounter < loopLimit)
     {
-      cout << "| " << decimalToBinary(counter2) << " | " << setw(3) << setbase(8) << setprecision(3) << counter2 << " | " << setw(3) << setbase(16) << counter2 << " | " << setw(3) << setbase(10) << setprecision(3) << counter2 << " | " << setw(3) << char(counter2) << " | " << endl;
+      currentNumber = begin + linesQnt * pageCounter + linesPerPageCounter;
+      cout << "| " << decimalToBinary(currentNumber) << " | "
+           << setw(3) << setbase(8) << setprecision(3)
+           << currentNumber << " | " << setw(3)
+           << setbase(16) << currentNumber << " | " << setw(3)
+           << setbase(10) << setprecision(3) << currentNumber
+           << " | " << setw(3) << char(currentNumber) << " | " << endl;
 
-      counter2++;
+      linesPerPageCounter++;
     }
     cout << "+-----------+-----+-----+-----+-----+" << endl;
     cout << endl;
-    currentNumber = counter2;
-    counter1++;
+
+    pageCounter++;
   }
   return 0;
 }
