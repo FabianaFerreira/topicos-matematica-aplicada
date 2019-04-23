@@ -7,6 +7,9 @@
 #include "functions.h"
 
 #define EXTENSION "txt"
+#define RESULTFILENAME "Resultado_Contagem.txt"
+
+using namespace std;
 
 /*Funcao que faz o parser de string atraves de um delimiter*/
 vector<float> getNumbersFromInput(string str, char delimiter)
@@ -23,7 +26,7 @@ vector<float> getNumbersFromInput(string str, char delimiter)
 }
 
 /*Funcao que converte decimal para binario e insere um espaco no meio do binario*/
-string decimalToBinary(unsigned n)
+string decimalToBinary(unsigned long n)
 {
   string r;
   unsigned counter = 1;
@@ -218,6 +221,48 @@ void getFilesList(const string &path, vector<string> &files, const bool showHidd
     }
   }
   closedir(dpdf);
+}
+
+/*Gera os pares de palavra e frequencia e escreve no arquivo de resultado*/
+void generateWordsFile(vector<string> files)
+{
+  string currentWord;
+  map<string, unsigned> words;
+
+  for (auto file : files)
+  {
+    ifstream input(file);
+
+    for (string line; getline(input, line);)
+    {
+      currentWord = line;
+      if (words.find(currentWord) == words.end())
+      {
+        words.insert(make_pair(currentWord, 1));
+      }
+      else
+      {
+        unsigned value = words.at(currentWord);
+        words.at(currentWord) = value + 1;
+      }
+    }
+  }
+
+  writeResultFile(words);
+}
+
+/*Funcao que ira escrever as informacoes do map num arquivo de saida*/
+void writeResultFile(map<string, unsigned> words)
+{
+  fstream fs;
+  fs.open(RESULTFILENAME, fstream::out);
+
+  for (auto const pair : words)
+  {
+    fs << pair.first + ":" + to_string(pair.second) + "\n";
+  }
+
+  fs.close();
 }
 
 /*Funcao para printar o menu*/

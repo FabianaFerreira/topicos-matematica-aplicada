@@ -170,8 +170,7 @@ int main()
       vector<string> files;
       getFilesList("/home/fabiana/Desktop/testeArq", files, false);
 
-      for (unsigned i = 0; i < files.size(); i++)
-        cout << files.at(i) << endl;
+      generateWordsFile(files);
     }
     else if (input == "4")
     {

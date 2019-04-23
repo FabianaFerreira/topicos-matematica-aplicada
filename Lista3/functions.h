@@ -13,22 +13,23 @@
 #include <iomanip>
 #include <sstream>
 #include <dirent.h>
-// #include <cstring>
+#include <map>
+#include <fstream>
 
-using namespace std;
+std::vector<float> getNumbersFromInput(std::string, char);
 
-vector<float> getNumbersFromInput(string, char);
-
-string decimalToBinary(unsigned long);
+std::string decimalToBinary(unsigned long);
 
 int printAsciiTable(unsigned, unsigned, unsigned);
 
 int printUnicodeTable(unsigned, unsigned, unsigned);
 
-string getFileExtension(const string);
+std::string getFileExtension(const std::string);
 
-void getFilesList(const string &, vector<string> &, const bool);
+void getFilesList(const std::string &, std::vector<std::string> &, const bool);
 
-vector<string> generateFilesList(string);
+void generateWordsFile (std::vector<std::string>);
+
+void writeResultFile(std::map<std::string, unsigned>);
 
 void printMenu();
