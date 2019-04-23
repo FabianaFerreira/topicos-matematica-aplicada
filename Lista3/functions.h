@@ -14,20 +14,24 @@
 #include <sstream>
 
 #include <unistd.h>
-#include<sys/wait.h> 
+#include <sys/wait.h>
+
+#include <string>
+#include <functional>
+#include <dirent.h>
 
 using namespace std;
 
-vector<float> getNumbersFromInput(std::string, char);
+vector<float> getNumbersFromInput(string, char);
 
 string decimalToBinary(unsigned long);
-
-/*Definindo valores padrão para as variaveis*/
 
 int printAsciiTable(unsigned, unsigned, unsigned);
 
 int printUnicodeTable(unsigned, unsigned, unsigned);
 
-vector<string> generateFilesList (string);
+void GetReqDirs(const string &, vector<string> &, const bool);
+
+vector<string> generateFilesList(string);
 
 void printMenu();

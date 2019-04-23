@@ -184,51 +184,30 @@ int printUnicodeTable(unsigned begin, unsigned end, unsigned linesQnt)
   return 0;
 }
 
-vector<string> generateFilesList(string path)
+#include <dirent.h>
+#include <vector>
+#include <cstring>
+
+void GetReqDirs(const string &path, vector<string> &files, const bool showHiddenDirs = false)
 {
-  char commandList[BUFFER * 20];
-  int pipefd[2];
-  string token, list;
-  vector<string> files;
-
-  /*Faço uma chamada de execlp para listar os comandos que estão na
-	pasta bin, de forma a conseguir tratar o erro, caso o usuário entre
-	com um comando que não está na pasta*/
-
-  pipe(pipefd);
-  pid_t dirPathPID = fork();
-  if (dirPathPID == 0)
+  DIR *dpdf;
+  struct dirent *epdf;
+  dpdf = opendir(path.c_str());
+  if (dpdf != NULL)
   {
-    //Fecha o lado de entrada do pipe (do filho)
-    close(pipefd[0]);
-
-    dup2(pipefd[1], fileno(stdout));
-    close(pipefd[1]);
-
-    execlp("/bin/dir", "dir", "-1", path.c_str(), NULL);
-  }
-  else
-  {
-    wait(NULL);
-    close(pipefd[1]);
-    while (read(pipefd[0], commandList, sizeof(commandList)) != 0)
+    while ((epdf = readdir(dpdf)) != NULL)
     {
+      if (showHiddenDirs ? (epdf->d_type == DT_DIR && string(epdf->d_name) != ".." && string(epdf->d_name) != ".") : (epdf->d_type == DT_DIR && strstr(epdf->d_name, "..") == NULL && strstr(epdf->d_name, ".") == NULL))
+      {
+        GetReqDirs(path + "/" + epdf->d_name + "/", files, showHiddenDirs);
+      }
+      if (epdf->d_type == DT_REG)
+      {
+        files.push_back(path + epdf->d_name);
+      }
     }
   }
-
-  list = string(commandList);
-
-  // Removendo ultimo \n
-  list.pop_back();
-
-  istringstream filesStream(commandList);
-
-  while (getline(filesStream, token, '\n'))
-  {
-    files.push_back(token);
-  }
-
-  return files;
+  closedir(dpdf);
 }
 
 /*Funcao para printar o menu*/

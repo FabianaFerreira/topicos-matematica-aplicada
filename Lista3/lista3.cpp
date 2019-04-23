@@ -167,10 +167,11 @@ int main()
     }
     else if (input == "3")
     {
-      vector<string> list = generateFilesList("/home/fabiana/Desktop/testeArq");
+      vector<string> files;
+      GetReqDirs("/home/fabiana/Desktop/testeArq", files, false);
 
-      for (unsigned i = 0; i < list.size(); i++)
-        cout << list.at(i) << endl;
+      for (unsigned i = 0; i < files.size(); i++)
+        cout << files.at(i) << endl;
     }
     else if (input == "4")
     {
