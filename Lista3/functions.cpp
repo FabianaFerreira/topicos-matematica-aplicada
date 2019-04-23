@@ -6,7 +6,7 @@
 
 #include "functions.h"
 
-#define BUFFER 100
+#define EXTENSION "txt"
 
 /*Funcao que faz o parser de string atraves de um delimiter*/
 vector<float> getNumbersFromInput(string str, char delimiter)
@@ -184,11 +184,19 @@ int printUnicodeTable(unsigned begin, unsigned end, unsigned linesQnt)
   return 0;
 }
 
-#include <dirent.h>
-#include <vector>
-#include <cstring>
+string getFileExtension(const string s)
+{
 
-void GetReqDirs(const string &path, vector<string> &files, const bool showHiddenDirs = false)
+  size_t i = s.rfind('.', s.length());
+  if (i != string::npos)
+  {
+    return (s.substr(i + 1, s.length() - i));
+  }
+
+  return ("");
+}
+
+void getFilesList(const string &path, vector<string> &files, const bool showHiddenDirs = false)
 {
   DIR *dpdf;
   struct dirent *epdf;
@@ -199,11 +207,13 @@ void GetReqDirs(const string &path, vector<string> &files, const bool showHidden
     {
       if (showHiddenDirs ? (epdf->d_type == DT_DIR && string(epdf->d_name) != ".." && string(epdf->d_name) != ".") : (epdf->d_type == DT_DIR && strstr(epdf->d_name, "..") == NULL && strstr(epdf->d_name, ".") == NULL))
       {
-        GetReqDirs(path + "/" + epdf->d_name + "/", files, showHiddenDirs);
+        getFilesList(path + "/" + epdf->d_name, files, showHiddenDirs);
       }
       if (epdf->d_type == DT_REG)
       {
-        files.push_back(path + epdf->d_name);
+        string extension = getFileExtension(string(epdf->d_name));
+        if (extension.compare(EXTENSION) == 0)
+          files.push_back(path + "/" + epdf->d_name);
       }
     }
   }

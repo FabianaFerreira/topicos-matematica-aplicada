@@ -168,7 +168,7 @@ int main()
     else if (input == "3")
     {
       vector<string> files;
-      GetReqDirs("/home/fabiana/Desktop/testeArq", files, false);
+      getFilesList("/home/fabiana/Desktop/testeArq", files, false);
 
       for (unsigned i = 0; i < files.size(); i++)
         cout << files.at(i) << endl;

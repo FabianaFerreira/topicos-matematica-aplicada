@@ -12,13 +12,8 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-
-#include <unistd.h>
-#include <sys/wait.h>
-
-#include <string>
-#include <functional>
 #include <dirent.h>
+// #include <cstring>
 
 using namespace std;
 
@@ -30,7 +25,9 @@ int printAsciiTable(unsigned, unsigned, unsigned);
 
 int printUnicodeTable(unsigned, unsigned, unsigned);
 
-void GetReqDirs(const string &, vector<string> &, const bool);
+string getFileExtension(const string);
+
+void getFilesList(const string &, vector<string> &, const bool);
 
 vector<string> generateFilesList(string);
 
