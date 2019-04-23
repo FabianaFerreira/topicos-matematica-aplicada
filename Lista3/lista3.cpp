@@ -167,7 +167,10 @@ int main()
     }
     else if (input == "3")
     {
-      cout << "3" << endl;
+      vector<string> list = generateFilesList("/home/fabiana/Desktop/testeArq");
+
+      for (unsigned i = 0; i < list.size(); i++)
+        cout << list.at(i) << endl;
     }
     else if (input == "4")
     {

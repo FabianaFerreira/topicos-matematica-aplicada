@@ -6,6 +6,8 @@
 
 #include "functions.h"
 
+#define BUFFER 100
+
 /*Funcao que faz o parser de string atraves de um delimiter*/
 vector<float> getNumbersFromInput(string str, char delimiter)
 {
@@ -20,6 +22,7 @@ vector<float> getNumbersFromInput(string str, char delimiter)
   return tokenVector;
 }
 
+/*Funcao que converte decimal para binario e insere um espaco no meio do binario*/
 string decimalToBinary(unsigned n)
 {
   string r;
@@ -48,6 +51,7 @@ string decimalToBinary(unsigned n)
   return r;
 }
 
+/*Funcao que printa a tabela ascii dados um inicio e um fim*/
 int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
 {
   unsigned totalLines = end - begin + 1;
@@ -97,6 +101,7 @@ int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
   return 0;
 }
 
+/*Funcao que printa a tabela unicode dados um inicio e um fim e tambem a lingua*/
 int printUnicodeTable(unsigned begin, unsigned end, unsigned linesQnt)
 {
   unsigned totalLines = end - begin + 1;
@@ -179,10 +184,58 @@ int printUnicodeTable(unsigned begin, unsigned end, unsigned linesQnt)
   return 0;
 }
 
+vector<string> generateFilesList(string path)
+{
+  char commandList[BUFFER * 20];
+  int pipefd[2];
+  string token, list;
+  vector<string> files;
+
+  /*Faço uma chamada de execlp para listar os comandos que estão na
+	pasta bin, de forma a conseguir tratar o erro, caso o usuário entre
+	com um comando que não está na pasta*/
+
+  pipe(pipefd);
+  pid_t dirPathPID = fork();
+  if (dirPathPID == 0)
+  {
+    //Fecha o lado de entrada do pipe (do filho)
+    close(pipefd[0]);
+
+    dup2(pipefd[1], fileno(stdout));
+    close(pipefd[1]);
+
+    execlp("/bin/dir", "dir", "-1", path.c_str(), NULL);
+  }
+  else
+  {
+    wait(NULL);
+    close(pipefd[1]);
+    while (read(pipefd[0], commandList, sizeof(commandList)) != 0)
+    {
+    }
+  }
+
+  list = string(commandList);
+
+  // Removendo ultimo \n
+  list.pop_back();
+
+  istringstream filesStream(commandList);
+
+  while (getline(filesStream, token, '\n'))
+  {
+    files.push_back(token);
+  }
+
+  return files;
+}
+
 /*Funcao para printar o menu*/
 void printMenu()
 {
   cout << "Digite 1 para tabela ASCII" << endl;
   cout << "Digite 2 para tabela Unicode" << endl;
+  cout << "Digite 3 para contagem de palavras em uma arquivo .txt" << endl;
   cout << "Digite 'exit' para sair do programa" << endl;
 }

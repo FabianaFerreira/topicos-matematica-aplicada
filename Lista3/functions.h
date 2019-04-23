@@ -13,6 +13,9 @@
 #include <iomanip>
 #include <sstream>
 
+#include <unistd.h>
+#include<sys/wait.h> 
+
 using namespace std;
 
 vector<float> getNumbersFromInput(std::string, char);
@@ -24,5 +27,7 @@ string decimalToBinary(unsigned long);
 int printAsciiTable(unsigned, unsigned, unsigned);
 
 int printUnicodeTable(unsigned, unsigned, unsigned);
+
+vector<string> generateFilesList (string);
 
 void printMenu();
