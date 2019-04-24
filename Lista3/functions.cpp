@@ -25,6 +25,20 @@ vector<float> getNumbersFromInput(string str, char delimiter)
   return tokenVector;
 }
 
+/*Funcao que faz o parser das strings de uma linha*/
+vector<string> getStringsFromLine(string str, char delimiter)
+{
+  vector<string> tokenVector;
+  stringstream ss(str);
+  string token;
+  while (getline(ss, token, delimiter))
+  {
+    tokenVector.push_back(token);
+  }
+
+  return tokenVector;
+}
+
 /*Funcao que converte decimal para binario e insere um espaco no meio do binario*/
 string decimalToBinary(unsigned long n)
 {
@@ -199,7 +213,7 @@ string getFileExtension(const string s)
   return ("");
 }
 
-void getFilesList(const string &path, vector<string> &files, const bool showHiddenDirs = false)
+bool getFilesList(const string &path, vector<string> &files, const bool showHiddenDirs = false)
 {
   DIR *dpdf;
   struct dirent *epdf;
@@ -219,8 +233,10 @@ void getFilesList(const string &path, vector<string> &files, const bool showHidd
           files.push_back(path + "/" + epdf->d_name);
       }
     }
+    closedir(dpdf);
+    return true;
   }
-  closedir(dpdf);
+  return false;
 }
 
 /*Gera os pares de palavra e frequencia e escreve no arquivo de resultado*/
@@ -229,25 +245,27 @@ void generateWordsFile(vector<string> files)
   string currentWord;
   map<string, unsigned> words;
 
-  for (auto file : files)
+  for (string file : files)
   {
     ifstream input(file);
 
     for (string line; getline(input, line);)
     {
-      currentWord = line;
-      if (words.find(currentWord) == words.end())
+      vector<string> wordsFromLine = getStringsFromLine(line, ' ');
+      for (string currentWord : wordsFromLine)
       {
-        words.insert(make_pair(currentWord, 1));
-      }
-      else
-      {
-        unsigned value = words.at(currentWord);
-        words.at(currentWord) = value + 1;
+        if (words.find(currentWord) == words.end())
+        {
+          words.insert(make_pair(currentWord, 1));
+        }
+        else
+        {
+          unsigned value = words.at(currentWord);
+          words.at(currentWord) = value + 1;
+        }
       }
     }
   }
-
   writeResultFile(words);
 }
 
@@ -270,6 +288,6 @@ void printMenu()
 {
   cout << "Digite 1 para tabela ASCII" << endl;
   cout << "Digite 2 para tabela Unicode" << endl;
-  cout << "Digite 3 para contagem de palavras em uma arquivo .txt" << endl;
+  cout << "Digite 3 para contagem de palavras em um diretorio" << endl;
   cout << "Digite 'exit' para sair do programa" << endl;
 }

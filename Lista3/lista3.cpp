@@ -167,10 +167,28 @@ int main()
     }
     else if (input == "3")
     {
-      vector<string> files;
-      getFilesList("/home/fabiana/Desktop/testeArq", files, false);
+      cout << "Digite o nome do diretorio a ser usado (caminho completo, nao o relativo): ";
+      getline(cin, input);
 
-      generateWordsFile(files);
+      if (input.length() == 0)
+      {
+        cout << "Campo invalido" << endl;
+        break;
+      }
+      vector<string> files;
+      bool listResult = getFilesList(input, files, false);
+
+      if (listResult)
+      {
+        generateWordsFile(files);
+        cout << "Arquivo de saida gerado com sucesso na pasta atual" << endl;
+      }
+
+      else
+      {
+        cout << "Houve um problema na leitura do diretorio. Tente novamente e "
+             << "certifique-se de que o caminho esta correto e existe." << endl;
+      }
     }
     else if (input == "4")
     {
