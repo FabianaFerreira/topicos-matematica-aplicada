@@ -32,6 +32,8 @@ bool getFilesList(const std::string &, std::vector<std::string> &, const bool);
 
 void generateWordsFile(std::vector<std::string>);
 
+void formatString(std::string &);
+
 void writeResultFile(std::map<std::string, unsigned>);
 
 void printMenu();

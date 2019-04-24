@@ -8,10 +8,11 @@
 
 #define EXTENSION "txt"
 #define RESULTFILENAME "Resultado_Contagem.txt"
+#define NOTALLOWEDCHARS "!?.,;"
 
 using namespace std;
 
-/*Funcao que faz o parser de string atraves de um delimiter*/
+/*Function that gets the numbers from a string. It is used to get user options*/
 vector<float> getNumbersFromInput(string str, char delimiter)
 {
   vector<float> tokenVector;
@@ -25,7 +26,8 @@ vector<float> getNumbersFromInput(string str, char delimiter)
   return tokenVector;
 }
 
-/*Funcao que faz o parser das strings de uma linha*/
+/*Function that gets the substrings from a string, given a delimiter. 
+  It is used to parse strings from file lines*/
 vector<string> getStringsFromLine(string str, char delimiter)
 {
   vector<string> tokenVector;
@@ -39,7 +41,8 @@ vector<string> getStringsFromLine(string str, char delimiter)
   return tokenVector;
 }
 
-/*Funcao que converte decimal para binario e insere um espaco no meio do binario*/
+/*Function that converts decimal number to binary. It also appends a space in the middle of
+  the number to format it*/
 string decimalToBinary(unsigned long n)
 {
   string r;
@@ -68,7 +71,8 @@ string decimalToBinary(unsigned long n)
   return r;
 }
 
-/*Funcao que printa a tabela ascii dados um inicio e um fim*/
+/*Function that prints an ASCII table. It has three numbers as parameters: 
+  begin and end of the table and also the number of lines per page*/
 int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
 {
   unsigned totalLines = end - begin + 1;
@@ -118,7 +122,8 @@ int printAsciiTable(unsigned begin, unsigned end, unsigned linesQnt)
   return 0;
 }
 
-/*Funcao que printa a tabela unicode dados um inicio e um fim e tambem a lingua*/
+/*Function that prints an unicode table. It has three numbers as parameters: 
+  begin and end of the table and also the number of lines per page*/
 int printUnicodeTable(unsigned begin, unsigned end, unsigned linesQnt)
 {
   unsigned totalLines = end - begin + 1;
@@ -239,7 +244,30 @@ bool getFilesList(const string &path, vector<string> &files, const bool showHidd
   return false;
 }
 
-/*Gera os pares de palavra e frequencia e escreve no arquivo de resultado*/
+/*Function that formats string so as to remove dots, comma and etc. 
+  It also puts every char in lower case*/
+void formatString(string &str)
+{
+  string excludeChars = NOTALLOWEDCHARS;
+
+  auto writeIter = str.begin();
+
+  for (auto readIter = str.begin(); readIter != str.end(); ++readIter)
+  {
+    auto chr = *readIter;
+
+    if (excludeChars.find(chr) != string::npos)
+      continue;
+
+    *writeIter = tolower((unsigned char)chr);
+    ++writeIter;
+  }
+
+  str.erase(writeIter, str.end());
+}
+
+/*Function that generates the word/counter pairs and writes them in a 
+  result file which name is defined as a const*/
 void generateWordsFile(vector<string> files)
 {
   string currentWord;
@@ -251,6 +279,7 @@ void generateWordsFile(vector<string> files)
 
     for (string line; getline(input, line);)
     {
+      formatString(line);
       vector<string> wordsFromLine = getStringsFromLine(line, ' ');
       for (string currentWord : wordsFromLine)
       {
@@ -269,7 +298,7 @@ void generateWordsFile(vector<string> files)
   writeResultFile(words);
 }
 
-/*Funcao que ira escrever as informacoes do map num arquivo de saida*/
+/*Function that will write all the information in an output file*/
 void writeResultFile(map<string, unsigned> words)
 {
   fstream fs;
@@ -283,7 +312,7 @@ void writeResultFile(map<string, unsigned> words)
   fs.close();
 }
 
-/*Funcao para printar o menu*/
+/*Function that show the user menu*/
 void printMenu()
 {
   cout << "Digite 1 para tabela ASCII" << endl;
