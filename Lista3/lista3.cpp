@@ -192,8 +192,18 @@ int main()
     }
     else if (input == "4")
     {
-      cout << "4" << endl;
+      vector<long> result;
+      cout << "Digite o nome do arquivo a ser lido (caminho completo, nao o relativo): ";
       getline(cin, input);
+
+      if (input.length() == 0)
+        cout << "Campo invalido" << endl;
+      else
+      {
+        result = getLinesAndColumnsQnt(input);
+        cout << "Numero de linhas: " << result.at(0) << endl;
+        cout << "Numero de colunas: " << result.at(1) << endl;
+      }
     }
     else if (input.compare("exit") != 0)
     {

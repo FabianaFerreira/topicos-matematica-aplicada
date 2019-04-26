@@ -36,4 +36,6 @@ void formatString(std::string &);
 
 void writeResultFile(std::map<std::string, unsigned>);
 
+std::vector<long> getLinesAndColumnsQnt(std::string);
+
 void printMenu();

@@ -312,11 +312,38 @@ void writeResultFile(map<string, unsigned> words)
   fs.close();
 }
 
+vector<long> getLinesAndColumnsQnt(string filename)
+{
+  ifstream input(filename);
+  long numberOfLines = 0;
+  long numberOfColumns = 0;
+  vector<long> result;
+  for (string line; getline(input, line);)
+  {
+    if (numberOfLines == 0)
+    {
+      if (line.find(',') != std::string::npos)
+        numberOfColumns = getStringsFromLine(line, ',').size();
+      else if (line.find(';') != std::string::npos)
+        numberOfColumns = getStringsFromLine(line, ';').size();
+    }
+    numberOfLines++;
+  }
+  //Exclui a primeira linha
+  numberOfLines--;
+
+  result.push_back(numberOfLines);
+  result.push_back(numberOfColumns);
+
+  return result;
+}
+
 /*Function that show the user menu*/
 void printMenu()
 {
   cout << "Digite 1 para tabela ASCII" << endl;
   cout << "Digite 2 para tabela Unicode" << endl;
   cout << "Digite 3 para contagem de palavras em um diretorio" << endl;
+  cout << "Digite 4 para contagem de linhas e colunas em um arquivo csv" << endl;
   cout << "Digite 'exit' para sair do programa" << endl;
 }
