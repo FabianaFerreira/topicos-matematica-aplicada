@@ -312,30 +312,32 @@ void writeResultFile(map<string, unsigned> words)
   fs.close();
 }
 
-vector<long> getLinesAndColumnsQnt(string filename)
+bool getLinesAndColumnsQnt(string filename, vector<long> &result)
 {
   ifstream input(filename);
   long numberOfLines = 0;
   long numberOfColumns = 0;
-  vector<long> result;
-  for (string line; getline(input, line);)
+  if (input.good())
   {
-    if (numberOfLines == 0)
+    for (string line; getline(input, line);)
     {
-      if (line.find(',') != std::string::npos)
-        numberOfColumns = getStringsFromLine(line, ',').size();
-      else if (line.find(';') != std::string::npos)
-        numberOfColumns = getStringsFromLine(line, ';').size();
+      if (numberOfLines == 0)
+      {
+        if (line.find(',') != std::string::npos)
+          numberOfColumns = getStringsFromLine(line, ',').size();
+        else if (line.find(';') != std::string::npos)
+          numberOfColumns = getStringsFromLine(line, ';').size();
+      }
+      numberOfLines++;
     }
-    numberOfLines++;
+    //Exclui a primeira linha
+    numberOfLines--;
+
+    result.push_back(numberOfLines);
+    result.push_back(numberOfColumns);
+    return true;
   }
-  //Exclui a primeira linha
-  numberOfLines--;
-
-  result.push_back(numberOfLines);
-  result.push_back(numberOfColumns);
-
-  return result;
+  return false;
 }
 
 /*Function that show the user menu*/

@@ -200,9 +200,13 @@ int main()
         cout << "Campo invalido" << endl;
       else
       {
-        result = getLinesAndColumnsQnt(input);
-        cout << "Numero de linhas: " << result.at(0) << endl;
-        cout << "Numero de colunas: " << result.at(1) << endl;
+        if (getLinesAndColumnsQnt(input, result))
+        {
+          cout << "Numero de linhas: " << result.at(0) << endl;
+          cout << "Numero de colunas: " << result.at(1) << endl;
+        }
+        else
+          cout << "Erro: arquivo não existe. Tente novamente.";
       }
     }
     else if (input.compare("exit") != 0)
