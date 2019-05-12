@@ -24,49 +24,6 @@ using namespace std;
 int main()
 {
   char index;
-
-  // MatrixList matrixList;
-
-  // --- Constructing from file ---
-  // MatrixList matrixList("matrix.txt");
-  // matrixList.list();
-  // ------------------------------
-
-  // // --- Adding matrix ---
-
-  // // --- Adding identity 3x3 ---
-  // matrixList.insertIdentity('i', 3);
-  // cout << "Inserted identity 'i' 3x3" << endl;
-  // matrixList.list();
-  // // ---------------------------
-
-  // // --- Get matrix by index ---
-  // cout << "Getting the matrix 'i'" << endl;
-  // printMatrix(matrixList.get('i'));
-  // cout << endl;
-  // // ---------------------------
-
-  // // --- Removing matrix by index ---
-  // matrixList.remove('a');
-  // cout << "After removing the matrix 'a'" << endl;
-  // matrixList.list();
-  // // --------------------------------
-
-  // // --- Clearing the matrix list ---
-  // // matrixList.clear();
-  // // matrixList.list();
-  // // --------------------------------
-
-  // // --- Reading from file (appending or not) ---
-  // cout << "Reading from file" << endl;
-  // matrixList.readFile("matrix2.txt", true);
-  // matrixList.list();
-  // // --------------------------------
-
-  // // --- Saving to file ---
-  // matrixList.save("teste.txt");
-  // // ----------------------
-
   string input;
   string filename;
   cout << "Digite o nome da lista de matrizes a ser lido (.txt): ";
