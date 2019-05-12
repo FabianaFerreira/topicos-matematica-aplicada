@@ -37,12 +37,56 @@ int main()
     /*Soma ou subtração*/
     case 1:
     {
+      Matrix m1{{1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}};
+
+      Matrix m2{{1, 2, 3},
+                {4, 5, 6}};
+
+      vector<unsigned> size1 = Calculator::getMatrixDimension(m1);
+      vector<unsigned> size2 = Calculator::getMatrixDimension(m2);
+
+      cout << "Tamanho 1: " << size1.at(0) << " " << size1.at(1) << endl;
+      cout << "Tamanho 2: " << size2.at(0) << " " << size2.at(1) << endl;
+
+      if (size1.at(0) == size2.at(0) && size1.at(1) == size2.at(1))
+      {
+        Matrix result = calculator->sumOrSubMatrices(m1, m2, 1);
+
+        //Debug
+        for (unsigned i = 0; i < result.size(); i++)
+        {
+          for (unsigned j = 0; j < result.at(i).size(); j++)
+          {
+            cout << " " << result.at(i).at(j) << " " << endl;
+          }
+        }
+      }
+      else
+      {
+        cout << "Matrizes com dimensoes diferentes. Nao eh possivel efetuar o calculo" << endl;
+      }
     }
     break;
 
     /*Multiplicação por escalar*/
     case 2:
     {
+      Matrix m1{{1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}};
+
+      Matrix result = calculator->scaleMatrix(m1, 2);
+
+      //Debug
+      for (unsigned i = 0; i < result.size(); i++)
+      {
+        for (unsigned j = 0; j < result.at(i).size(); j++)
+        {
+          cout << " " << result.at(i).at(j) << " " << endl;
+        }
+      }
     }
 
     break;

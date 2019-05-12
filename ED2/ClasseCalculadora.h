@@ -22,7 +22,7 @@ public:
 
   static std::vector<unsigned> getMatrixDimension(Matrix);
 
-  Matrix sumOrSubVectors(Matrix, Matrix, unsigned);
+  Matrix sumOrSubMatrices(Matrix, Matrix, unsigned);
 
   Matrix scaleMatrix(Matrix, float);
 

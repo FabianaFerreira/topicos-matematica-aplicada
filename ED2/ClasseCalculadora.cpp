@@ -1,27 +1,26 @@
 #include "ClasseCalculadora.h"
 
-Calculator::Calculator() {};
+Calculator::Calculator(){};
 
 Matrix currentResult;
 
-std::vector<unsigned> getMatrixDimension(Matrix m)
+std::vector<unsigned> Calculator::getMatrixDimension(Matrix m)
 {
   std::vector<unsigned> result;
-  result.at(0) = m.size();
+  result.push_back(m.size());
 
   //Checking if it's possible to get first position of matrix
   if (m.size() != 0)
-    result.at(1) = m.at(0).size();
+    result.push_back(m.at(0).size());
   else
-    result.at(1) = 0;
+    result.push_back(0);
 
   return result;
 }
 
-Matrix Calculator::sumOrSubVectors(Matrix m1, Matrix m2, unsigned isSub)
+Matrix Calculator::sumOrSubMatrices(Matrix m1, Matrix m2, unsigned isSub)
 {
-
-  Matrix result;
+  Matrix result(m1);
   for (unsigned i = 0; i < m1.size(); i++)
   {
     for (unsigned j = 0; j < m1.at(i).size(); j++)
@@ -35,7 +34,7 @@ Matrix Calculator::sumOrSubVectors(Matrix m1, Matrix m2, unsigned isSub)
 
 Matrix Calculator::scaleMatrix(Matrix matrix, float multiplier)
 {
-  Matrix result;
+  Matrix result(matrix);
   for (unsigned i = 0; i < matrix.size(); i++)
   {
     for (unsigned j = 0; j < matrix.at(i).size(); j++)
@@ -66,7 +65,7 @@ Matrix Calculator::multiplyMatrices(Matrix m1, Matrix m2)
 
 Matrix Calculator::transposeMatrix(Matrix matrix)
 {
-  Matrix result;
+  Matrix result(matrix);
   for (unsigned i = 0; i < matrix.size(); i++)
   {
     for (unsigned j = 0; j < matrix.at(i).size(); j++)
