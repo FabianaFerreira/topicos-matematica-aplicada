@@ -20,6 +20,20 @@ std::vector<float> getNumbersFromInput(std::string str, char delimiter)
   return tokenVector;
 }
 
+/*Funcao que faz o parser de string atraves de um delimiter*/
+std::vector<std::string> parseInput(std::string str, char delimiter)
+{
+  std::vector<std::string> tokenVector;
+  std::stringstream ss(str);
+  std::string token;
+  while (getline(ss, token, delimiter))
+  {
+    tokenVector.push_back(token);
+  }
+
+  return tokenVector;
+}
+
 int getUserOption(char option)
 {
   if (option == 'y')
@@ -140,4 +154,5 @@ void printMenu()
   std::cout << "18. Ler uma outra lista de matrizes (adicionar à existente ou substituir)" << std::endl;
   std::cout << "19. Zerar a lista de matrizes" << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
+  std::cout << std::endl;
 }

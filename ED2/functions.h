@@ -12,7 +12,9 @@
 
 #include "types.h"
 
-std::vector<float> getNumbersFromInput(std::string, char);
+std::vector<float> getNumbersFromInput (std::string, char);
+
+std::vector<std::string> parseInput(std::string, char);
 
 int getUserOption(char);
 

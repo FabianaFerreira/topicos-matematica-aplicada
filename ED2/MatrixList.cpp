@@ -15,13 +15,13 @@ MatrixList::MatrixList(std::string filename)
     std::vector<float> matrixLine;
     float element;
 
-    std::cout << "Construtor arquivo" << std::endl;
+    // std::cout << "Construtor com arquivo definido pelo usu[ár" << std::endl;
     std::ifstream f;
 
     f.open(filename);
     if (!f)
     {
-        std::cout << "Unable to open file";
+        std::cout << "Unable to open file" << std::endl;
         exit(1); // terminate with error
     };
 

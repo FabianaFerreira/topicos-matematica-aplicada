@@ -28,7 +28,7 @@ int main()
   // MatrixList matrixList;
 
   // --- Constructing from file ---
-  MatrixList matrixList("matrix.txt");
+  // MatrixList matrixList("matrix.txt");
   // matrixList.list();
   // ------------------------------
 
@@ -68,12 +68,20 @@ int main()
   // // ----------------------
 
   string input;
+  string filename;
+  cout << "Digite o nome da lista de matrizes a ser lido (.txt): ";
+  cin >> filename;
+  cout << endl
+       << endl;
+
+  /*Instancias dos objetos das classes Calculator e MatrixList*/
+  Calculator *calculator = new Calculator();
+  MatrixList matrixList(filename);
 
   printMenu();
 
-  cout << endl;
-
-  Calculator *calculator = new Calculator();
+  //Ignoring \n that is in buffer
+  cin.ignore();
 
   while (input.compare("exit") != 0)
   {
@@ -477,8 +485,20 @@ int main()
     }
     break;
 
+    /*Imprimir uma ou mais matrizes da lista*/
     case 12:
     {
+      std::string id;
+      cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) listada(s) separados por espaco: ";
+      getline(std::cin, id);
+      vector<string> identifiers(parseInput(id, ' '));
+      for (unsigned i = 0; i < identifiers.size(); i++)
+      {
+        char ident = identifiers.at(i).c_str()[0];
+        cout << "** Matrix " << ident << " **" << endl;
+        printMatrix(matrixList.get(ident));
+        cout << endl;
+      }
     }
     break;
 
@@ -492,7 +512,8 @@ int main()
       matrixList.insert(index, newMatrix);
 
       cout << endl;
-      cout << "Lista alterada com sucesso!" << endl;;
+      cout << "Lista alterada com sucesso!" << endl;
+      ;
       cout << endl;
 
       cout << "** -- Lista atual -- **" << endl;
@@ -517,9 +538,51 @@ int main()
       matrixList.list();
     }
     break;
-
+    /*Alterar ou remover uma ou mais matrizes da lista*/
     case 15:
     {
+      std::string id;
+      char option;
+      bool removes = false;
+      cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) listada(s) separados por espaco: ";
+      getline(cin, id);
+      vector<string> identifiers(parseInput(id, ' '));
+
+      for (unsigned i = 0; i < identifiers.size(); i++)
+      {
+        char ident = identifiers.at(i).c_str()[0];
+        cout << "Voce deseja alterar a matriz " << ident << "? (y/n). Se nao, voce ira remove-la. ";
+        cin >> option;
+
+        if (getUserOption(option) == -1)
+        {
+          cout << "Opcao invalida" << endl;
+          break;
+        }
+        removes = getUserOption(option) == 0 ? true : false;
+
+        if (removes)
+        {
+          matrixList.remove(ident);
+          cout << "Matriz " << ident << " removida com sucesso!" << endl;
+          matrixList.save(filename);
+        }
+        else
+        {
+          cout << "Voce optou por alterar a matriz " << ident << "." << endl;
+          cout << endl;
+          Matrix newMatrix(getMatrixFromUser());
+          matrixList.insert(ident, newMatrix);
+          matrixList.save(filename);
+        }
+        cout << endl;
+      }
+
+      cout << endl
+           << "Lista alterada com sucesso!" << endl;
+      cout << endl;
+      matrixList.list();
+      cin.ignore();
     }
     break;
 
