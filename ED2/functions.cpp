@@ -61,6 +61,28 @@ Matrix getMatrixFromUser()
   return result;
 }
 
+void copyMatrix(Matrix const m, Matrix &copy, unsigned n)
+{
+  for (unsigned i = 0; i < n; i++)
+  {
+    copy.push_back(std::vector<float>(2 * n, 0));
+  }
+
+  //Copying matrix to first part of result
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      copy.at(i).at(j) = m[i][j];
+    }
+  }
+  //Putting identity matrix in the last part of matrix
+  for (int i = 0; i < n; i++)
+  {
+    copy[i][n + i] = 1;
+  }
+}
+
 void printMatrix(Matrix matrix)
 {
   unsigned lines = matrix.size();
@@ -77,14 +99,15 @@ void printMatrix(Matrix matrix)
   }
 }
 
-void printMatrix(Matrix matrix, unsigned lineLimit, unsigned columnLimit)
+void printMatrix(Matrix matrix, unsigned lineLimit, unsigned columnLimit, bool isFirstPart)
 {
   for (unsigned i = 0; i < lineLimit; i++)
   {
     std::cout << "[ ";
     for (unsigned j = 0; j < columnLimit; j++)
     {
-      std::cout << matrix.at(i).at(lineLimit + j) << " ";
+      isFirstPart ? std::cout << matrix.at(i).at(j) << " "
+                  : std::cout << matrix.at(i).at(lineLimit + j) << " ";
     }
     std::cout << "]";
     std::cout << std::endl;

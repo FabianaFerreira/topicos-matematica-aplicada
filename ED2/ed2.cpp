@@ -434,7 +434,7 @@ int main()
       cout << "Resultado: " << endl;
 
       // Result has n x 2n dimension. Using function overloading to print only the part of the matrix which is the result
-      printMatrix(result, size.at(0), size.at(1));
+      printMatrix(result, size.at(0), size.at(1), false);
     }
     break;
 
@@ -447,6 +447,30 @@ int main()
     /*Escalonamento*/
     case 10:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+      if (size.at(0) != size.at(1))
+      {
+        cout << "Matriz nao eh quadrada. Nao eh possivel realizar a operacao" << endl;
+        break;
+      }
+
+      Matrix result;
+      unsigned n = size.at(0);
+      copyMatrix(m, result, n);
+
+      calculator->gaussElimination(result);
+
+      cout << "Resultado: " << endl;
+
+      // Result has n x 2n dimension. Using function overloading to print only the part of the matrix which is the result
+      printMatrix(result, size.at(0), size.at(1), true);
     }
     break;
 

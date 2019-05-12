@@ -18,8 +18,10 @@ int getUserOption(char);
 
 Matrix getMatrixFromUser();
 
+void copyMatrix(Matrix const, Matrix &, unsigned);
+
 void printMatrix(Matrix);
 
-void printMatrix(Matrix, unsigned, unsigned);
+void printMatrix(Matrix, unsigned, unsigned, bool);
 
 void printMenu();
