@@ -446,6 +446,39 @@ int main()
     /*Combinação linear*/
     case 9:
     {
+      string id;
+
+      cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) listada(s) separados por espaco: ";
+      getline(cin, id);
+      vector<string> identifiers(parseInput(id, ' '));
+
+      cout << "Digite os coeficientes a serem multiplicados em cada matriz: ";
+      getline(cin, id);
+      vector<float> multipliers(getNumbersFromInput(id, ' '));
+
+      if (identifiers.size() != multipliers.size())
+      {
+        cout << "Quantidade de coeficientes nao condiz com a quantidade de matrizes informadas" << endl << endl;
+        break;
+      }
+
+      Matrix result;
+      unsigned n = matrixList.get(identifiers.at(0).c_str()[0]).size();
+      for (unsigned i = 0; i < n; i++)
+      {
+        result.push_back(std::vector<float>(n, 0));
+      }
+
+      for (unsigned i = 0; i < identifiers.size(); i++)
+      {
+        char ident = identifiers.at(i).c_str()[0];
+        Matrix current(matrixList.get(ident));
+        result = calculator->sumOrSubMatrices(result, calculator->scaleMatrix(current, multipliers.at(i)), 0);
+      }
+      cout << endl;
+      cout << "Resultado: " << endl;
+      printMatrix(result);
+      cout << endl;
     }
     break;
 
@@ -510,13 +543,16 @@ int main()
       vector<float> x(calculator->solveEquation(result));
 
       cout << endl;
-      cout << "Resultado: " << endl << endl;;
+      cout << "Resultado: " << endl
+           << endl;
+      ;
       cout << "[ ";
       for (int i = 0; i < size.at(0); i++)
       {
         cout << x[i] << " ";
       }
-      cout << "]" << endl << endl;
+      cout << "]" << endl
+           << endl;
     }
     break;
 

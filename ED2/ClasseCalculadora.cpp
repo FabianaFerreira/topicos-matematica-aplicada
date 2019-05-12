@@ -35,15 +35,11 @@ Matrix Calculator::sumOrSubMatrices(Matrix m1, Matrix m2, unsigned isSub)
 
 Matrix Calculator::scaleMatrix(Matrix matrix, float multiplier)
 {
-  std::cout << multiplier << std::endl;
   Matrix result(matrix);
   for (unsigned i = 0; i < matrix.size(); i++)
   {
     for (unsigned j = 0; j < matrix.at(i).size(); j++)
-    {
       result.at(i).at(j) = matrix.at(i).at(j) * multiplier;
-      std::cout << matrix.at(i).at(j) << std::endl;
-    }
   }
   currentResult = result;
   return result;
