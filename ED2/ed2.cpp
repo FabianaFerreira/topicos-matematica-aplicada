@@ -203,24 +203,233 @@ int main()
     /*Permutação de linhas ou colunas*/
     case 5:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      cout << "Ira permutar linhas? (y/n) Se nao, colunas serao permutadas" << endl;
+      cin >> index;
+
+      int isLine = getUserOption(index);
+
+      unsigned p1, p2;
+      string position;
+
+      cout << "Digite a primeira posicao a ser trocada : " << endl;
+      cin >> position;
+
+      //Checking for error
+      if (!stoi(position))
+      {
+        cout << "Argumento invalido" << endl;
+        break;
+      }
+      else
+        p1 = stoi(position);
+
+      cout << "Digite a segunda posicao a ser trocada : " << endl;
+      cin >> position;
+      //Checking for error
+      if (!stoi(position))
+      {
+        cout << "Argumento invalido" << endl;
+        break;
+      }
+      else
+        p2 = stoi(position);
+
+      //In case of getUserOption throwing -1 as result -> invalid option
+      if (isLine == -1)
+      {
+        cout << "Opcao invalida" << endl;
+      }
+      else
+      {
+        vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+        if (isLine == 1)
+        {
+          if (size.at(0) < p1 || size.at(0) < p2)
+          {
+            cout << "Uma das posicoes escolhidas eh maior do que a quantidade de linhas da matriz" << endl;
+            break;
+          }
+        }
+        else
+        {
+          if (size.at(1) < p1 || size.at(1) < p2)
+          {
+            cout << "Uma das posicoes escolhidas eh maior do que a quantidade de colunas da matriz" << endl;
+            break;
+          }
+        }
+
+        Matrix result(calculator->swapLinesOrColumns(m, isLine, p1, p2));
+        cout << "Resultado: " << endl;
+        printMatrix(result);
+      }
     }
     break;
 
     /*Soma de duas linhas ou colunas*/
     case 6:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      cout << "Ira somar linhas? (y/n) Se nao, colunas serao somadas." << endl;
+      cin >> index;
+
+      int isLine = getUserOption(index);
+
+      unsigned p1, p2;
+      string position;
+
+      cout << "Digite a posicao a ser substituida pela soma das duas linhas ou colunas: " << endl;
+      cin >> position;
+
+      //Checking for error
+      if (!stoi(position))
+      {
+        cout << "Argumento invalido" << endl;
+        break;
+      }
+      else
+        p1 = stoi(position);
+
+      cout << "Digite a segunda posicao a ser somada: " << endl;
+      cin >> position;
+      //Checking for error
+      if (!stoi(position))
+      {
+        cout << "Argumento invalido" << endl;
+        break;
+      }
+      else
+        p2 = stoi(position);
+
+      //In case of getUserOption throwing -1 as result -> invalid option
+      if (isLine == -1)
+      {
+        cout << "Opcao invalida" << endl;
+      }
+      else
+      {
+        vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+        if (isLine == 1)
+        {
+          if (size.at(0) < p1 || size.at(0) < p2)
+          {
+            cout << "Uma das posicoes escolhidas eh maior do que a quantidade de linhas da matriz" << endl;
+            break;
+          }
+        }
+        else
+        {
+          if (size.at(1) < p1 || size.at(1) < p2)
+          {
+            cout << "Uma das posicoes escolhidas eh maior do que a quantidade de colunas da matriz" << endl;
+            break;
+          }
+        }
+
+        Matrix result(calculator->sumLinesOrColumns(m, isLine, p1, p2));
+        cout << "Resultado: " << endl;
+        printMatrix(result);
+      }
     }
     break;
 
     /*Multiplicação de uma linha ou uma coluna por escalar*/
     case 7:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      string mult;
+      cout << "Digite o multiplicador: " << endl;
+      cin >> mult;
+
+      cout << "Ira multiplicar uma linha por um escalar? (y/n) Se nao, uma coluna sera escalada." << endl;
+      cin >> index;
+
+      int isLine = getUserOption(index);
+
+      unsigned pos;
+      string position;
+
+      cout << "Digite a posicao a ser escalada: " << endl;
+      cin >> position;
+
+      //Checking for error
+      if (!stoi(position))
+      {
+        cout << "Argumento invalido" << endl;
+        break;
+      }
+      else
+        pos = stoi(position);
+
+      //In case of getUserOption throwing -1 as result -> invalid option
+      if (isLine == -1)
+      {
+        cout << "Opcao invalida" << endl;
+      }
+      else
+      {
+        vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+        if (isLine == 1)
+        {
+          if (size.at(0) < pos)
+          {
+            cout << "Posicao escolhida eh maior do que a quantidade de linhas da matriz" << endl;
+            break;
+          }
+        }
+        else
+        {
+          if (size.at(1) < pos)
+          {
+            cout << "Posicao escolhida eh maior do que a quantidade de colunas da matriz" << endl;
+            break;
+          }
+        }
+
+        Matrix result(calculator->multiplyLineOrColumn(m, isLine, pos, stof(mult)));
+        cout << "Resultado: " << endl;
+        printMatrix(result);
+      }
     }
     break;
 
     /*Inversão de matrix*/
     case 8:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      Matrix result(calculator->generalInverter(m));
+
+      vector<unsigned> size(Calculator::getMatrixDimension(m));
+      vector<unsigned> resultSize(Calculator::getMatrixDimension(result));
+
+      cout << "Resultado: " << endl;
+
+      // Result has n x 2n dimension. Using function overloading to print only the part of the matrix which is the result
+      printMatrix(result, size.at(0), size.at(1));
     }
     break;
 

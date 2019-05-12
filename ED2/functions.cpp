@@ -77,6 +77,20 @@ void printMatrix(Matrix matrix)
   }
 }
 
+void printMatrix(Matrix matrix, unsigned lineLimit, unsigned columnLimit)
+{
+  for (unsigned i = 0; i < lineLimit; i++)
+  {
+    std::cout << "[ ";
+    for (unsigned j = 0; j < columnLimit; j++)
+    {
+      std::cout << matrix.at(i).at(lineLimit + j) << " ";
+    }
+    std::cout << "]";
+    std::cout << std::endl;
+  }
+}
+
 /*Funcao para printar o menu*/
 void printMenu()
 {

@@ -91,25 +91,25 @@ Matrix Calculator::transposeMatrix(Matrix matrix, unsigned lines, unsigned colum
   return result;
 };
 
-Matrix Calculator::swapLinesOrColumns(Matrix matrix, bool isLine, unsigned p1, unsigned p2)
+Matrix Calculator::swapLinesOrColumns(Matrix matrix, unsigned isLine, unsigned p1, unsigned p2)
 {
   Matrix result(matrix);
-  if (isLine)
+  if (isLine == 1)
   {
-    for (unsigned i = 0; i < matrix.at(p1).size(); i++)
+    for (unsigned i = 0; i < matrix.at(p1 - 1).size(); i++)
     {
-      unsigned tmp = matrix.at(p1).at(i);
-      result.at(p1).at(i) = matrix.at(p2).at(i);
-      result.at(p2).at(i) = tmp;
+      unsigned tmp = matrix.at(p1 - 1).at(i);
+      result.at(p1 - 1).at(i) = matrix.at(p2 - 1).at(i);
+      result.at(p2 - 1).at(i) = tmp;
     }
   }
   else
   {
     for (unsigned i = 0; i < matrix.size(); i++)
     {
-      unsigned tmp = matrix.at(i).at(p1);
-      result.at(i).at(p1) = matrix.at(i).at(p2);
-      result.at(i).at(p2) = tmp;
+      unsigned tmp = matrix.at(i).at(p1 - 1);
+      result.at(i).at(p1 - 1) = matrix.at(i).at(p2 - 1);
+      result.at(i).at(p2 - 1) = tmp;
     }
   }
 
@@ -117,43 +117,43 @@ Matrix Calculator::swapLinesOrColumns(Matrix matrix, bool isLine, unsigned p1, u
   return result;
 };
 
-Matrix Calculator::sumLinesOrColumns(Matrix matrix, bool isLine, unsigned p1, unsigned p2)
+Matrix Calculator::sumLinesOrColumns(Matrix matrix, unsigned isLine, unsigned p1, unsigned p2)
 {
   Matrix result(matrix);
   if (isLine)
   {
-    for (unsigned i = 0; i < matrix.at(p1).size(); i++)
-      result.at(p1).at(i) = matrix.at(p1).at(i) + matrix.at(p2).at(i);
+    for (unsigned i = 0; i < matrix.at(p1 - 1).size(); i++)
+      result.at(p1 - 1).at(i) = matrix.at(p1 - 1).at(i) + matrix.at(p2 - 1).at(i);
   }
   else
   {
     for (unsigned i = 0; i < matrix.size(); i++)
-      result.at(i).at(p1) = matrix.at(i).at(p1) + matrix.at(i).at(p2);
+      result.at(i).at(p1 - 1) = matrix.at(i).at(p1 - 1) + matrix.at(i).at(p2 - 1);
   }
 
   currentResult = result;
   return result;
 };
 
-Matrix Calculator::multiplyLineOrColumn(Matrix matrix, bool isLine, unsigned pos, float multiplier)
+Matrix Calculator::multiplyLineOrColumn(Matrix matrix, unsigned isLine, unsigned pos, float multiplier)
 {
   Matrix result(matrix);
   if (isLine)
   {
-    for (unsigned i = 0; i < matrix.at(pos).size(); i++)
-      result.at(pos).at(i) = matrix.at(pos).at(i) * multiplier;
+    for (unsigned i = 0; i < matrix.at(pos - 1).size(); i++)
+      result.at(pos - 1).at(i) = matrix.at(pos - 1).at(i) * multiplier;
   }
   else
   {
     for (unsigned i = 0; i < matrix.size(); i++)
-      result.at(i).at(pos) = matrix.at(i).at(pos) * multiplier;
+      result.at(i).at(pos - 1) = matrix.at(i).at(pos - 1) * multiplier;
   }
 
   currentResult = result;
   return result;
 };
 
-//Transforms a matrix  to an upper triangular one
+// Receives a reference to a n x 2n block matrix [A | I] and finds the reduced form of this block (transforms A into an upper triangular)
 void Calculator::gaussElimination(Matrix &m)
 {
   int n = m.size();
@@ -167,13 +167,13 @@ void Calculator::gaussElimination(Matrix &m)
     {
       if (abs(m[k][i]) > maxEl)
       {
-        maxEl = abs(m[k][i]);
+        maxEl = m[k][i];
         maxRow = k;
       }
     }
 
     // Swap maximum row with current row (column by column)
-    for (int k = i; k < n + 1; k++)
+    for (int k = i; k < 2 * n; k++)
     {
       double tmp = m[maxRow][k];
       m[maxRow][k] = m[i][k];
@@ -184,7 +184,7 @@ void Calculator::gaussElimination(Matrix &m)
     for (int k = i + 1; k < n; k++)
     {
       double c = -m[k][i] / m[i][i];
-      for (int j = i; j < n + 1; j++)
+      for (int j = i; j < 2 * n; j++)
       {
         if (i == j)
         {
@@ -199,33 +199,55 @@ void Calculator::gaussElimination(Matrix &m)
   }
 }
 
-void Calculator::generalInverter(Matrix &matrix)
+// Uses Gauss Elimination to find the reduced form of the n x 2n block and solves Ax = b for an upper triangular matrix
+Matrix Calculator::generalInverter(Matrix matrix)
 {
-  //Transforms to an upper triangular matrix
-  gaussElimination(matrix);
-
   int n = matrix.size();
+  Matrix result;
+  for (unsigned i = 0; i < n; i++)
+  {
+    result.push_back(std::vector<float>(2 * n, 0));
+  }
+
+  //Copying matrix to first part of result
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      result.at(i).at(j) = matrix[i][j];
+    }
+  }
+  //Putting identity matrix in the last part of matrix
+  for (int i = 0; i < n; i++)
+  {
+    result[i][n + i] = 1;
+  }
+
+  //Transforms to an upper triangular matrix
+  gaussElimination(result);
 
   // Solve equation Ax=b for an upper triangular matrix A
   for (int i = n - 1; i >= 0; i--)
   {
     for (int k = n; k < 2 * n; k++)
     {
-      matrix[i][k] /= matrix[i][i];
+      result[i][k] /= result[i][i];
     }
     // this is not necessary, but the output looks nicer:
-    matrix[i][i] = 1;
+    result[i][i] = 1;
 
     for (int rowModify = i - 1; rowModify >= 0; rowModify--)
     {
       for (int columModify = n; columModify < 2 * n; columModify++)
       {
-        matrix[rowModify][columModify] -= matrix[i][columModify] * matrix[rowModify][i];
+        result[rowModify][columModify] -= result[i][columModify] * result[rowModify][i];
       }
       // this is not necessary, but the output looks nicer:
-      matrix[rowModify][i] = 0;
+      result[rowModify][i] = 0;
     }
   }
+
+  return result;
 }
 
 std::vector<float> Calculator::solveEquation(Matrix &m)

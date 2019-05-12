@@ -4,7 +4,7 @@
 
 # the compiler
 CC = g++
-CFLAGS  = -Wall
+CFLAGS  = -Wall -std=c++11
 OBJFILES = functions.o MatrixList.o ClasseCalculadora.o ed2.o
 TARGET = ed2.exe
 

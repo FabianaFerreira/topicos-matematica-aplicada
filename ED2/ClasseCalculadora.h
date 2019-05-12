@@ -32,17 +32,17 @@ public:
 
   Matrix transposeMatrix(Matrix, unsigned, unsigned);
 
-  Matrix swapLinesOrColumns(Matrix, bool, unsigned, unsigned);
+  Matrix swapLinesOrColumns(Matrix, unsigned, unsigned, unsigned);
 
-  Matrix sumLinesOrColumns(Matrix, bool, unsigned, unsigned);
+  Matrix sumLinesOrColumns(Matrix, unsigned, unsigned, unsigned);
 
-  Matrix multiplyLineOrColumn(Matrix, bool, unsigned, float);
+  Matrix multiplyLineOrColumn(Matrix, unsigned, unsigned, float);
 
   Matrix twoDimensionInverse(Matrix);
 
   void gaussElimination(Matrix &);
 
-  void generalInverter(Matrix &);
+  Matrix generalInverter(Matrix);
 
   std::vector<float> solveEquation(Matrix &);
 
