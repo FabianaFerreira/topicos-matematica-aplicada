@@ -424,8 +424,13 @@ int main()
       Matrix result(calculator->generalInverter(m));
 
       vector<unsigned> size(Calculator::getMatrixDimension(m));
-      vector<unsigned> resultSize(Calculator::getMatrixDimension(result));
 
+      if (size.at(0) != size.at(1))
+      {
+        cout << "A matriz nao eh quadrada. A operacao nao pode ser feita." << endl;
+        break;
+      }
+      vector<unsigned> resultSize(Calculator::getMatrixDimension(result));
       cout << "Resultado: " << endl;
 
       // Result has n x 2n dimension. Using function overloading to print only the part of the matrix which is the result
