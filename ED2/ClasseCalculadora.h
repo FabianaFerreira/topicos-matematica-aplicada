@@ -10,7 +10,9 @@
 #include <string.h>
 #include <math.h>
 
-typedef std::vector<std::vector<float>> Matrix;
+#ifndef types_h
+  typedef std::vector<std::vector<float>> Matrix;
+#endif
 
 class Calculator
 {
@@ -26,9 +28,9 @@ public:
 
   Matrix scaleMatrix(Matrix, float);
 
-  Matrix multiplyMatrices(Matrix, Matrix);
+  Matrix multiplyMatrices(Matrix, Matrix, unsigned, unsigned);
 
-  Matrix transposeMatrix(Matrix);
+  Matrix transposeMatrix(Matrix, unsigned, unsigned);
 
   Matrix swapLinesOrColumns(Matrix, bool, unsigned, unsigned);
 

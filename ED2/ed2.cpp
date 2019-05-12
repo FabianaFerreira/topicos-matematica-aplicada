@@ -5,21 +5,69 @@
 ----------------------------------------*/
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include <string>
 #include <vector>
-#include <sstream>
+
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "functions.h"
 #include "ClasseCalculadora.h"
+#include "MatrixList.h"
 
 using namespace std;
 
 /*--------------------------------------------- MAIN -------------------------------------------------------*/
 int main()
 {
+  char index;
+
+  // MatrixList matrixList;
+
+  // --- Constructing from file ---
+  MatrixList matrixList("matrix.txt");
+  // matrixList.list();
+  // ------------------------------
+
+  // // --- Adding matrix ---
+
+  // // --- Adding identity 3x3 ---
+  // matrixList.insertIdentity('i', 3);
+  // cout << "Inserted identity 'i' 3x3" << endl;
+  // matrixList.list();
+  // // ---------------------------
+
+  // // --- Get matrix by index ---
+  // cout << "Getting the matrix 'i'" << endl;
+  // printMatrix(matrixList.get('i'));
+  // cout << endl;
+  // // ---------------------------
+
+  // // --- Removing matrix by index ---
+  // matrixList.remove('a');
+  // cout << "After removing the matrix 'a'" << endl;
+  // matrixList.list();
+  // // --------------------------------
+
+  // // --- Clearing the matrix list ---
+  // // matrixList.clear();
+  // // matrixList.list();
+  // // --------------------------------
+
+  // // --- Reading from file (appending or not) ---
+  // cout << "Reading from file" << endl;
+  // matrixList.readFile("matrix2.txt", true);
+  // matrixList.list();
+  // // --------------------------------
+
+  // // --- Saving to file ---
+  // matrixList.save("teste.txt");
+  // // ----------------------
+
   string input;
-  string values;
 
   printMenu();
 
@@ -37,35 +85,45 @@ int main()
     /*Soma ou subtração*/
     case 1:
     {
-      Matrix m1{{1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}};
+      cout << "Digite o identificador da primeira matriz: " << endl;
+      cin >> index;
 
-      Matrix m2{{1, 2, 3},
-                {4, 5, 6}};
+      //Copy constructor
+      Matrix m1(matrixList.get(index));
 
-      vector<unsigned> size1 = Calculator::getMatrixDimension(m1);
-      vector<unsigned> size2 = Calculator::getMatrixDimension(m2);
+      cout << "Digite o identificador da segunda matriz: " << endl;
+      cin >> index;
 
-      cout << "Tamanho 1: " << size1.at(0) << " " << size1.at(1) << endl;
-      cout << "Tamanho 2: " << size2.at(0) << " " << size2.at(1) << endl;
+      //Copy constructor
+      Matrix m2(matrixList.get(index));
 
-      if (size1.at(0) == size2.at(0) && size1.at(1) == size2.at(1))
+      cout << "Eh substracao? (y/n): " << endl;
+      cin >> index;
+
+      int isSub = getUserOption(index);
+
+      //In case of getUserOption throwing -1 as result -> invalid option
+      if (isSub == -1)
       {
-        Matrix result = calculator->sumOrSubMatrices(m1, m2, 1);
-
-        //Debug
-        for (unsigned i = 0; i < result.size(); i++)
-        {
-          for (unsigned j = 0; j < result.at(i).size(); j++)
-          {
-            cout << " " << result.at(i).at(j) << " " << endl;
-          }
-        }
+        cout << "Opcao invalida" << endl;
       }
       else
       {
-        cout << "Matrizes com dimensoes diferentes. Nao eh possivel efetuar o calculo" << endl;
+        vector<unsigned> size1(Calculator::getMatrixDimension(m1));
+        vector<unsigned> size2(Calculator::getMatrixDimension(m2));
+
+        cout << "Linhas: " << size1.at(0) << " " << size2.at(0) << endl;
+        cout << "Colunas: " << size1.at(1) << " " << size2.at(1) << endl;
+
+        if (size1.at(0) == size2.at(0) && size1.at(1) == size2.at(1))
+        {
+          Matrix result(calculator->sumOrSubMatrices(m1, m2, isSub));
+          cout << "Resultado: " << endl;
+          printMatrix(result);
+        }
+
+        else
+          cout << "Numero de linhas da matriz 1 eh diferente do numero de colunas da matriz 2. Nao eh possivel realizar a operacao" << endl;
       }
     }
     break;
@@ -73,20 +131,21 @@ int main()
     /*Multiplicação por escalar*/
     case 2:
     {
-      Matrix m1{{1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}};
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
 
-      Matrix result = calculator->scaleMatrix(m1, 2);
+      //Copy constructor
+      Matrix m(matrixList.get(index));
 
-      //Debug
-      for (unsigned i = 0; i < result.size(); i++)
-      {
-        for (unsigned j = 0; j < result.at(i).size(); j++)
-        {
-          cout << " " << result.at(i).at(j) << " " << endl;
-        }
-      }
+      string mult;
+      cout << "Digite o multiplicador: " << endl;
+      cin >> mult;
+
+      Matrix result(calculator->scaleMatrix(m, stof(mult)));
+
+      //Printing result
+      cout << "Resultado: " << endl;
+      printMatrix(result);
     }
 
     break;
@@ -94,12 +153,50 @@ int main()
     /*Multiplicação matricial*/
     case 3:
     {
+      cout << "Digite o identificador da primeira matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m1(matrixList.get(index));
+
+      cout << "Digite o identificador da segunda matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m2(matrixList.get(index));
+
+      vector<unsigned> size1(Calculator::getMatrixDimension(m1));
+
+      vector<unsigned> size2(Calculator::getMatrixDimension(m2));
+
+      if (size1.at(1) == size2.at(0))
+      {
+        Matrix result(calculator->multiplyMatrices(m1, m2, size1.at(0), size2.at(1)));
+        cout << "Resultado: " << endl;
+        printMatrix(result);
+      }
+
+      else
+        cout << "Numero de linhas da matriz 1 eh diferente do numero de colunas da matriz 2. Nao eh possivel realizar a operacao" << endl;
     }
     break;
 
     /*Transposição*/
     case 4:
     {
+      cout << "Digite o identificador da matriz: " << endl;
+      cin >> index;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+
+      vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+      Matrix result(calculator->transposeMatrix(m, size.at(0), size.at(1)));
+
+      //Printing result
+      cout << "Resultado: " << endl;
+      printMatrix(result);
     }
     break;
 
@@ -141,6 +238,52 @@ int main()
 
     /*Resolução de sistema linear*/
     case 11:
+    {
+    }
+    break;
+
+    case 12:
+    {
+    }
+    break;
+
+    case 13:
+    {
+      cout << "Digite uma letra para identificar a nova matriz: " << endl;
+      cin >> index;
+      cin.ignore();
+      Matrix newMatrix = getMatrixFromUser();
+      matrixList.insert(index, newMatrix);
+      matrixList.list();
+    }
+    break;
+
+    case 14:
+    {
+    }
+    break;
+
+    case 15:
+    {
+    }
+    break;
+
+    case 16:
+    {
+    }
+    break;
+
+    case 17:
+    {
+    }
+    break;
+
+    case 18:
+    {
+    }
+    break;
+
+    case 19:
     {
     }
     break;

@@ -10,10 +10,14 @@
 #include <iostream>
 #include <math.h>
 
+#include "types.h"
+
 std::vector<float> getNumbersFromInput(std::string, char);
 
-int getUserOption(std::string);
+int getUserOption(char);
 
-std::vector<float> getVectorFromUser(bool);
+Matrix getMatrixFromUser();
 
-    void printMenu();
+void printMatrix(Matrix matrix);
+
+void printMenu();

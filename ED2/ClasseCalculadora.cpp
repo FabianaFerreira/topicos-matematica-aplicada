@@ -34,26 +34,34 @@ Matrix Calculator::sumOrSubMatrices(Matrix m1, Matrix m2, unsigned isSub)
 
 Matrix Calculator::scaleMatrix(Matrix matrix, float multiplier)
 {
+  std::cout << multiplier << std::endl;
   Matrix result(matrix);
   for (unsigned i = 0; i < matrix.size(); i++)
   {
     for (unsigned j = 0; j < matrix.at(i).size(); j++)
     {
       result.at(i).at(j) = matrix.at(i).at(j) * multiplier;
+      std::cout << matrix.at(i).at(j) << std::endl;
     }
   }
   currentResult = result;
   return result;
 };
 
-Matrix Calculator::multiplyMatrices(Matrix m1, Matrix m2)
+Matrix Calculator::multiplyMatrices(Matrix m1, Matrix m2, unsigned m1Lines, unsigned m2Columns)
 {
   Matrix result;
-  for (unsigned i = 0; i < m1.size(); i++)
+  //Creating m1Lines x m2Columns matrix and inserting zeros
+  for (unsigned i = 0; i < m1Lines; i++)
   {
-    for (unsigned j = 0; j < m2.at(i).size(); j++)
+    result.push_back(std::vector<float>(m2Columns, 0));
+  }
+
+  for (unsigned i = 0; i < m1Lines; i++)
+  {
+    for (unsigned j = 0; j < m2Columns; j++)
     {
-      for (unsigned k = 0; j < m1.at(i).size(); j++)
+      for (unsigned k = 0; k < m1.at(i).size(); k++)
       {
         result.at(i).at(j) += m1.at(i).at(k) * m2.at(k).at(j);
       }
@@ -63,9 +71,15 @@ Matrix Calculator::multiplyMatrices(Matrix m1, Matrix m2)
   return result;
 };
 
-Matrix Calculator::transposeMatrix(Matrix matrix)
+Matrix Calculator::transposeMatrix(Matrix matrix, unsigned lines, unsigned columns)
 {
-  Matrix result(matrix);
+  Matrix result;
+  //Creating columns x linhes matrix and inserting zeros
+  for (unsigned i = 0; i < columns; i++)
+  {
+    result.push_back(std::vector<float>(lines, 0));
+  }
+
   for (unsigned i = 0; i < matrix.size(); i++)
   {
     for (unsigned j = 0; j < matrix.at(i).size(); j++)

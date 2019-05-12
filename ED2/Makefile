@@ -5,8 +5,7 @@
 # the compiler
 CC = g++
 CFLAGS  = -Wall
-
-OBJFILES = functions.o ClasseCalculadora.o ed2.o
+OBJFILES = functions.o MatrixList.o ClasseCalculadora.o ed2.o
 TARGET = ed2.exe
 
 all: $(TARGET)

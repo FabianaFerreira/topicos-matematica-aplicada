@@ -20,24 +20,61 @@ std::vector<float> getNumbersFromInput(std::string str, char delimiter)
   return tokenVector;
 }
 
-int getUserOption(std::string option)
+int getUserOption(char option)
 {
-  if (option.compare("y") == 0)
+  if (option == 'y')
     return 1;
-  if (option.compare("n") == 0)
+  if (option == 'n')
     return 0;
   return -1;
 }
 
-std::vector<float> getVectorFromUser(bool isFirst)
+Matrix getMatrixFromUser()
 {
+  Matrix result;
   std::string values;
-  std::string whichVector = isFirst ? "primeiro" : "segundo";
-  std::cout << "Digite as coordenadas do " << whichVector << " vetor separados por espaço: ";
-  getline(std::cin, values);
-  std::vector<float> vector = getNumbersFromInput(values, ' ');
+  unsigned lines, columns;
 
-  return vector;
+  std::cout << "Digite a quantidade de linhas da matriz: ";
+  std::cin >> lines;
+  std::cin.ignore();
+  std::cout << lines << " linhas" << std::endl;
+
+  std::cout << "Digite a quantidade de colunas da matriz: ";
+  std::cin >> columns;
+  std::cin.ignore();
+  std::cout << columns << " colunas" << std::endl;
+
+  for (int i = 0; i < lines; i++)
+  {
+    std::cout << "Digite os elementos da linha " << (i + 1) << " separados por espaço: ";
+    getline(std::cin, values);
+    std::vector<float> line = getNumbersFromInput(values, ' ');
+    if (line.size() != columns)
+    {
+      std::cout << "ERRO: Quantidade de elementos diferente do numero de colunas" << std::endl;
+      exit(1);
+    }
+    result.push_back(line);
+  }
+
+  return result;
+}
+
+void printMatrix(Matrix matrix)
+{
+  unsigned lines = matrix.size();
+  unsigned columns = matrix[0].size();
+  for (unsigned i = 0; i < lines; i++)
+  {
+    std::cout << "[ ";
+    for (unsigned j = 0; j < columns; j++)
+    {
+      std::cout << matrix.at(i).at(j) << " ";
+    }
+    std::cout << "]";
+    std::cout << std::endl;
+  }
 }
 
 /*Funcao para printar o menu*/
@@ -56,5 +93,14 @@ void printMenu()
   std::cout << "9. Combinação linear" << std::endl;
   std::cout << "10. Escalonamento" << std::endl;
   std::cout << "11. Resolução de sistemas lineares" << std::endl;
+  std::cout << "**-- Opções --**" << std::endl;
+  std::cout << "12. Imprimir uma ou mais matrizes da lista" << std::endl;
+  std::cout << "13. Inserir uma nova matriz" << std::endl;
+  std::cout << "14. Inserir uma matriz identidade n x n" << std::endl;
+  std::cout << "15. Alterar ou remover uma ou mais matrizes da lista" << std::endl;
+  std::cout << "16. Listar todas as matrizes da lista" << std::endl;
+  std::cout << "17. Fazer um backup da lista" << std::endl;
+  std::cout << "18. Ler uma outra lista de matrizes (adicionar à existente ou substituir)" << std::endl;
+  std::cout << "19. Zerar a lista de matrizes" << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
 }
