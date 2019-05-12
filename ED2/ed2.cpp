@@ -85,13 +85,13 @@ int main()
     /*Soma ou subtração*/
     case 1:
     {
-      cout << "Digite o identificador da primeira matriz: " << endl;
+      cout << "Digite o identificador da primeira matriz: ";
       cin >> index;
 
       //Copy constructor
       Matrix m1(matrixList.get(index));
 
-      cout << "Digite o identificador da segunda matriz: " << endl;
+      cout << "Digite o identificador da segunda matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -112,9 +112,6 @@ int main()
         vector<unsigned> size1(Calculator::getMatrixDimension(m1));
         vector<unsigned> size2(Calculator::getMatrixDimension(m2));
 
-        cout << "Linhas: " << size1.at(0) << " " << size2.at(0) << endl;
-        cout << "Colunas: " << size1.at(1) << " " << size2.at(1) << endl;
-
         if (size1.at(0) == size2.at(0) && size1.at(1) == size2.at(1))
         {
           Matrix result(calculator->sumOrSubMatrices(m1, m2, isSub));
@@ -131,7 +128,7 @@ int main()
     /*Multiplicação por escalar*/
     case 2:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -153,7 +150,7 @@ int main()
     /*Multiplicação matricial*/
     case 3:
     {
-      cout << "Digite o identificador da primeira matriz: " << endl;
+      cout << "Digite o identificador da primeira matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -184,7 +181,7 @@ int main()
     /*Transposição*/
     case 4:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -203,7 +200,7 @@ int main()
     /*Permutação de linhas ou colunas*/
     case 5:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -276,7 +273,7 @@ int main()
     /*Soma de duas linhas ou colunas*/
     case 6:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -349,7 +346,7 @@ int main()
     /*Multiplicação de uma linha ou uma coluna por escalar*/
     case 7:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -447,7 +444,7 @@ int main()
     /*Escalonamento*/
     case 10:
     {
-      cout << "Digite o identificador da matriz: " << endl;
+      cout << "Digite o identificador da matriz: ";
       cin >> index;
 
       //Copy constructor
@@ -485,19 +482,39 @@ int main()
     }
     break;
 
+    /*Inserir matriz qualquer*/
     case 13:
     {
-      cout << "Digite uma letra para identificar a nova matriz: " << endl;
+      cout << "Digite uma letra para identificar a nova matriz: ";
       cin >> index;
       cin.ignore();
       Matrix newMatrix = getMatrixFromUser();
       matrixList.insert(index, newMatrix);
+
+      cout << endl;
+      cout << "Lista alterada com sucesso!" << endl;;
+      cout << endl;
+
+      cout << "** -- Lista atual -- **" << endl;
       matrixList.list();
+      cout << "** ----------------- **" << endl;
+      cout << endl;
     }
     break;
 
+    /*Inserir matriz identidade n x n*/
     case 14:
     {
+      char identifier;
+      unsigned dimension;
+      cout << "Digite o identificador da matriz a ser inserida: ";
+      cin >> identifier;
+
+      cout << "Digite a dimensao da matriz identidade a ser inserida: ";
+      cin >> dimension;
+
+      matrixList.insertIdentity(identifier, dimension);
+      matrixList.list();
     }
     break;
 
@@ -506,23 +523,61 @@ int main()
     }
     break;
 
+    /*Lista todas as matrizes*/
     case 16:
     {
+      matrixList.list();
     }
     break;
 
+    /*Fazer backup*/
     case 17:
     {
+      string filename;
+      cout << "Digite o nome do arquivo de backup: ";
+      cin >> filename;
+
+      matrixList.save(filename);
+
+      cout << endl;
+      cout << "Arquivo criado com sucesso" << endl;
     }
     break;
 
+    /*Alterar arquivo de matrizes*/
     case 18:
     {
+      string filename;
+      char option;
+      cout << "Digite o nome do arquivo a ser lido: ";
+      cin >> filename;
+
+      cout << "Voce deseja sobrescrever o arquivo? (y/n). Se nao, sera adicionado ao fim do arquivo existente" << endl;
+      cin >> option;
+
+      if (getUserOption(option) == -1)
+      {
+        cout << "Opcao invalida" << endl;
+        break;
+      }
+      bool appends = getUserOption(option) == 0 ? true : false;
+
+      matrixList.readFile(filename, appends);
+      matrixList.save("matrix.txt");
+
+      cout << endl;
+      cout << "Arquivo alterado com sucesso" << endl;
     }
     break;
 
+    /*Zera lista*/
     case 19:
     {
+      matrixList.clear();
+      matrixList.save("matrix.txt");
+
+      cout << endl;
+      cout << "Arquivo zerado com sucesso" << endl;
     }
     break;
 

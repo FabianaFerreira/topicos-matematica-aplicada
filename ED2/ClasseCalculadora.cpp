@@ -1,4 +1,5 @@
 #include "ClasseCalculadora.h"
+#include "functions.h"
 
 Calculator::Calculator(){};
 
@@ -204,24 +205,8 @@ Matrix Calculator::generalInverter(Matrix matrix)
 {
   int n = matrix.size();
   Matrix result;
-  for (unsigned i = 0; i < n; i++)
-  {
-    result.push_back(std::vector<float>(2 * n, 0));
-  }
 
-  //Copying matrix to first part of result
-  for (int i = 0; i < n; i++)
-  {
-    for (int j = 0; j < n; j++)
-    {
-      result.at(i).at(j) = matrix[i][j];
-    }
-  }
-  //Putting identity matrix in the last part of matrix
-  for (int i = 0; i < n; i++)
-  {
-    result[i][n + i] = 1;
-  }
+  copyMatrix(matrix, result, n);
 
   //Transforms to an upper triangular matrix
   gaussElimination(result);
