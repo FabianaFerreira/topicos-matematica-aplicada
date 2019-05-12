@@ -10,24 +10,39 @@
 #include <string.h>
 #include <math.h>
 
+typedef std::vector<std::vector<float>> Matrix;
+
 class Calculator
 {
 
 public:
   Calculator();
 
-  std::vector<std::vector<float>> currentResult;
+  Matrix currentResult;
 
-  static std::vector<unsigned> getMatrixDimension(std::vector<std::vector<float>>);
+  static std::vector<unsigned> getMatrixDimension(Matrix);
 
-  std::vector<std::vector<float>> sumOrSubVectors(std::vector<std::vector<float>>, std::vector<std::vector<float>>, unsigned);
+  Matrix sumOrSubVectors(Matrix, Matrix, unsigned);
 
-  std::vector<std::vector<float>> scaleMatrix(std::vector<std::vector<float>>, float);
+  Matrix scaleMatrix(Matrix, float);
 
-  std::vector<std::vector<float>> multiplyMatrices(std::vector<std::vector<float>>, std::vector<std::vector<float>>);
-  
-  std::vector<std::vector<float>> transposeMatrix(std::vector<std::vector<float>>);
+  Matrix multiplyMatrices(Matrix, Matrix);
 
-  std::vector<std::vector<float>> calculateLinearCombination(std::vector<std::vector<float>>, std::vector<std::vector<float>>, float, float);
+  Matrix transposeMatrix(Matrix);
 
+  Matrix swapLinesOrColumns(Matrix, bool, unsigned, unsigned);
+
+  Matrix sumLinesOrColumns(Matrix, bool, unsigned, unsigned);
+
+  Matrix multiplyLineOrColumn(Matrix, bool, unsigned, float);
+
+  Matrix twoDimensionInverse(Matrix);
+
+  void gaussElimination(Matrix &);
+
+  void generalInverter(Matrix &);
+
+  std::vector<float> solveEquation(Matrix &);
+
+  Matrix calculateLinearCombination(Matrix, Matrix, float, float);
 };

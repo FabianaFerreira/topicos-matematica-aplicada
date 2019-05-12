@@ -45,16 +45,16 @@ void printMenu()
 {
   std::cout << "-------- Calculadora Vetorial --------" << std::endl;
   std::cout << "**-- Operações --**" << std::endl;
-  std::cout << "1. Soma vetorial" << std::endl;
+  std::cout << "1. Soma ou subtração matricial" << std::endl;
   std::cout << "2. Multiplicação por escalar " << std::endl;
-  std::cout << "3. Combinação linear de dois vetores " << std::endl;
-  std::cout << "4. Produto interno" << std::endl;
-  std::cout << "5. Norma vetorial (módulo)" << std::endl;
-  std::cout << "6. Distância entre dois vetores" << std::endl;
-  std::cout << "7. Ângulo entre dois vetores" << std::endl;
-  std::cout << "**-- Opções --**" << std::endl;
-  std::cout << "8. Alterar a dimensão dos vetores" << std::endl;
-  std::cout << "9. Memorizar o último resultado" << std::endl;
-  std::cout << "10. Acumular um resultado vetorial" << std::endl;
+  std::cout << "3. Multiplicação de duas matrizes " << std::endl;
+  std::cout << "4. Transposição" << std::endl;
+  std::cout << "5. Permutação de linhas ou colunas" << std::endl;
+  std::cout << "6. Soma de duas linhas ou duas colunas" << std::endl;
+  std::cout << "7. Multiplicação de uma linha ou uma coluna por um escalar" << std::endl;
+  std::cout << "8. Inversão de matriz" << std::endl;
+  std::cout << "9. Combinação linear" << std::endl;
+  std::cout << "10. Escalonamento" << std::endl;
+  std::cout << "11. Resolução de sistemas lineares" << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
 }

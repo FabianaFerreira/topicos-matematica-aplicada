@@ -34,55 +34,72 @@ int main()
 
     switch (atoi(input.c_str()))
     {
+    /*Soma ou subtração*/
     case 1:
     {
     }
     break;
 
+    /*Multiplicação por escalar*/
     case 2:
     {
     }
 
     break;
 
+    /*Multiplicação matricial*/
     case 3:
     {
     }
     break;
 
+    /*Transposição*/
     case 4:
     {
     }
     break;
 
+    /*Permutação de linhas ou colunas*/
     case 5:
     {
     }
     break;
 
+    /*Soma de duas linhas ou colunas*/
     case 6:
     {
     }
     break;
 
+    /*Multiplicação de uma linha ou uma coluna por escalar*/
     case 7:
     {
     }
     break;
 
+    /*Inversão de matrix*/
     case 8:
     {
     }
     break;
 
+    /*Combinação linear*/
     case 9:
     {
     }
     break;
 
+    /*Escalonamento*/
     case 10:
+    {
+    }
+    break;
 
-      break;
+    /*Resolução de sistema linear*/
+    case 11:
+    {
+    }
+    break;
 
     default:
     {
