@@ -97,6 +97,28 @@ void copyMatrix(Matrix const m, Matrix &copy, unsigned n)
   }
 }
 
+void createEquationMatrix(Matrix const m, std::vector<float> const b,  Matrix &equation, unsigned n)
+{
+  for (unsigned i = 0; i < n; i++)
+  {
+    equation.push_back(std::vector<float>(n + 1, 0));
+  }
+
+  //Copying matrix to first part of result
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      equation.at(i).at(j) = m[i][j];
+    }
+  }
+  //Putting identity matrix in the last part of matrix
+  for (int i = 0; i < n; i++)
+  {
+    equation[i][n + i] = b.at(i);
+  }
+}
+
 void printMatrix(Matrix matrix)
 {
   unsigned lines = matrix.size();

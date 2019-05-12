@@ -22,6 +22,8 @@ Matrix getMatrixFromUser();
 
 void copyMatrix(Matrix const, Matrix &, unsigned);
 
+void createEquationMatrix(Matrix const, std::vector<float> const, Matrix &, unsigned);
+
 void printMatrix(Matrix);
 
 void printMatrix(Matrix, unsigned, unsigned, bool);

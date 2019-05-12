@@ -482,6 +482,41 @@ int main()
     /*Resolução de sistema linear*/
     case 11:
     {
+      cout << "Digite o identificador da matriz: ";
+      cin >> index;
+      string id;
+
+      //Copy constructor
+      Matrix m(matrixList.get(index));
+      Matrix result;
+
+      vector<unsigned> size(Calculator::getMatrixDimension(m));
+
+      cout << "A matriz " << index << " tem " << size.at(1) << " colunas." << endl;
+      cout << "Digite os valores do vetor b para resolucao do sistema Ax = b (separados por espaco): ";
+      cin.ignore();
+      getline(cin, id);
+
+      vector<float> b(getNumbersFromInput(id, ' '));
+
+      if (b.size() != size.at(1))
+      {
+        cout << "Tamanho do vetor b eh diferente do numero de colunas da matriz " << index << endl;
+        break;
+      }
+
+      createEquationMatrix(m, b, result, size.at(0));
+
+      vector<float> x(calculator->solveEquation(result));
+
+      cout << endl;
+      cout << "Resultado: " << endl << endl;;
+      cout << "[ ";
+      for (int i = 0; i < size.at(0); i++)
+      {
+        cout << x[i] << " ";
+      }
+      cout << "]" << endl << endl;
     }
     break;
 
