@@ -12,7 +12,7 @@
 
 #include "types.h"
 
-std::vector<float> getNumbersFromInput (std::string, char);
+std::vector<float> getNumbersFromInput(std::string, char);
 
 std::vector<std::string> parseInput(std::string, char);
 
@@ -20,7 +20,9 @@ int getUserOption(char);
 
 Matrix getMatrixFromUser();
 
-void copyMatrix(Matrix const, Matrix &, unsigned);
+void generateBlockMatrix(Matrix const, Matrix &, unsigned);
+
+Matrix initializeSquareMatrix(unsigned);
 
 void createEquationMatrix(Matrix const, std::vector<float> const, Matrix &, unsigned);
 

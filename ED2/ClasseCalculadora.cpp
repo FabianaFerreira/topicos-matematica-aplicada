@@ -1,9 +1,13 @@
+/* ---------------------------------------
+  Fabiana Ferreira Fonseca
+  Universidade Federal do Rio de Janeiro
+  DRE: 115037241
+----------------------------------------*/
+
 #include "ClasseCalculadora.h"
 #include "functions.h"
 
 Calculator::Calculator(){};
-
-Matrix currentResult;
 
 std::vector<unsigned> Calculator::getMatrixDimension(Matrix m)
 {
@@ -19,6 +23,22 @@ std::vector<unsigned> Calculator::getMatrixDimension(Matrix m)
   return result;
 }
 
+bool Calculator::checkIfDimensionsAreEqual(MatrixList list, std::vector<std::string> identifiers)
+{
+  char firstIdentifier = identifiers.at(0).c_str()[0];
+  std::vector<unsigned> firstDimension(getMatrixDimension(list.get(firstIdentifier)));
+
+  for (unsigned i = 1; i < identifiers.size(); i++)
+  {
+    char ident = identifiers.at(i).c_str()[0];
+    Matrix current(list.get(ident));
+    std::vector<unsigned> currentDimension(getMatrixDimension(list.get(i)));
+    if (firstDimension != currentDimension)
+      return false;
+  }
+  return true;
+}
+
 Matrix Calculator::sumOrSubMatrices(Matrix m1, Matrix m2, unsigned isSub)
 {
   Matrix result(m1);
@@ -29,7 +49,7 @@ Matrix Calculator::sumOrSubMatrices(Matrix m1, Matrix m2, unsigned isSub)
       result.at(i).at(j) = m1.at(i).at(j) + (m2.at(i).at(j)) * pow(-1, isSub);
     }
   }
-  currentResult = result;
+
   return result;
 };
 
@@ -41,7 +61,6 @@ Matrix Calculator::scaleMatrix(Matrix matrix, float multiplier)
     for (unsigned j = 0; j < matrix.at(i).size(); j++)
       result.at(i).at(j) = matrix.at(i).at(j) * multiplier;
   }
-  currentResult = result;
   return result;
 };
 
@@ -64,7 +83,6 @@ Matrix Calculator::multiplyMatrices(Matrix m1, Matrix m2, unsigned m1Lines, unsi
       }
     }
   }
-  currentResult = result;
   return result;
 };
 
@@ -84,7 +102,6 @@ Matrix Calculator::transposeMatrix(Matrix matrix, unsigned lines, unsigned colum
       result.at(j).at(i) = matrix.at(i).at(j);
     }
   }
-  currentResult = result;
   return result;
 };
 
@@ -110,7 +127,6 @@ Matrix Calculator::swapLinesOrColumns(Matrix matrix, unsigned isLine, unsigned p
     }
   }
 
-  currentResult = result;
   return result;
 };
 
@@ -128,11 +144,10 @@ Matrix Calculator::sumLinesOrColumns(Matrix matrix, unsigned isLine, unsigned p1
       result.at(i).at(p1 - 1) = matrix.at(i).at(p1 - 1) + matrix.at(i).at(p2 - 1);
   }
 
-  currentResult = result;
   return result;
 };
 
-Matrix Calculator::multiplyLineOrColumn(Matrix matrix, unsigned isLine, unsigned pos, float multiplier)
+Matrix Calculator::scaleLineOrColumn(Matrix matrix, unsigned isLine, unsigned pos, float multiplier)
 {
   Matrix result(matrix);
   if (isLine)
@@ -146,11 +161,12 @@ Matrix Calculator::multiplyLineOrColumn(Matrix matrix, unsigned isLine, unsigned
       result.at(i).at(pos - 1) = matrix.at(i).at(pos - 1) * multiplier;
   }
 
-  currentResult = result;
   return result;
 };
 
-// Receives a reference to a n x 2n block matrix [A | I] and finds the reduced form of this block (transforms A into an upper triangular)
+/* Receives a reference to a n x 2n block matrix [A | I] and finds the reduced 
+   form of this block (transforms A into an upper triangular)
+*/
 void Calculator::gaussElimination(Matrix &m)
 {
   int n = m.size();
@@ -196,13 +212,15 @@ void Calculator::gaussElimination(Matrix &m)
   }
 }
 
-// Uses Gauss Elimination to find the reduced form of the n x 2n block and solves Ax = b for an upper triangular matrix
+/* Uses Gauss Elimination to find the reduced form of the n x 2n block 
+   and solves Ax = b for an upper triangular matrix
+*/
 Matrix Calculator::generalInverter(Matrix matrix)
 {
   int n = matrix.size();
   Matrix result;
 
-  copyMatrix(matrix, result, n);
+  generateBlockMatrix(matrix, result, n);
 
   //Transforms to an upper triangular matrix
   gaussElimination(result);
@@ -214,7 +232,6 @@ Matrix Calculator::generalInverter(Matrix matrix)
     {
       result[i][k] /= result[i][i];
     }
-    // this is not necessary, but the output looks nicer:
     result[i][i] = 1;
 
     for (int rowModify = i - 1; rowModify >= 0; rowModify--)
@@ -223,7 +240,6 @@ Matrix Calculator::generalInverter(Matrix matrix)
       {
         result[rowModify][columModify] -= result[i][columModify] * result[rowModify][i];
       }
-      // this is not necessary, but the output looks nicer:
       result[rowModify][i] = 0;
     }
   }
@@ -249,4 +265,19 @@ std::vector<float> Calculator::solveEquation(Matrix &m)
     }
   }
   return x;
+}
+
+Matrix Calculator::calculateLinearCombination(MatrixList list, std::vector<std::string> identifiers, std::vector<float> multipliers)
+{
+  char firstIdentifier = identifiers.at(0).c_str()[0];
+  unsigned n = list.get(firstIdentifier).size();
+  Matrix result(initializeSquareMatrix(n));
+
+  for (unsigned i = 0; i < identifiers.size(); i++)
+  {
+    char ident = identifiers.at(i).c_str()[0];
+    Matrix current(list.get(ident));
+    result = this->sumOrSubMatrices(result, this->scaleMatrix(current, multipliers.at(i)), 0);
+  }
+  return result;
 }

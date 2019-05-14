@@ -16,7 +16,6 @@
 
 #include "functions.h"
 #include "ClasseCalculadora.h"
-#include "MatrixList.h"
 
 using namespace std;
 
@@ -128,7 +127,6 @@ int main()
       Matrix m2(matrixList.get(index));
 
       vector<unsigned> size1(Calculator::getMatrixDimension(m1));
-
       vector<unsigned> size2(Calculator::getMatrixDimension(m2));
 
       if (size1.at(1) == size2.at(0))
@@ -367,7 +365,7 @@ int main()
           }
         }
 
-        Matrix result(calculator->multiplyLineOrColumn(m, isLine, pos, stof(mult)));
+        Matrix result(calculator->scaleLineOrColumn(m, isLine, pos, stof(mult)));
         cout << "Resultado: " << endl;
         printMatrix(result);
       }
@@ -395,7 +393,8 @@ int main()
       vector<unsigned> resultSize(Calculator::getMatrixDimension(result));
       cout << "Resultado: " << endl;
 
-      // Result has n x 2n dimension. Using function overloading to print only the part of the matrix which is the result
+      // Result has n x 2n dimension.
+      // Using function overloading to print only the part of the matrix which is the result
       printMatrix(result, size.at(0), size.at(1), false);
     }
     break;
@@ -405,7 +404,7 @@ int main()
     {
       string id;
 
-      cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) listada(s) separados por espaco: ";
+      cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) combinada(s) separados por espaco: ";
       getline(cin, id);
       vector<string> identifiers(parseInput(id, ' '));
 
@@ -415,27 +414,26 @@ int main()
 
       if (identifiers.size() != multipliers.size())
       {
-        cout << "Quantidade de coeficientes nao condiz com a quantidade de matrizes informadas" << endl << endl;
+        cout << "Quantidade de coeficientes nao condiz com a quantidade de matrizes informadas" << endl
+             << endl;
         break;
       }
 
-      Matrix result;
-      unsigned n = matrixList.get(identifiers.at(0).c_str()[0]).size();
-      for (unsigned i = 0; i < n; i++)
+      if (Calculator::checkIfDimensionsAreEqual(matrixList, identifiers))
       {
-        result.push_back(std::vector<float>(n, 0));
+        cout << "Ha, pelo menos, uma matriz com dimensoes diferentes das outras."
+             << " Nao foi possivel realizar a operacao." << endl << endl;
+        break;
       }
+      else
+      {
+        Matrix result(calculator->calculateLinearCombination(matrixList, identifiers, multipliers));
 
-      for (unsigned i = 0; i < identifiers.size(); i++)
-      {
-        char ident = identifiers.at(i).c_str()[0];
-        Matrix current(matrixList.get(ident));
-        result = calculator->sumOrSubMatrices(result, calculator->scaleMatrix(current, multipliers.at(i)), 0);
+        cout << endl;
+        cout << "Resultado: " << endl;
+        printMatrix(result);
+        cout << endl;
       }
-      cout << endl;
-      cout << "Resultado: " << endl;
-      printMatrix(result);
-      cout << endl;
     }
     break;
 
@@ -458,7 +456,7 @@ int main()
 
       Matrix result;
       unsigned n = size.at(0);
-      copyMatrix(m, result, n);
+      generateBlockMatrix(m, result, n);
 
       calculator->gaussElimination(result);
 

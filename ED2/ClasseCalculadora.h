@@ -10,6 +10,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "MatrixList.h"
+
 #ifndef types_h
   typedef std::vector<std::vector<float>> Matrix;
 #endif
@@ -20,9 +22,9 @@ class Calculator
 public:
   Calculator();
 
-  Matrix currentResult;
-
   static std::vector<unsigned> getMatrixDimension(Matrix);
+
+  static bool checkIfDimensionsAreEqual(MatrixList, std::vector<std::string>);
 
   Matrix sumOrSubMatrices(Matrix, Matrix, unsigned);
 
@@ -36,7 +38,7 @@ public:
 
   Matrix sumLinesOrColumns(Matrix, unsigned, unsigned, unsigned);
 
-  Matrix multiplyLineOrColumn(Matrix, unsigned, unsigned, float);
+  Matrix scaleLineOrColumn(Matrix, unsigned, unsigned, float);
 
   Matrix twoDimensionInverse(Matrix);
 
@@ -46,5 +48,5 @@ public:
 
   std::vector<float> solveEquation(Matrix &);
 
-  Matrix calculateLinearCombination(Matrix, Matrix, float, float);
+  Matrix calculateLinearCombination(MatrixList, std::vector<std::string>, std::vector<float>);
 };

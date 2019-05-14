@@ -1,12 +1,14 @@
+/* ---------------------------------------
+  Fabiana Ferreira Fonseca
+  Universidade Federal do Rio de Janeiro
+  DRE: 115037241
+----------------------------------------*/
+
 #include "MatrixList.h"
 
 #include "functions.h"
 
-MatrixList::MatrixList()
-{
-    std::cout << "Construtor padrao" << std::endl;
-    ;
-};
+MatrixList::MatrixList(){};
 
 MatrixList::MatrixList(std::string filename)
 {
@@ -15,7 +17,6 @@ MatrixList::MatrixList(std::string filename)
     std::vector<float> matrixLine;
     float element;
 
-    // std::cout << "Construtor com arquivo definido pelo usu[ár" << std::endl;
     std::ifstream f;
 
     f.open(filename);

@@ -75,7 +75,10 @@ Matrix getMatrixFromUser()
   return result;
 }
 
-void copyMatrix(Matrix const m, Matrix &copy, unsigned n)
+/*Function that generates a new matrix, which uses the first part of its 2n colums
+  to copy Matrix m and its second part to store an identity matrix
+*/
+void generateBlockMatrix(Matrix const m, Matrix &copy, unsigned n)
 {
   for (unsigned i = 0; i < n; i++)
   {
@@ -97,7 +100,16 @@ void copyMatrix(Matrix const m, Matrix &copy, unsigned n)
   }
 }
 
-void createEquationMatrix(Matrix const m, std::vector<float> const b,  Matrix &equation, unsigned n)
+Matrix initializeSquareMatrix(unsigned n)
+{
+  Matrix m;
+  for (unsigned i = 0; i < n; i++)
+    m.push_back(std::vector<float>(n, 0));
+
+  return m;
+}
+
+void createEquationMatrix(Matrix const m, std::vector<float> const b, Matrix &equation, unsigned n)
 {
   for (unsigned i = 0; i < n; i++)
   {
@@ -119,6 +131,7 @@ void createEquationMatrix(Matrix const m, std::vector<float> const b,  Matrix &e
   }
 }
 
+/*Function to print matrix on the screen*/
 void printMatrix(Matrix matrix)
 {
   unsigned lines = matrix.size();
@@ -135,6 +148,7 @@ void printMatrix(Matrix matrix)
   }
 }
 
+/*Overloaded function to print matrix on the screen*/
 void printMatrix(Matrix matrix, unsigned lineLimit, unsigned columnLimit, bool isFirstPart)
 {
   for (unsigned i = 0; i < lineLimit; i++)
@@ -150,7 +164,7 @@ void printMatrix(Matrix matrix, unsigned lineLimit, unsigned columnLimit, bool i
   }
 }
 
-/*Funcao para printar o menu*/
+/*Function to print menu on the screen*/
 void printMenu()
 {
   std::cout << "-------- Calculadora Vetorial --------" << std::endl;
