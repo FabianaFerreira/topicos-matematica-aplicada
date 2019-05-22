@@ -53,6 +53,17 @@ int main()
         /*Torre de Hanoi*/
         case 2:
         {
+            unsigned qnt = solveHanoiTower(3, 'A', 'B', 'C');
+
+            cout << "qnt 3: " << qnt << endl;
+
+            qnt = solveHanoiTower(4, 'A', 'B', 'C');
+
+            cout << "qnt 4: " << qnt << endl;
+
+            qnt = solveHanoiTower(5, 'A', 'B', 'C');
+
+            cout << "qnt 5: " << qnt << endl;
         }
 
         break;
@@ -60,6 +71,37 @@ int main()
         /*Preenchimento de contornos*/
         case 3:
         {
+            BinaryMatrix m;
+            std::ifstream f;
+            std::string line;
+            unsigned linesCounter = 0;
+            unsigned columnsCounter, linePos, columnPos;
+
+            cout << "Digite o nome da lista de matrizes a ser lido (.txt): ";
+            cin >> filename;
+
+            cout << "Digite a posicao inicial (x,y) (separados por espaco): ";
+            cin >> linePos >> columnPos;
+
+            f.open(filename);
+            if (!f)
+            {
+                std::cout << "FileNotFoundError: Unable to open file" << std::endl;
+                exit(1); // terminate with error
+            }
+            while (std::getline(f, line))
+            {
+
+                vector<char> v(line.begin(), line.end());
+
+                m.push_back(v);
+
+                linesCounter++;
+            }
+            f.close();
+
+            cout << " ----------------- Depois -----------------" << endl;
+            fillContour(m, linesCounter, m.at(0).size(), linePos, columnPos);
         }
         break;
 

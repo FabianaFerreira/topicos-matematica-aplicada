@@ -123,57 +123,75 @@ void printMatrix(Matrix matrix)
   }
 }
 
-bool fillContour(Matrix matrix, unsigned maxLines, unsigned maxColumns, unsigned line, unsigned column)
+/*Overloaded function to print matrix*/
+void printMatrix(BinaryMatrix matrix)
 {
+  unsigned lines = matrix.size();
+  unsigned columns = matrix[0].size();
+  for (unsigned i = 0; i < lines; i++)
+  {
+    std::cout << "[ ";
+    for (unsigned j = 0; j < columns; j++)
+    {
+      std::cout << matrix.at(i).at(j) << " ";
+    }
+    std::cout << "]";
+    std::cout << std::endl;
+  }
+}
 
-  // if (maxLines > NUMERO_MAXIMO_LINHAS || maxColumns > NUMERO_MAXIMO_COLUNAS)
-  // 	return false;
+bool fillContour(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, unsigned line, unsigned column)
+{
 
   if (line > maxLines || column > maxColumns)
     return false;
 
-  if (matrix[line][column] == 1)
+  if (matrix[line][column] == '0')
     return true;
 
-  matrix[line][column] = 1;
+  matrix[line][column] = '0';
 
-  printMatrix(matrix);
-
-  if ((line + 1) <= maxLines)
+  if ((line + 1) < maxLines)
     fillContour(matrix, maxLines, maxColumns, (line + 1), column);
 
   if ((line - 1) >= 0)
     fillContour(matrix, maxLines, maxColumns, (line - 1), column);
 
-  if ((column + 1) <= maxColumns)
+  if ((column + 1) < maxColumns)
     fillContour(matrix, maxLines, maxColumns, line, (column + 1));
 
   if ((column - 1) >= 0)
     fillContour(matrix, maxLines, maxColumns, line, (column - 1));
 
+  std::cout << std::endl;
+
+  printMatrix(matrix);
+
   return true;
 }
 
-void solveHanoiTower(int n, char from, char to, char aux)
+unsigned solveHanoiTower(int n, char from, char to, char aux)
 {
   if (n == 1)
   {
     std::cout << "Move disk 1 from rod " << from << " to rod " << to << std::endl;
-    return;
+    return 1;
   }
-  solveHanoiTower(n - 1, from, aux, to);
+  unsigned qnt1 = solveHanoiTower(n - 1, from, aux, to);
   std::cout << "Move disk " << n << " from rod " << from << " to rod " << to << std::endl;
-  solveHanoiTower(n - 1, aux, to, from);
+  unsigned qnt2 = solveHanoiTower(n - 1, aux, to, from);
+
+  return qnt1 + qnt2 + 1;
 }
 
 /*Function to print menu on the screen*/
 void printMenu()
 {
-  std::cout << "-------- Calculadora Vetorial --------" << std::endl;
+  std::cout << "-------- Lista 4 --------" << std::endl;
   std::cout << "**-- Operações --**" << std::endl;
-  std::cout << "1. Soma ou subtração matricial" << std::endl;
-  std::cout << "2. Multiplicação por escalar " << std::endl;
-  std::cout << "3. Multiplicação de duas matrizes " << std::endl;
+  std::cout << "1. Armazenar matriz de um arquivo na memória interna do programa" << std::endl;
+  std::cout << "2. Torre de Hanoi " << std::endl;
+  std::cout << "3. Preenchimento de contorno " << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
   std::cout << std::endl;
 }

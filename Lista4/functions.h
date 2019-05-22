@@ -20,18 +20,16 @@ int getUserOption(char);
 
 Matrix getMatrixFromUser();
 
-void generateBlockMatrix(Matrix const, Matrix &, unsigned);
-
 Matrix initializeSquareMatrix(unsigned);
 
 void createEquationMatrix(Matrix const, std::vector<float> const, Matrix &, unsigned);
 
 void printMatrix(Matrix);
 
-void printMatrix(Matrix, unsigned, unsigned, bool);
+void printMatrix(BinaryMatrix);
 
-bool fillContour (Matrix, unsigned, unsigned, unsigned, unsigned);
+bool fillContour (BinaryMatrix &, unsigned, unsigned, unsigned, unsigned);
 
-void solveHanoiTower(int, char, char, char);
+unsigned solveHanoiTower(int, char, char, char);
 
 void printMenu();
