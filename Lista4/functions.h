@@ -8,11 +8,13 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <math.h>
 
+#include "Pino.h"
 #include "types.h"
 
-std::vector<float> getNumbersFromInput(std::string, char);
+std::vector<unsigned> getNumbersFromString(std::string);
 
 std::vector<std::string> parseInput(std::string, char);
 
@@ -24,12 +26,16 @@ Matrix initializeSquareMatrix(unsigned);
 
 void createEquationMatrix(Matrix const, std::vector<float> const, Matrix &, unsigned);
 
+unsigned getFileLinesQuantity (std::string);
+
 void printMatrix(Matrix);
 
 void printMatrix(BinaryMatrix);
 
-bool fillContour (BinaryMatrix &, unsigned, unsigned, unsigned, unsigned);
+bool fillContour(BinaryMatrix &, unsigned, unsigned, unsigned, unsigned);
 
-unsigned solveHanoiTower(int, char, char, char);
+unsigned solveHanoiTower(int, Pino &, Pino &, Pino &);
+
+void MoveDisc(Pino &, Pino &);
 
 void printMenu();

@@ -15,12 +15,10 @@
 class MatrixList
 {
 private:
-    std::map<char, Matrix> m_matrixList;
+    std::map<unsigned, Matrix> m_matrixList;
 
 public:
     MatrixList(std::string);
-
-    void readFile(std::string, bool);
 
     void list();
 

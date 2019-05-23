@@ -7,10 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
 #include <string>
 #include <vector>
-
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -19,7 +17,6 @@
 
 using namespace std;
 
-/*--------------------------------------------- MAIN -------------------------------------------------------*/
 int main()
 {
     char index;
@@ -28,11 +25,9 @@ int main()
 
     printMenu();
 
-    //Ignoring \n that is in buffer
-    cin.ignore();
-
     while (input.compare("exit") != 0)
     {
+
         cout << "Digite uma opcao: ";
         getline(cin, input);
 
@@ -53,17 +48,24 @@ int main()
         /*Torre de Hanoi*/
         case 2:
         {
-            unsigned qnt = solveHanoiTower(3, 'A', 'B', 'C');
+            unsigned n, steps;
 
-            cout << "qnt 3: " << qnt << endl;
+            cout << "Digite a quantidade de discos: ";
+            cin >> n;
+            cin.ignore();
 
-            qnt = solveHanoiTower(4, 'A', 'B', 'C');
+            /*Instances of 'Pino'*/
+            Pino pino1(n), pino2(0), pino3(0);
 
-            cout << "qnt 4: " << qnt << endl;
+            steps = solveHanoiTower(n, pino1, pino2, pino3);
 
-            qnt = solveHanoiTower(5, 'A', 'B', 'C');
+            cout << "Numero de movimentos utilizados: " << steps << endl;
 
-            cout << "qnt 5: " << qnt << endl;
+            pino1.print();
+
+            pino2.print();
+
+            pino3.print();
         }
 
         break;
@@ -91,11 +93,8 @@ int main()
             }
             while (std::getline(f, line))
             {
-
                 vector<char> v(line.begin(), line.end());
-
                 m.push_back(v);
-
                 linesCounter++;
             }
             f.close();

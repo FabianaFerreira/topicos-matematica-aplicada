@@ -10,112 +10,87 @@
 
 MatrixList::MatrixList(std::string filename)
 {
-    char index;
-    unsigned lines, columns;
+    unsigned lines, columns, lineCounter, linesInFile;
     std::vector<float> matrixLine;
     std::string element;
-
     std::ifstream f;
+    std::string line;
 
     f.open(filename);
+    linesInFile = getFileLinesQuantity(filename);
+
+    lineCounter = 0;
+
     if (!f)
     {
         std::cout << "FileNotFoundError: Unable to open file" << std::endl;
         exit(1); // terminate with error
     }
 
-    std::string line;
     while (std::getline(f, line))
     {
-        std::smatch match;
-        std::regex pattern("^(.)\\s(\\d{1})\\s(\\d{1})$");
-        if (!regex_search(line, match, pattern) && match.size() <= 0)
+
+        if (lineCounter == 0)
         {
-            std::cout << "IndexError: First line of matrix file does not match" << std::endl;
-            exit(1); // terminate with error
-        }
-
-        // If line is correct, uses a string stream to get
-        // values from line (index, lines and columns)
-        std::stringstream str(line);
-
-        str >> index >> lines >> columns;
-
-        for (int i = 0; i < lines; i++)
-        {
-            matrixLine.clear();
-            for (int j = 0; j < columns; j++)
+            std::smatch match;
+            std::regex pattern("^(\\d+)\\s(\\d+)$");
+            if (!regex_search(line, match, pattern) && match.size() <= 0)
             {
-                float number;
-                f >> element;
+                std::cout << "IndexError: First line of matrix file does not match" << std::endl;
+                exit(1); // terminate with error
+            }
 
-                std::istringstream iss(element);
-                iss >> number;
+            std::vector<unsigned> dimensions(getNumbersFromString(line));
 
-                if (iss.eof() && !iss.fail())
+            lines = dimensions.at(0);
+            columns = dimensions.at(1);
+
+            /*Removing first line*/
+            if (lines != linesInFile - 1)
+            {
+                std::cout << "IndexError: Number of lines does not match" << std::endl;
+                exit(1); // terminate with error
+            }
+        }
+        else
+        {
+            for (int i = 0; i < lines; i++)
+            {
+                matrixLine.clear();
+                if (line.length() != 2 * columns - 1)
                 {
-                    matrixLine.push_back(number);
-                }
-                else
-                {
-                    std::cout << "ValueError: "
-                              << "Element in position (" << i + 1 << ", "
-                              << j + 1 << ") has invalid type." << std::endl;
+                    std::cout << "IndexError: Number of columns does not match" << std::endl;
                     exit(1); // terminate with error
                 }
+                for (int j = 0; j < columns; j++)
+                {
+                    float number;
+                    f >> element;
+
+                    std::istringstream iss(element);
+                    iss >> number;
+
+                    if (iss.eof() && !iss.fail())
+                    {
+                        matrixLine.push_back(number);
+                    }
+                    else
+                    {
+                        std::cout << "ValueError: "
+                                  << "Element in position (" << i + 1 << ", "
+                                  << j + 1 << ") has invalid type." << std::endl;
+                        exit(1); // terminate with error
+                    }
+                }
+                m_matrixList[lineCounter].push_back(matrixLine);
             }
-            m_matrixList[index].push_back(matrixLine);
         }
+
+        lineCounter++;
     }
 
     f.close();
 };
-
-// Read matrix list from file. If `append` is true, then append the new
-// matrix list content to the current one, overwriting existing indexes.
-// If `append` is false, set the matrix list content to the file data.
-void MatrixList::readFile(std::string filename, bool append = false)
-{
-    char index;
-    unsigned lines, columns;
-    std::vector<float> matrixLine;
-    std::map<char, Matrix> tempMatrixList;
-    float element;
-    bool wasEmpty = (m_matrixList.size() == 0);
-
-    std::cout << "Construtor arquivo" << std::endl;
-    std::ifstream f;
-
-    f.open(filename);
-    if (!f)
-    {
-        std::cout << "Unable to open file";
-        exit(1); // terminate with error
-    };
-
-    while (!f.eof())
-    {
-        f >> index >> lines >> columns;
-        for (int i = 0; i < lines; i++)
-        {
-            matrixLine.clear();
-            for (int j = 0; j < columns; j++)
-            {
-                f >> element;
-                matrixLine.push_back(element);
-            }
-            if (append || wasEmpty)
-                m_matrixList[index].push_back(matrixLine);
-            else
-                tempMatrixList[index].push_back(matrixLine);
-        }
-    }
-
-    f.close();
-
-    if (!append)
-        m_matrixList = tempMatrixList;
-}
 
 void MatrixList::list()
 {

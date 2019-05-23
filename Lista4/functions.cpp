@@ -7,17 +7,30 @@
 #include "functions.h"
 
 /*Funcao que faz o parser de string atraves de um delimiter*/
-std::vector<float> getNumbersFromInput(std::string str, char delimiter)
+std::vector<unsigned> getNumbersFromString(std::string str)
 {
-  std::vector<float> tokenVector;
-  std::stringstream ss(str);
-  std::string token;
-  while (getline(ss, token, delimiter))
-  {
-    tokenVector.push_back(stof(token));
-  }
+  std::vector<unsigned> result;
+  std::stringstream ss;
 
-  return tokenVector;
+  /* Storing the whole string into string stream */
+  ss << str;
+
+  /* Running loop till the end of the stream */
+  std::string temp;
+  unsigned number;
+  while (!ss.eof())
+  {
+
+    /* extracting word by word from stream */
+    ss >> temp;
+
+    /* Checking the given word is integer or not */
+    if (std::stringstream(temp) >> number)
+    {
+      result.push_back(number);
+    }
+  }
+  return result;
 }
 
 /*Funcao que faz o parser de string atraves de um delimiter*/
@@ -41,38 +54,6 @@ int getUserOption(char option)
   if (option == 'n')
     return 0;
   return -1;
-}
-
-Matrix getMatrixFromUser()
-{
-  Matrix result;
-  std::string values;
-  unsigned lines, columns;
-
-  std::cout << "Digite a quantidade de linhas da matriz: ";
-  std::cin >> lines;
-  std::cin.ignore();
-  std::cout << lines << " linhas" << std::endl;
-
-  std::cout << "Digite a quantidade de colunas da matriz: ";
-  std::cin >> columns;
-  std::cin.ignore();
-  std::cout << columns << " colunas" << std::endl;
-
-  for (int i = 0; i < lines; i++)
-  {
-    std::cout << "Digite os elementos da linha " << (i + 1) << " separados por espaço: ";
-    getline(std::cin, values);
-    std::vector<float> line = getNumbersFromInput(values, ' ');
-    if (line.size() != columns)
-    {
-      std::cout << "ERRO: Quantidade de elementos diferente do numero de colunas" << std::endl;
-      exit(1);
-    }
-    result.push_back(line);
-  }
-
-  return result;
 }
 
 Matrix initializeSquareMatrix(unsigned n)
@@ -104,6 +85,24 @@ void createEquationMatrix(Matrix const m, std::vector<float> const b, Matrix &eq
   {
     equation[i][n + i] = b.at(i);
   }
+}
+
+unsigned getFileLinesQuantity(std::string filename)
+{
+  std::ifstream f;
+  std::string line;
+  unsigned linesCounter = 0;
+
+  f.open(filename);
+
+  while (std::getline(f, line))
+  {
+    linesCounter++;
+  }
+
+  f.close();
+
+  return linesCounter;
 }
 
 /*Function to print matrix on the screen*/
@@ -142,7 +141,6 @@ void printMatrix(BinaryMatrix matrix)
 
 bool fillContour(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, unsigned line, unsigned column)
 {
-
   if (line > maxLines || column > maxColumns)
     return false;
 
@@ -170,16 +168,22 @@ bool fillContour(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, u
   return true;
 }
 
-unsigned solveHanoiTower(int n, char from, char to, char aux)
+void MoveDisc(Pino &from, Pino &to)
+{
+  to.push(from.pop());
+}
+
+/*Function to sole Hanoi tower*/
+unsigned solveHanoiTower(int n, Pino &p1, Pino &p2, Pino &p3)
 {
   if (n == 1)
   {
-    std::cout << "Move disk 1 from rod " << from << " to rod " << to << std::endl;
+    MoveDisc(p1, p3);
     return 1;
   }
-  unsigned qnt1 = solveHanoiTower(n - 1, from, aux, to);
-  std::cout << "Move disk " << n << " from rod " << from << " to rod " << to << std::endl;
-  unsigned qnt2 = solveHanoiTower(n - 1, aux, to, from);
+  unsigned qnt1 = solveHanoiTower(n - 1, p1, p3, p2);
+  MoveDisc(p1, p3);
+  unsigned qnt2 = solveHanoiTower(n - 1, p2, p1, p3);
 
   return qnt1 + qnt2 + 1;
 }
