@@ -3,7 +3,6 @@
   Universidade Federal do Rio de Janeiro
   DRE: 115037241
 ----------------------------------------*/
-
 #include "functions.h"
 
 /*Funcao que faz o parser de string atraves de um delimiter*/
@@ -140,7 +139,7 @@ void printMatrix(BinaryMatrix matrix)
 }
 
 bool fillContour(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, unsigned line, unsigned column)
-{
+{ 
   if (line > maxLines || column > maxColumns)
     return false;
 
@@ -166,6 +165,103 @@ bool fillContour(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, u
   printMatrix(matrix);
 
   return true;
+}
+
+void fillContour2(BinaryMatrix &matrix, unsigned maxLines, unsigned maxColumns, unsigned line, unsigned column)
+{ 
+  int currentLine = line;
+  int currentColumn = column;
+  int nextLine, nextColumn;
+
+  bool stop = false; // stop from moving diagonally
+  bool switched = false; // switched from going down diagonally
+
+  bool zeroAbove, zeroBelow, zeroLeft, zeroRight;
+  // Get the biggest amount of offset from the line x column selected that is enough
+  // to go through all the elements.
+  unsigned maxOffsetLine;
+  unsigned maxOffsetColumn;
+  unsigned maxOffset;
+
+  // Pile of (line, column) to fill with 0
+  std::vector<std::pair<int, int>> pile;
+
+  // Nothing to paint
+  if (matrix[line][column] == '0')
+    return;
+
+  while (!stop)
+  {
+    maxOffsetLine = std::max((unsigned) currentLine, maxLines - line - 1);
+    maxOffsetColumn = std::max((unsigned) currentColumn, maxColumns - column - 1);
+    maxOffset = std::max(maxOffsetLine, maxOffsetColumn);
+
+    // Reset the flags
+    zeroAbove = false;
+    zeroBelow = false;
+    zeroLeft = false;
+    zeroRight = false;
+
+    if (matrix[currentLine][currentColumn] == '1')
+      pile.push_back(std::make_pair(currentLine, currentColumn));
+
+    // Painting in a cross shape
+    for (unsigned offset=1; offset <= maxOffset; offset++)
+    {
+      // Element above
+      nextLine = (int) (currentLine - offset);
+      if ((nextLine >= 0) && (matrix[nextLine][currentColumn] == '1') && !zeroAbove)
+        pile.push_back(std::make_pair(nextLine, currentColumn));
+      else if ((nextLine >= 0) && (matrix[nextLine][currentColumn] == '0'))
+        zeroAbove = !zeroAbove;
+      
+      // Element below
+      nextLine = currentLine + offset;
+      if ((nextLine < maxLines) && (matrix[nextLine][currentColumn] == '1') && !zeroBelow)
+        pile.push_back(std::make_pair(nextLine, currentColumn));
+      else if ((nextLine < maxLines) && (matrix[nextLine][currentColumn] == '0'))
+        zeroBelow = !zeroBelow;
+
+      // Element to the left
+      nextColumn = (int) (currentColumn - offset);
+      if ((nextColumn >= 0) && (matrix[currentLine][nextColumn] == '1') && !zeroLeft)
+        pile.push_back(std::make_pair(currentLine, nextColumn));
+      else if ((nextColumn >= 0) && (matrix[currentLine][nextColumn] == '0'))
+        zeroLeft = !zeroLeft;
+
+      // Element to the right
+      nextColumn = currentColumn + offset;
+      if ((nextColumn < maxColumns) && (matrix[currentLine][nextColumn] == '1') && !zeroRight)
+        pile.push_back(std::make_pair(currentLine, nextColumn));
+      else if ((nextColumn < maxColumns) && (matrix[currentLine][nextColumn] == '0'))
+        zeroRight = !zeroRight;
+    }
+
+    // Go down-right diagonally
+    if (!switched)
+    {
+      currentLine ++; currentColumn++;
+    }
+    // Go up-left diagonally
+    else
+    {
+      currentLine --; currentColumn--;
+    }
+
+    if (!switched && (matrix[currentLine][currentColumn] == '0' || currentLine >= maxLines || currentColumn >= maxColumns))
+    {
+      switched = true;
+      currentLine = line - 1;
+      currentColumn = column - 1;
+    }
+    else if (matrix[currentLine][currentColumn] == '0' || currentLine < 0 || currentColumn < 0)
+      stop = true;
+  }
+
+  for (unsigned i=0; i < pile.size(); i++)
+    matrix[pile.at(i).first][pile.at(i).second] = '0';
+
+  printMatrix(matrix);
 }
 
 void MoveDisc(Pino &from, Pino &to)
@@ -195,7 +291,8 @@ void printMenu()
   std::cout << "**-- Operações --**" << std::endl;
   std::cout << "1. Armazenar matriz de um arquivo na memória interna do programa" << std::endl;
   std::cout << "2. Torre de Hanoi " << std::endl;
-  std::cout << "3. Preenchimento de contorno " << std::endl;
+  std::cout << "3. Preenchimento de contorno recursivo" << std::endl;
+  std::cout << "4. Preenchimento de contorno iterativo" << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
   std::cout << std::endl;
 }

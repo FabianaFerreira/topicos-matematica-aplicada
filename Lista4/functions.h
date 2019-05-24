@@ -9,7 +9,9 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include <math.h>
+#include <algorithm> 
 
 #include "Pino.h"
 #include "types.h"
@@ -33,6 +35,8 @@ void printMatrix(Matrix);
 void printMatrix(BinaryMatrix);
 
 bool fillContour(BinaryMatrix &, unsigned, unsigned, unsigned, unsigned);
+
+void fillContour2(BinaryMatrix &, unsigned, unsigned, unsigned, unsigned);
 
 unsigned solveHanoiTower(int, Pino &, Pino &, Pino &);
 

@@ -72,6 +72,7 @@ int main()
 
         /*Preenchimento de contornos*/
         case 3:
+        case 4:
         {
             BinaryMatrix m;
             std::ifstream f;
@@ -81,9 +82,11 @@ int main()
 
             cout << "Digite o nome da lista de matrizes a ser lido (.txt): ";
             cin >> filename;
+            cin.ignore();
 
             cout << "Digite a posicao inicial (x,y) (separados por espaco): ";
             cin >> linePos >> columnPos;
+            cin.ignore();
 
             f.open(filename);
             if (!f)
@@ -100,7 +103,10 @@ int main()
             f.close();
 
             cout << " ----------------- Depois -----------------" << endl;
-            fillContour(m, linesCounter, m.at(0).size(), linePos, columnPos);
+            if (atoi(input.c_str()) == 3)
+                fillContour(m, linesCounter, m.at(0).size(), linePos, columnPos);
+            else
+                fillContour2(m, linesCounter, m.at(0).size(), linePos, columnPos);
         }
         break;
 
