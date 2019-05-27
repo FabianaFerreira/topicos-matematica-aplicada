@@ -17,31 +17,31 @@ Lista::Lista(){};
 //     std::vector<float> matrixLine;
 //     float element;
 
-    // std::ifstream f;
+// std::ifstream f;
 
-    // f.open(filename);
-    // if (!f)
-    // {
-    //     std::cout << "Unable to open file" << std::endl;
-    //     exit(1); // terminate with error
-    // };
+// f.open(filename);
+// if (!f)
+// {
+//     std::cout << "Unable to open file" << std::endl;
+//     exit(1); // terminate with error
+// };
 
-    // while (!f.eof())
-    // {
-    //     f >> index >> lines >> columns;
-    //     for (int i = 0; i < lines; i++)
-    //     {
-    //         matrixLine.clear();
-    //         for (int j = 0; j < columns; j++)
-    //         {
-    //             f >> element;
-    //             matrixLine.push_back(element);
-    //         }
-    //         lista[index].push_back(matrixLine);
-    //     }
-    // }
+// while (!f.eof())
+// {
+//     f >> index >> lines >> columns;
+//     for (int i = 0; i < lines; i++)
+//     {
+//         matrixLine.clear();
+//         for (int j = 0; j < columns; j++)
+//         {
+//             f >> element;
+//             matrixLine.push_back(element);
+//         }
+//         lista[index].push_back(matrixLine);
+//     }
+// }
 
-    // f.close();
+// f.close();
 // };
 
 // Read matrix list from file. If `append` is true, then append the new
@@ -106,22 +106,12 @@ void Lista::save(std::string filename)
     {
         Aluno aluno = x.second;
 
-        // f << x.first << " " << lines << " " << columns << std::endl;
-        // for (unsigned i = 0; i < lines; i++)
-        // {
-        //     for (unsigned j = 0; j < columns; j++)
-        //     {
-        //         f << aluno.at(i).at(j);
-        //         if (j != (columns - 1))
-        //             f << " ";
-        //     }
-        //     if ((i != (lines - 1)) || (counter != (lista.size() - 1)))
-        //         f << std::endl;
-        // }
-        // if (counter != (lista.size() - 1))
-        //     f << std::endl;
+        f << x.first << " " << aluno.getName() << " " << aluno.getCourse() << " " << aluno.getSemester();
 
-        // counter++;
+        if (counter != (lista.size() - 1))
+            f << std::endl;
+
+        counter++;
     }
 
     f.close();
@@ -148,12 +138,28 @@ void Lista::list()
     }
 }
 
-Aluno Lista::get(std::string index, bool isSearchByName)
+std::vector<Aluno> Lista::get(std::string searchKey, bool isSearchByName)
 {
-    return lista[index];
+    std::vector<Aluno> results;
+    if (isSearchByName)
+    {
+        for (auto const &x : lista)
+        {
+            Aluno aluno = x.second;
+
+            if (aluno.getName().find(searchKey) != std::string::npos)
+            {
+                results.push_back(aluno);
+            }
+        }
+    }
+    else
+    {
+        results.push_back(lista[searchKey]);
+    }
+    return results;
 }
 
-// Add or modify a matrix of the list given an index
 void Lista::insert(std::string index, Aluno aluno)
 {
     lista[index] = aluno;

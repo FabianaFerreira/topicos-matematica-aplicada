@@ -27,7 +27,7 @@ class Lista
 
     void list();
 
-    Aluno get(std::string, bool);
+    std::vector<Aluno> get(std::string, bool);
 
     void insert(std::string, Aluno);
 
