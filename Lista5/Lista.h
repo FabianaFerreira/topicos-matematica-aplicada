@@ -14,22 +14,24 @@
 class Lista
 {
   private:
-    std::map<std::string, Aluno> lista;
+    std::map<std::string, Aluno*> lista;
 
   public:
     Lista();
 
+    ~Lista();
+
     // Lista(std::string);
 
-    // void readFile(std::string, bool);
+    void readFile(std::string);
 
     void save(std::string);
 
     void list();
 
-    std::vector<Aluno> get(std::string, bool);
+    std::vector<Aluno*> get(std::string, bool);
 
-    void insert(std::string, Aluno);
+    void insert(std::string, Aluno*);
 
     void remove(std::string);
 

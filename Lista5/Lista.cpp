@@ -10,6 +10,16 @@
 
 Lista::Lista(){};
 
+Lista::~Lista()
+{
+    // Destroying all pointers to Aluno
+    for (auto const &x : lista)
+    {
+        delete x.second;
+    }
+    clear();
+};
+
 // Lista::Lista(std::string filename)
 // {
 //     std::string index;
@@ -44,51 +54,35 @@ Lista::Lista(){};
 // f.close();
 // };
 
-// Read matrix list from file. If `append` is true, then append the new
-// matrix list content to the current one, overwriting existing indexes.
-// If `append` is false, set the matrix list content to the file data.
-// void Lista::readFile(std::string filename, bool append = false)
-// {
-//     std::string index;
-//     unsigned lines, columns;
-//     std::vector<float> matrixLine;
-//     std::map<std::string, Aluno> tempList;
-//     float element;
-//     bool wasEmpty = (lista.size() == 0);
+void Lista::readFile(std::string filename)
+{
+    std::string id, name, surname, course;
+    unsigned semester;
+    float frequency, p1, p2, pf, p2ch;
 
-//     std::cout << "Construtor arquivo" << std::endl;
-//     std::ifstream f;
+    std::map<std::string, Aluno *> list;
+    float element;
+    bool wasEmpty = (lista.size() == 0);
 
-//     f.open(filename);
-//     if (!f)
-//     {
-//         std::cout << "Unable to open file";
-//         exit(1); // terminate with error
-//     };
+    std::ifstream f;
 
-//     while (!f.eof())
-//     {
-//         f >> index >> lines >> columns;
-//         for (int i = 0; i < lines; i++)
-//         {
-//             matrixLine.clear();
-//             for (int j = 0; j < columns; j++)
-//             {
-//                 f >> element;
-//                 matrixLine.push_back(element);
-//             }
-//             if (append || wasEmpty)
-//                 lista[index].push_back(matrixLine);
-//             else
-//                 tempList[index].push_back(matrixLine);
-//         }
-//     }
+    f.open(filename);
 
-//     f.close();
+    if (!f)
+    {
+        std::cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
 
-//     if (!append)
-//         lista = tempList;
-// }
+    while (!f.eof())
+    {
+        f >> name >> surname >> id >> course >> semester >> frequency >> p1 >> p2 >> pf >> p2ch;
+        Aluno *current = new Aluno(id, name + " " + surname, course, frequency);
+        lista[id] = current;
+    }
+
+    f.close();
+}
 
 void Lista::save(std::string filename)
 {
@@ -104,9 +98,9 @@ void Lista::save(std::string filename)
     unsigned counter = 0;
     for (auto const &x : lista)
     {
-        Aluno aluno = x.second;
+        Aluno *aluno = x.second;
 
-        f << x.first << " " << aluno.getName() << " " << aluno.getCourse() << " " << aluno.getSemester();
+        f << x.first << " " << aluno->getName() << " " << aluno->getCourse() << " " << aluno->getSemester();
 
         if (counter != (lista.size() - 1))
             f << std::endl;
@@ -127,27 +121,27 @@ void Lista::list()
 
     for (auto const &x : lista)
     {
-        Aluno aluno = x.second;
+        Aluno *aluno = x.second;
 
         std::cout << "Aluno " << x.first << std::endl;
-        std::cout << "Nome: " << aluno.getName() << std::endl;
-        std::cout << "DRE: " << aluno.getDre() << std::endl;
-        std::cout << "Curso: " << aluno.getCourse() << std::endl;
-        std::cout << "Periodo: " << aluno.getSemester() << std::endl;
+        std::cout << "Nome: " << aluno->getName() << std::endl;
+        std::cout << "DRE: " << aluno->getDre() << std::endl;
+        std::cout << "Curso: " << aluno->getCourse() << std::endl;
+        std::cout << "Periodo: " << aluno->getSemester() << std::endl;
         std::cout << std::endl;
     }
 }
 
-std::vector<Aluno> Lista::get(std::string searchKey, bool isSearchByName)
+std::vector<Aluno *> Lista::get(std::string const searchKey, bool isSearchByName)
 {
-    std::vector<Aluno> results;
+    std::vector<Aluno *> results;
     if (isSearchByName)
     {
         for (auto const &x : lista)
         {
-            Aluno aluno = x.second;
+            Aluno *aluno = x.second;
 
-            if (aluno.getName().find(searchKey) != std::string::npos)
+            if (aluno->getName().find(searchKey) != std::string::npos)
             {
                 results.push_back(aluno);
             }
@@ -160,7 +154,7 @@ std::vector<Aluno> Lista::get(std::string searchKey, bool isSearchByName)
     return results;
 }
 
-void Lista::insert(std::string index, Aluno aluno)
+void Lista::insert(std::string index, Aluno *aluno)
 {
     lista[index] = aluno;
 }

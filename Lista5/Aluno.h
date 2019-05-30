@@ -5,12 +5,12 @@ class Aluno
 {
 public:
     Aluno();
-
-    Aluno(std::string, std::string, std::string, unsigned);
+    Aluno(std::string, std::string = "Sem nome", std::string = "Sem curso", unsigned = 0);
+    ~Aluno();
 
     std::string getName();
     std::string getDre();
-    std::vector<float> getGrades();
+    std::vector<float> *getGrades();
     float getFrequency();
     std::string getCourse();
     unsigned getSemester();
@@ -20,8 +20,7 @@ public:
     bool setCourse(std::string);
     bool setSemester(unsigned);
 
-    float calculateFinalGrade();
-    
+    void printData() const;
     static float calculateAverage(float, float);
 
 private:
@@ -29,8 +28,6 @@ private:
     std::string course;
     std::string dre;
     unsigned semester;
-    std::vector<float> grades;
-    std::vector<float> gradesAverage;
-    float finalGrade;
     float frequency;
+    std::vector<float> *grades;
 };

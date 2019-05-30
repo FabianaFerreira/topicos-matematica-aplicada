@@ -3,13 +3,18 @@
 
 #define QUANTITY_OF_GRADES 4
 
-Aluno::Aluno() {}
+Aluno::Aluno(std::string _dre, std::string _name, std::string _course, unsigned _semester) : dre(_dre)
+{
+    grades = new std::vector<float>(QUANTITY_OF_GRADES, 0);
+    name = _name;
+    course = _course;
+    semester = _semester;
+}
 
-Aluno::Aluno(std::string _name, std::string _dre, std::string _course, unsigned _semester) : grades(QUANTITY_OF_GRADES, -1),
-                                                                                             name(_name),
-                                                                                             dre(_dre),
-                                                                                             course(_course),
-                                                                                             semester(_semester) {}
+Aluno::~Aluno()
+{
+    delete grades;
+}
 
 std::string Aluno::getName()
 {
@@ -21,7 +26,7 @@ std::string Aluno::getDre()
     return dre;
 }
 
-std::vector<float> Aluno::getGrades()
+std::vector<float> *Aluno::getGrades()
 {
     return grades;
 }
@@ -45,7 +50,7 @@ bool Aluno::setGrade(unsigned position, float grade)
 {
     if (grade > 0 && grade <= 10)
     {
-        grades.at(position) = grade;
+        grades->at(position) = grade;
     }
 }
 
@@ -86,4 +91,13 @@ float calculateAverage(float g1, float g2)
         return (g1 + g2) / 2;
     }
     return -1;
+}
+
+void Aluno::printData() const
+{
+    std::cout << '|' << std::setw(10) << name << '|'
+              << std::setw(10) << dre << '|'
+              << std::setw(10) << course << '|'
+              << std::setw(8) << semester << '|'
+              << std::endl;
 }
