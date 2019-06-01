@@ -20,6 +20,105 @@ Lista::~Lista()
     clear();
 };
 
+bool Lista::sortByName(Aluno *a, Aluno *b)
+{
+    return a->getName() < b->getName();
+}
+
+bool Lista::sortByAverage(Aluno *a, Aluno *b)
+{
+    std::vector<float> gradesA(a->getGrades());
+    std::vector<float> gradesB(b->getGrades());
+    float partialAverageA, partialAverageB, finalAverageA, finalAverageB;
+
+    if (gradesA.at(0) < 0 || gradesA.at(1) < 0)
+    {
+        partialAverageA = -1;
+        finalAverageA = -1;
+    }
+    else
+    {
+        partialAverageA = (gradesA.at(0) + gradesA.at(1)) / 2;
+
+        if (gradesA.at(2) > 0)
+        {
+            finalAverageA = (partialAverageA + gradesA.at(2)) / 2;
+        }
+        else
+        {
+            finalAverageA = partialAverageA;
+        }
+    }
+
+    if (gradesB.at(0) < 0 || gradesB.at(1) < 0)
+    {
+        partialAverageB = -1;
+        finalAverageB = -1;
+    }
+    else
+    {
+
+        partialAverageB = (gradesB.at(0) + gradesB.at(1)) / 2;
+        if (gradesB.at(2) > 0)
+        {
+            finalAverageB = (partialAverageB + gradesB.at(2)) / 2;
+        }
+        else
+        {
+            finalAverageB = partialAverageB;
+        }
+    }
+
+    return (partialAverageA > partialAverageB || finalAverageA > finalAverageB);
+}
+
+bool Lista::sortByGradesAndAverage(Aluno *a, Aluno *b)
+{
+    std::vector<float> gradesA(a->getGrades());
+    std::vector<float> gradesB(b->getGrades());
+    float partialAverageA, partialAverageB, finalAverageA, finalAverageB;
+
+    if (gradesA.at(0) < 0 || gradesA.at(1) < 0)
+    {
+        partialAverageA = -1;
+        finalAverageA = -1;
+    }
+    else
+    {
+        partialAverageA = (gradesA.at(0) + gradesA.at(1)) / 2;
+
+        if (gradesA.at(2) > 0)
+        {
+            finalAverageA = (partialAverageA + gradesA.at(2)) / 2;
+        }
+        else
+        {
+            finalAverageA = partialAverageA;
+        }
+    }
+
+    if (gradesB.at(0) < 0 || gradesB.at(1) < 0)
+    {
+        partialAverageB = -1;
+        finalAverageB = -1;
+    }
+    else
+    {
+
+        partialAverageB = (gradesB.at(0) + gradesB.at(1)) / 2;
+        if (gradesB.at(2) > 0)
+        {
+            finalAverageB = (partialAverageB + gradesB.at(2)) / 2;
+        }
+        else
+        {
+            finalAverageB = partialAverageB;
+        }
+    }
+
+    return (gradesA.at(0) > gradesB.at(0) || gradesA.at(1) > gradesB.at(1) || partialAverageA > partialAverageB || finalAverageA > finalAverageB);
+}
+
 void Lista::readFile(std::string filename)
 {
     std::string id, name, surname, course;

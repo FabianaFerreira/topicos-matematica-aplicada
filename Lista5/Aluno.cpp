@@ -1,3 +1,9 @@
+/* ---------------------------------------
+  Fabiana Ferreira Fonseca
+  Universidade Federal do Rio de Janeiro
+  DRE: 115037241
+----------------------------------------*/
+
 #include "Aluno.h"
 #include "functions.h"
 
@@ -102,9 +108,15 @@ float calculateAverage(float g1, float g2)
 
 void Aluno::printData() const
 {
-    std::cout << '|' << std::setw(10) << name << '|'
-              << std::setw(10) << dre << '|'
-              << std::setw(10) << course << '|'
-              << std::setw(8) << semester << '|'
-              << std::endl;
+    std::cout << " | "
+              << std::setw(16) << name << " | "
+              << std::setw(10) << dre << " | "
+              << std::setw(15) << course << " | "
+              << std::setw(3) << semester << " | "
+              << std::setw(5) << frequency << " | "
+              << std::setw(5) << grades.at(0) << " | "
+              << std::setw(5) << grades.at(1) << " | "
+              << std::setw(5) << grades.at(2) << " | "
+              << std::setw(5) << grades.at(3) << " | "
+    << std::endl;
 }

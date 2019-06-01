@@ -13,9 +13,6 @@
 
 class Lista
 {
-  private:
-    std::map<std::string, Aluno*> lista;
-
   public:
     Lista();
 
@@ -27,13 +24,24 @@ class Lista
 
     void list();
 
-    std::vector<Aluno*> get(std::string, bool);
+    std::vector<Aluno *> get(std::string, bool);
 
     std::vector<Aluno *> getAllStudents();
 
-    void insert(std::string, Aluno*);
+    void insert(std::string, Aluno *);
 
     void remove(std::string);
 
     void clear();
+
+    static bool sortByName(Aluno *, Aluno *);
+
+    static bool sortByAverage(Aluno *, Aluno *);
+
+    static bool sortByGradesAndAverage(Aluno *, Aluno *);
+
+  private:
+    std::map<std::string, Aluno *> lista;
+
+
 };
