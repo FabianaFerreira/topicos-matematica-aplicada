@@ -1,0 +1,5 @@
+Fabiana Ferreira 110037241 Farmacia 4 0.8 9 9 9 -1
+Tamine Verli 112037241 Eletronica 10 0.75 8 8 8 -1
+Lucas Cerqueira 113037241 Eletronica 10 1 10 10 10 -1
+Luiza Ferreira 114037241 Biologia 1 1 8 8 8 -1
+Isolda Ferreira 119037281 Letras 1 0 -1 -1 -1 -1
