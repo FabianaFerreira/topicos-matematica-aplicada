@@ -21,8 +21,6 @@ class Lista
 
     ~Lista();
 
-    // Lista(std::string);
-
     void readFile(std::string);
 
     void save(std::string);
@@ -30,6 +28,8 @@ class Lista
     void list();
 
     std::vector<Aluno*> get(std::string, bool);
+
+    std::vector<Aluno *> getAllStudents();
 
     void insert(std::string, Aluno*);
 

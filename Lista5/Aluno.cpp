@@ -3,18 +3,25 @@
 
 #define QUANTITY_OF_GRADES 4
 
-Aluno::Aluno(std::string _dre, std::string _name, std::string _course, unsigned _semester) : dre(_dre)
+Aluno::Aluno(std::string _dre, std::string _name, std::string _course, unsigned _semester, float _frequency, std::vector<float> _grades) : dre(_dre)
 {
-    grades = new std::vector<float>(QUANTITY_OF_GRADES, 0);
     name = _name;
     course = _course;
     semester = _semester;
+    frequency = _frequency;
+    grades = std::vector<float>(_grades);
 }
 
-Aluno::~Aluno()
+Aluno::Aluno(std::string _dre, std::string _name, std::string _course, unsigned _semester, float _frequency) : dre(_dre)
 {
-    delete grades;
+    name = _name;
+    course = _course;
+    semester = _semester;
+    frequency = _frequency;
+    grades = std::vector<float>(QUANTITY_OF_GRADES, -1);
 }
+
+Aluno::~Aluno() {}
 
 std::string Aluno::getName()
 {
@@ -26,7 +33,7 @@ std::string Aluno::getDre()
     return dre;
 }
 
-std::vector<float> *Aluno::getGrades()
+std::vector<float> Aluno::getGrades()
 {
     return grades;
 }
@@ -50,7 +57,7 @@ bool Aluno::setGrade(unsigned position, float grade)
 {
     if (grade > 0 && grade <= 10)
     {
-        grades->at(position) = grade;
+        grades.at(position) = grade;
     }
 }
 

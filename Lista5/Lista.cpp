@@ -20,40 +20,6 @@ Lista::~Lista()
     clear();
 };
 
-// Lista::Lista(std::string filename)
-// {
-//     std::string index;
-//     unsigned lines, columns;
-//     std::vector<float> matrixLine;
-//     float element;
-
-// std::ifstream f;
-
-// f.open(filename);
-// if (!f)
-// {
-//     std::cout << "Unable to open file" << std::endl;
-//     exit(1); // terminate with error
-// };
-
-// while (!f.eof())
-// {
-//     f >> index >> lines >> columns;
-//     for (int i = 0; i < lines; i++)
-//     {
-//         matrixLine.clear();
-//         for (int j = 0; j < columns; j++)
-//         {
-//             f >> element;
-//             matrixLine.push_back(element);
-//         }
-//         lista[index].push_back(matrixLine);
-//     }
-// }
-
-// f.close();
-// };
-
 void Lista::readFile(std::string filename)
 {
     std::string id, name, surname, course;
@@ -77,7 +43,8 @@ void Lista::readFile(std::string filename)
     while (!f.eof())
     {
         f >> name >> surname >> id >> course >> semester >> frequency >> p1 >> p2 >> pf >> p2ch;
-        Aluno *current = new Aluno(id, name + " " + surname, course, frequency);
+        std::vector<float> grades = {p1, p2, pf, p2ch};
+        Aluno *current = new Aluno(id, name + " " + surname, course, semester, frequency, grades);
         lista[id] = current;
     }
 
@@ -100,7 +67,13 @@ void Lista::save(std::string filename)
     {
         Aluno *aluno = x.second;
 
-        f << x.first << " " << aluno->getName() << " " << aluno->getCourse() << " " << aluno->getSemester();
+        f << aluno->getName() << " " << x.first << " " << aluno->getCourse() << " " << aluno->getSemester() << " " << aluno->getFrequency();
+
+        // Putting all grades in file
+        for (auto const &grade : aluno->getGrades())
+        {
+            f << " " << grade;
+        }
 
         if (counter != (lista.size() - 1))
             f << std::endl;
@@ -151,6 +124,20 @@ std::vector<Aluno *> Lista::get(std::string const searchKey, bool isSearchByName
     {
         results.push_back(lista[searchKey]);
     }
+    return results;
+}
+
+std::vector<Aluno *> Lista::getAllStudents()
+{
+    std::vector<Aluno *> results;
+
+    for (auto const &x : lista)
+    {
+        Aluno *aluno = x.second;
+
+        results.push_back(aluno);
+    }
+
     return results;
 }
 

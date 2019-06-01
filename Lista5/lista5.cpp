@@ -20,11 +20,11 @@ int main()
 
   Lista lista;
 
-  lista.readFile("teste.txt");
-
   printMenu();
 
   cout << endl;
+
+  lista.readFile("teste.txt");
 
   while (input.compare("exit") != 0)
   {
@@ -34,6 +34,26 @@ int main()
     /*INSERIR ALUNO*/
     if (input == "1")
     {
+      string name, dre, course;
+      unsigned semester;
+      cout << "Digite o nome do aluno (nome e sobrenome): ";
+      getline(cin, name);
+
+      cout << "Digite o DRE do aluno : ";
+      cin >> dre;
+
+      cout << "Qual o curso? ";
+      cin >> course;
+
+      cout << "Qual o periodo atual do aluno? ";
+      cin >> semester;
+
+      cout << "nome : " << name << endl;
+
+      Aluno *student = new Aluno(dre, name, course, semester);
+
+      lista.insert(dre, student);
+      cin.ignore();
     }
     /*CONSULTAR ALUNO*/
     else if (input == "2")
@@ -79,12 +99,56 @@ int main()
       }
     }
 
-    /*ALTERAR DADOS DO ALUNO*/
+    /*ALTERAR DADOS DOS ALUNOS*/
     else if (input == "3")
     {
       string dreToChange;
-      cout << "Digite o DRE do aluno a ser alterado: ";
-      getline(cin, dreToChange);
+      unsigned option, exam;
+
+      cout << "Digite 0 para alterar notas ou 1 para alterar frequencia: ";
+      cin >> option;
+      cin.ignore();
+
+      if (option != 0 && option != 1)
+      {
+        cout << "Opcao invalida. Tente novamente" << endl;
+        break;
+      }
+
+      // Copy constructor
+      vector<Aluno *> students(lista.getAllStudents());
+
+      if (option == 0)
+      {
+        float grade;
+        cout << "Qual nota deseja alterar? 1 para P1, 2 para P2, 3 para PF e 4 para 2a chamada: ";
+        cin >> exam;
+
+        if (exam > 4 || exam < 0)
+        {
+          cout << "Opcao invalida. Tente novamente" << endl;
+          break;
+        }
+      }
+
+      for (auto student : students)
+      {
+        cout << "-- Aluno: " << student->getName() << " DRE: " << student->getDre() << " --" << endl;
+        string placeholder = option == 0 ? "nota" : "frequencia";
+        float value;
+        cout << "Digite a " << placeholder << ": ";
+
+        cin >> value;
+
+        if (value < 0)
+        {
+          cout << "Valor de " << placeholder << " invalido." << endl;
+          break;
+        }
+        option == 0 ? student->setGrade(exam - 1, value) : student->setFrequency(value);
+      }
+      cout << "Alteracoes feitas com sucesso" << endl;
+      cin.ignore();
     }
 
     /*REMOVER ALUNO*/
@@ -95,6 +159,7 @@ int main()
       getline(cin, dreToRemove);
 
       lista.remove(dreToRemove);
+      cout << "Aluno removido com sucesso" << endl;
     }
 
     /*LISTAR ALUNOS*/
@@ -111,6 +176,7 @@ int main()
       getline(cin, filename);
 
       lista.save(filename);
+      cout << "Arquivo criado com sucesso" << endl;
     }
 
     else if (input.compare("exit") != 0)
@@ -121,7 +187,7 @@ int main()
     cout << endl;
   }
 
-  // cout << "Obrigada por testar!" << endl;
+  cout << "Obrigada por testar!" << endl;
 
   return 0;
 }

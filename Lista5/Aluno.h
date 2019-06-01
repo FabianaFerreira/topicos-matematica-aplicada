@@ -4,13 +4,13 @@
 class Aluno
 {
 public:
-    Aluno();
-    Aluno(std::string, std::string = "Sem nome", std::string = "Sem curso", unsigned = 0);
+    Aluno(std::string, std::string, std::string, unsigned, float, std::vector<float>);
+    Aluno(std::string, std::string = "Sem nome", std::string = "Sem curso", unsigned = 0, float = 0);
     ~Aluno();
 
     std::string getName();
     std::string getDre();
-    std::vector<float> *getGrades();
+    std::vector<float> getGrades();
     float getFrequency();
     std::string getCourse();
     unsigned getSemester();
@@ -29,5 +29,5 @@ private:
     std::string dre;
     unsigned semester;
     float frequency;
-    std::vector<float> *grades;
+    std::vector<float> grades;
 };
