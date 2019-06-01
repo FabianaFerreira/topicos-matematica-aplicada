@@ -7,6 +7,7 @@
 #include "Lista.h"
 
 #include "functions.h"
+#include "sortRules.h"
 
 Lista::Lista(){};
 
@@ -19,105 +20,6 @@ Lista::~Lista()
     }
     clear();
 };
-
-bool Lista::sortByName(Aluno *a, Aluno *b)
-{
-    return a->getName() < b->getName();
-}
-
-bool Lista::sortByAverage(Aluno *a, Aluno *b)
-{
-    std::vector<float> gradesA(a->getGrades());
-    std::vector<float> gradesB(b->getGrades());
-    float partialAverageA, partialAverageB, finalAverageA, finalAverageB;
-
-    if (gradesA.at(0) < 0 || gradesA.at(1) < 0)
-    {
-        partialAverageA = -1;
-        finalAverageA = -1;
-    }
-    else
-    {
-        partialAverageA = (gradesA.at(0) + gradesA.at(1)) / 2;
-
-        if (gradesA.at(2) > 0)
-        {
-            finalAverageA = (partialAverageA + gradesA.at(2)) / 2;
-        }
-        else
-        {
-            finalAverageA = partialAverageA;
-        }
-    }
-
-    if (gradesB.at(0) < 0 || gradesB.at(1) < 0)
-    {
-        partialAverageB = -1;
-        finalAverageB = -1;
-    }
-    else
-    {
-
-        partialAverageB = (gradesB.at(0) + gradesB.at(1)) / 2;
-        if (gradesB.at(2) > 0)
-        {
-            finalAverageB = (partialAverageB + gradesB.at(2)) / 2;
-        }
-        else
-        {
-            finalAverageB = partialAverageB;
-        }
-    }
-
-    return (partialAverageA > partialAverageB || finalAverageA > finalAverageB);
-}
-
-bool Lista::sortByGradesAndAverage(Aluno *a, Aluno *b)
-{
-    std::vector<float> gradesA(a->getGrades());
-    std::vector<float> gradesB(b->getGrades());
-    float partialAverageA, partialAverageB, finalAverageA, finalAverageB;
-
-    if (gradesA.at(0) < 0 || gradesA.at(1) < 0)
-    {
-        partialAverageA = -1;
-        finalAverageA = -1;
-    }
-    else
-    {
-        partialAverageA = (gradesA.at(0) + gradesA.at(1)) / 2;
-
-        if (gradesA.at(2) > 0)
-        {
-            finalAverageA = (partialAverageA + gradesA.at(2)) / 2;
-        }
-        else
-        {
-            finalAverageA = partialAverageA;
-        }
-    }
-
-    if (gradesB.at(0) < 0 || gradesB.at(1) < 0)
-    {
-        partialAverageB = -1;
-        finalAverageB = -1;
-    }
-    else
-    {
-
-        partialAverageB = (gradesB.at(0) + gradesB.at(1)) / 2;
-        if (gradesB.at(2) > 0)
-        {
-            finalAverageB = (partialAverageB + gradesB.at(2)) / 2;
-        }
-        else
-        {
-            finalAverageB = partialAverageB;
-        }
-    }
-
-    return (gradesA.at(0) > gradesB.at(0) || gradesA.at(1) > gradesB.at(1) || partialAverageA > partialAverageB || finalAverageA > finalAverageB);
-}
 
 void Lista::readFile(std::string filename)
 {
@@ -253,4 +155,54 @@ void Lista::remove(std::string index)
 void Lista::clear()
 {
     lista.clear();
+}
+
+std::vector<std::vector<float>> Lista::getStudentsGrades()
+{
+    std::vector<std::vector<float>> result;
+    for (auto const &a : lista)
+    {
+        Aluno *aluno = a.second;
+        for (unsigned i = 0; i < 6; i++)
+        {
+            if (i < 4)
+            {
+                result.at(i).push_back(aluno->getGrade(i));
+            }
+            else if (i == 4)
+            {
+                result.at(i).push_back(aluno->calculatePartialAverage());
+            }
+            else
+            {
+                result.at(i).push_back(aluno->calculateFinalAverage());
+            }
+        }
+    }
+
+    return result;
+}
+
+std::vector<std::vector<float>> Lista::calculateStatistics()
+{
+    float mean, median, mode, var, stdDev;
+
+    std::vector<std::vector<float>> gradeArray = getStudentsGrades();
+    std::vector<std::vector<float>> stats;
+
+    for (auto const &grades : gradeArray)
+    {
+        std::vector<float> gradesStats(5, 0);
+
+        // p1, p2, pf, 2ach, media parcial, media final
+        sort(grades.begin(), grades.end(), sortValues);
+
+        // gradesStats.at(0) = MEDIA
+        // gradesStats.at(1) = MEDIANA
+        gradesStats.at(2) = calculateMode(grades);
+        // gradesStats.at(2) = VARIANCIA
+        // gradesStats.at(3) = sqrt(VARIANCIA)
+
+        stats.push_back(gradesStats);
+    }
 }

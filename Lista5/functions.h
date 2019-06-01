@@ -4,6 +4,9 @@
   DRE: 115037241
 ----------------------------------------*/
 
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <string>
 #include <vector>
 #include <sstream>
@@ -39,3 +42,7 @@ void writeResultFile(std::map<std::string, unsigned>);
 bool getLinesAndColumnsQnt(std::string, std::vector<long> &);
 
 void printMenu();
+
+float calculateMode(std::vector<float>);
+
+#endif

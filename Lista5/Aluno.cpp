@@ -3,7 +3,6 @@
   Universidade Federal do Rio de Janeiro
   DRE: 115037241
 ----------------------------------------*/
-
 #include "Aluno.h"
 #include "functions.h"
 
@@ -42,6 +41,11 @@ std::string Aluno::getDre()
 std::vector<float> Aluno::getGrades()
 {
     return grades;
+}
+
+float Aluno::getGrade(unsigned pos)
+{
+    return grades.at(pos);
 }
 
 float Aluno::getFrequency()
@@ -97,15 +101,6 @@ bool Aluno::setSemester(unsigned _semester)
     return false;
 }
 
-float calculateAverage(float g1, float g2)
-{
-    if ((g1 > 0 && g1 <= 10) && (g2 > 0 && g2 <= 10))
-    {
-        return (g1 + g2) / 2;
-    }
-    return -1;
-}
-
 void Aluno::printData() const
 {
     std::cout << " | "
@@ -118,5 +113,27 @@ void Aluno::printData() const
               << std::setw(5) << grades.at(1) << " | "
               << std::setw(5) << grades.at(2) << " | "
               << std::setw(5) << grades.at(3) << " | "
-    << std::endl;
+              << std::endl;
+}
+
+float Aluno::calculatePartialAverage()
+{
+
+    if (grades.at(0) < 0 || grades.at(1) < 0)
+    {
+        return -1;
+    }
+    return (grades.at(0) + grades.at(1)) / 2;
+}
+
+float Aluno::calculateFinalAverage()
+{
+    float partial = calculatePartialAverage();
+    if (grades.at(0) < 0 || grades.at(1) < 0)
+    {
+        return -1;
+    }
+    if (grades.at(2) < 0)
+        return partial;
+    return (partial + grades.at(2)) / 2;
 }

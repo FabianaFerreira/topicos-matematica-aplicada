@@ -8,7 +8,7 @@ CFLAGS  = -Wall
 
 OBJFILES1 = Aluno.o Lista.o functions.o lista5q1.o
 
-OBJFILES2 = Aluno.o Lista.o functions.o lista5q2.o
+OBJFILES2 = Aluno.o Lista.o sortRules.o functions.o lista5q2.o
 
 TARGET1 = lista5q1.exe
 

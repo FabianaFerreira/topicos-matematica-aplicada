@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include "functions.h"
+#include "sortRules.h"
 #include "Lista.h"
 
 using namespace std;
@@ -55,7 +56,7 @@ int main()
                       << std::setw(8) << " P2ch |"
                       << std::endl;
 
-            sort(students.begin(), students.end(), Lista::sortByName);
+            sort(students.begin(), students.end(), sortByName);
             for (Aluno *a : students)
                 a->printData();
 
@@ -76,7 +77,7 @@ int main()
                       << std::setw(8) << " P2ch |"
                       << std::endl;
 
-            sort(students.begin(), students.end(), Lista::sortByAverage);
+            sort(students.begin(), students.end(), sortByAverage);
             for (Aluno *a : students)
                 a->printData();
 
@@ -117,7 +118,7 @@ int main()
             cout << endl;
         }
 
-        /*REMOVER ALUNO*/
+        /*LISTAR ALUNOS ORDENADOS POR MEDIA E NOTAS*/
         else if (input == "4")
         {
             std::cout << " | "
@@ -132,7 +133,7 @@ int main()
                       << std::setw(8) << " P2ch |"
                       << std::endl;
 
-            sort(students.begin(), students.end(), Lista::sortByGradesAndAverage);
+            sort(students.begin(), students.end(), sortByGradesAndAverage);
             for (Aluno *a : students)
                 a->printData();
 
@@ -142,6 +143,7 @@ int main()
         /*LISTAR ALUNOS*/
         else if (input == "5")
         {
+            
         }
 
         /*SALVAR EM ARQUIVO*/

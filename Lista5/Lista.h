@@ -4,6 +4,9 @@
   DRE: 115037241
 ----------------------------------------*/
 
+#ifndef LISTA_H
+#define LISTA_H
+
 #include <vector>
 #include <map>
 #include <iostream>
@@ -13,35 +16,39 @@
 
 class Lista
 {
-  public:
-    Lista();
+public:
+  Lista();
 
-    ~Lista();
+  ~Lista();
 
-    void readFile(std::string);
+  void readFile(std::string);
 
-    void save(std::string);
+  void save(std::string);
 
-    void list();
+  void list();
 
-    std::vector<Aluno *> get(std::string, bool);
+  std::vector<Aluno *> get(std::string, bool);
 
-    std::vector<Aluno *> getAllStudents();
+  std::vector<Aluno *> getAllStudents();
 
-    void insert(std::string, Aluno *);
+  void insert(std::string, Aluno *);
 
-    void remove(std::string);
+  void remove(std::string);
 
-    void clear();
+  void clear();
 
-    static bool sortByName(Aluno *, Aluno *);
+  static bool sortByName(Aluno *, Aluno *);
 
-    static bool sortByAverage(Aluno *, Aluno *);
+  static bool sortByAverage(Aluno *, Aluno *);
 
-    static bool sortByGradesAndAverage(Aluno *, Aluno *);
+  static bool sortByGradesAndAverage(Aluno *, Aluno *);
 
-  private:
-    std::map<std::string, Aluno *> lista;
+  std::vector<std::vector<float>> getStudentsGrades();
 
+  std::vector<std::vector<float>> calculateStatistics();
 
+private:
+  std::map<std::string, Aluno *> lista;
 };
+
+#endif
