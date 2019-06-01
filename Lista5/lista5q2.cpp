@@ -86,7 +86,36 @@ int main()
         /*LISTA NOMES DOS ALUNOS QUE FIZERAM DETERMINADA PROVA*/
         else if (input == "3")
         {
-                }
+            float exam;
+            cout << "Quais provas voce deseja visualizar? 1 para P1, 2 para P2, 3 para PF e 4 para 2a chamada: ";
+            cin >> exam;
+
+            if (exam > 4 || exam < 0)
+            {
+                cout << "Opcao invalida. Tente novamente" << endl;
+                break;
+            }
+
+            std::cout << " | "
+                      << std::setw(19) << " Nome | "
+                      << std::setw(13) << " DRE | "
+                      << std::setw(17) << " Curso |"
+                      << " Per | "
+                      << std::setw(5) << " Freq |"
+                      << std::setw(8) << " P1 |"
+                      << std::setw(8) << " P2 |"
+                      << std::setw(8) << " PF |"
+                      << std::setw(8) << " P2ch |"
+                      << std::endl;
+
+            for (Aluno *a : students)
+            {
+                if (a->getGrades().at(exam - 1) > 0)
+                    a->printData();
+            }
+
+            cout << endl;
+        }
 
         /*REMOVER ALUNO*/
         else if (input == "4")
