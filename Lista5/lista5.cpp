@@ -20,11 +20,17 @@ int main()
 
   Lista lista;
 
-  printMenu();
+  string filename;
+  cout << "Digite o nome da lista de alunos a ser lida (.txt): ";
+  cin >> filename;
+  cin.ignore();
+  lista.readFile(filename);
 
   cout << endl;
 
-  lista.readFile("teste.txt");
+  printMenu();
+
+  cout << endl;
 
   while (input.compare("exit") != 0)
   {
@@ -43,7 +49,7 @@ int main()
       cin >> dre;
 
       cout << "Qual o curso? ";
-      cin >> course;
+      getline(cin, course);
 
       cout << "Qual o periodo atual do aluno? ";
       cin >> semester;
