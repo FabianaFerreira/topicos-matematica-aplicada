@@ -160,26 +160,36 @@ void Lista::clear()
 std::vector<std::vector<float>> Lista::getStudentsGrades()
 {
     std::vector<std::vector<float>> result;
-    for (auto const &a : lista)
+    std::vector<float> current;
+
+    for (unsigned i = 0; i < 6; i++)
     {
-        Aluno *aluno = a.second;
-        for (unsigned i = 0; i < 6; i++)
+        current.clear();
+        for (auto const &a : lista)
         {
+            Aluno *aluno = a.second;
+            std::vector<float> studentGrades(aluno->getGrades());
+
             if (i < 4)
             {
-                result.at(i).push_back(aluno->getGrade(i));
+                float grade = studentGrades.at(i);
+                // If grade is -1, it will not count to calculate statistics
+                if (grade > 0)
+                {
+                    current.push_back(grade);
+                }
             }
             else if (i == 4)
             {
-                result.at(i).push_back(aluno->calculatePartialAverage());
+                current.push_back(aluno->calculatePartialAverage());
             }
             else
             {
-                result.at(i).push_back(aluno->calculateFinalAverage());
+                current.push_back(aluno->calculateFinalAverage());
             }
         }
+        result.push_back(current);
     }
-
     return result;
 }
 
@@ -190,19 +200,26 @@ std::vector<std::vector<float>> Lista::calculateStatistics()
     std::vector<std::vector<float>> gradeArray = getStudentsGrades();
     std::vector<std::vector<float>> stats;
 
-    for (auto const &grades : gradeArray)
+    for (auto &grades : gradeArray)
     {
         std::vector<float> gradesStats(5, 0);
 
-        // p1, p2, pf, 2ach, media parcial, media final
         sort(grades.begin(), grades.end(), sortValues);
 
-        // gradesStats.at(0) = MEDIA
-        // gradesStats.at(1) = MEDIANA
+        float mean = calculateMean(grades);
+        float var = calculateVariance(grades, mean);
+
+        gradesStats.at(0) = mean;
+        gradesStats.at(1) = calculateMedian(grades);
         gradesStats.at(2) = calculateMode(grades);
-        // gradesStats.at(2) = VARIANCIA
-        // gradesStats.at(3) = sqrt(VARIANCIA)
+        gradesStats.at(3) = var;
+        if (var > 0)
+            gradesStats.at(4) = sqrt(var);
+        else
+            gradesStats.at(4) = -1;
 
         stats.push_back(gradesStats);
     }
+
+    return stats;
 }

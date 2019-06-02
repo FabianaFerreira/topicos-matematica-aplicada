@@ -20,7 +20,6 @@ public:
   std::string getName();
   std::string getDre();
   std::vector<float> getGrades();
-  float Aluno::getGrade(unsigned);
   float getFrequency();
   std::string getCourse();
   unsigned getSemester();

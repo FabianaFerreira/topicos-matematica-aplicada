@@ -43,6 +43,12 @@ bool getLinesAndColumnsQnt(std::string, std::vector<long> &);
 
 void printMenu();
 
+float calculateMean(std::vector<float>);
+
+float calculateMedian(std::vector<float>);
+
 float calculateMode(std::vector<float>);
+
+float calculateVariance(std::vector<float>, float);
 
 #endif

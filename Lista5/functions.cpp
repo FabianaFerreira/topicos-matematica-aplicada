@@ -52,8 +52,46 @@ void printMenu()
   cout << "Digite 'exit' para sair do programa" << endl;
 }
 
+float calculateMean(std::vector<float> v)
+{
+  // Tests the case of not having at least one grade in vector (there
+  // were no students that did the exam)
+  unsigned size = v.size();
+  if (size == 0)
+    return -1;
+
+  float sum = 0;
+  for (unsigned i = 0; i < size; i++)
+    sum += v.at(i);
+
+  return sum / size;
+}
+
+float calculateMedian(std::vector<float> v)
+{
+  // Tests the case of not having at least one grade in vector (there
+  // were no students that did the exam)
+  unsigned size = v.size();
+  if (size == 0)
+  {
+    return -1;
+  }
+  if (size % 2 == 0)
+  {
+    return (v.at(size / 2 - 1) + v.at(size / 2)) / 2;
+  }
+  return v.at(size / 2);
+}
+
 float calculateMode(std::vector<float> v)
 {
+  // Tests the case of not having at least one grade in vector (there
+  // were no students that did the exam)
+  if (v.size() == 0)
+  {
+    return -1;
+  }
+
   float number = v.at(0);
   float mode = number;
   int count = 1;
@@ -62,19 +100,31 @@ float calculateMode(std::vector<float> v)
   for (int i = 1; i < v.size(); i++)
   {
     if (v.at(i) == number)
-    { // count occurrences of the current number
       ++count;
-    }
     else
-    { // now this is a different number
+    {
       if (count > countMode)
       {
-        countMode = count; // mode is the biggest ocurrences
+        countMode = count;
         mode = number;
       }
-      count = 1; // reset count for the new number
+      count = 1;
       number = v.at(i);
     }
   }
   return mode;
+}
+
+float calculateVariance(std::vector<float> v, float mean)
+{
+  unsigned size = v.size();
+  if (size == 0)
+    return -1;
+
+  float var = 0;
+  for (unsigned i = 0; i < size; i++)
+  {
+    var += pow((v.at(i) - mean), 2);
+  }
+  var = var / size;
 }

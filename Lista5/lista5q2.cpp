@@ -140,10 +140,26 @@ int main()
             cout << endl;
         }
 
-        /*LISTAR ALUNOS*/
+        /*ESTATISTICAS DAS NOTAS*/
         else if (input == "5")
         {
-            
+            cout << endl;
+            cout << "Estatisticas para provas e medias, na seguinte ordem:" << endl;
+            cout << "P1, P2, PF, 2a chamada, media parcial e media final" << endl;
+            cout << endl;
+
+            //Copy constructor
+            vector<vector<float>> stats(lista.calculateStatistics());
+
+            for (auto const &gradeStats : stats)
+            {
+                cout << "Media: " << gradeStats.at(0) << endl;
+                cout << "Mediana: " << gradeStats.at(1) << endl;
+                cout << "Moda: " << gradeStats.at(2) << endl;
+                cout << "Variancia: " << gradeStats.at(3) << endl;
+                cout << "Desvio Padrao: " << gradeStats.at(4) << endl;
+                cout << endl;
+            }
         }
 
         /*SALVAR EM ARQUIVO*/

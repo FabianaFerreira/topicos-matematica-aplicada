@@ -43,11 +43,6 @@ std::vector<float> Aluno::getGrades()
     return grades;
 }
 
-float Aluno::getGrade(unsigned pos)
-{
-    return grades.at(pos);
-}
-
 float Aluno::getFrequency()
 {
     return frequency;
