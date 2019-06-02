@@ -162,9 +162,64 @@ int main()
             }
         }
 
-        /*SALVAR EM ARQUIVO*/
         else if (input == "6")
         {
+            for (Aluno *a : students)
+            {
+                if (a->calculatePartialAverage() > 5.0)
+                    a->printData();
+            }
+        }
+
+        else if (input == "7")
+        {
+            for (Aluno *a : students)
+            {
+                if (a->calculatePartialAverage() < 5.0 ||
+                    (a->getSpecificGrade(0) < 0) ||
+                    (a->getSpecificGrade(1) < 0))
+                {
+                    a->printData();
+                }
+            }
+        }
+
+        else if (input == "8")
+        {
+            sort(students.begin(), students.end(), sortByFinalAverageDescending);
+            for (Aluno *a : students)
+            {
+                if (a->calculateFinalAverage() > 7.9)
+                {
+                    a->printData();
+                }
+            }
+        }
+
+        else if (input == "9")
+        {
+            sort(students.begin(), students.end(), sortByFinalAverageDescending);
+            for (Aluno *a : students)
+            {
+                float finalAverage = a->calculateFinalAverage();
+                if (finalAverage > 4.9 && finalAverage < 8.0)
+                {
+                    a->printData();
+                }
+            }
+        }
+
+        else if (input == "10")
+        {
+            sort(students.begin(), students.end(), sortByFinalAverageAscending);
+            for (Aluno *a : students)
+            {
+                float finalAverage = a->calculateFinalAverage();
+                if (finalAverage < 5.0)
+                {
+                    a->printData();
+                }
+            }
         }
 
         else if (input.compare("exit") != 0)

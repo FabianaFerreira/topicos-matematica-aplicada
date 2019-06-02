@@ -43,6 +43,11 @@ std::vector<float> Aluno::getGrades()
     return grades;
 }
 
+float Aluno::getSpecificGrade(unsigned pos)
+{
+    return grades.at(pos);
+}
+
 float Aluno::getFrequency()
 {
     return frequency;
@@ -124,11 +129,36 @@ float Aluno::calculatePartialAverage()
 float Aluno::calculateFinalAverage()
 {
     float partial = calculatePartialAverage();
-    if (grades.at(0) < 0 || grades.at(1) < 0)
+
+    // Se a media parcial eh -1, o aluno nao fez, pelo menos, uma prova.
+    float p1 = grades.at(0);
+    float p2 = grades.at(1);
+    float pf = grades.at(2);
+    float p2ch = grades.at(3);
+
+    // Nao fez ou p1 ou p2, fez 2ch e nao fez pf
+    if (partial < 0 && (p2ch > 0 && pf < 0))
     {
-        return -1;
+        if (p1 > 0 && p2 < 0)
+            return (p1 + p2ch) / 2;
+        if (p1 < 0 && p2 > 0)
+            return (p2 + p2ch) / 2;
+        if (p1 < 0 && p2 < 0)
+            return -1;
     }
-    if (grades.at(2) < 0)
+    // Nao fez ou p1 ou p2, fez 2ch e fez pf
+    if (partial < 0 && (p2ch > 0 && pf > 0))
+    {
+        if (p1 < 0 && p2 < 0)
+            return (p2ch + pf) / 2;
+        if (p1 < 0 && p2 > 0)
+            return (((p2 + p2ch) / 2) + pf) / 2;
+        if (p1 > 0 && p2 < 0)
+            return (((p1 + p2ch) / 2) + pf) / 2;
+    }
+    // Fez p1 e p2, nao 2ch e nao fez pf
+    if (partial > 0 && (pf < 0 && p2ch < 0))
         return partial;
-    return (partial + grades.at(2)) / 2;
+    // Precisou fazer pf
+    return (partial + pf) / 2;
 }

@@ -45,11 +45,16 @@ void printMenu()
   cout << "Digite 3 para listar alunos que fizeram determinada prova" << endl;
   cout << "Digite 4 para listar alunos em ordem decrescente de notas e medias" << endl;
   cout << "Digite 5 para calcular media, moda, mediana, variancia e desvio padrao" << endl;
-  cout << "Digite 6 para listar alunos em PF ou 2a chamada" << endl;
-  cout << "Digite 7 para listar alunos com media final acima de 7.9" << endl;
-  cout << "Digite 6 salvar listar alunos aprovados" << endl;
-  cout << "Digite 6 salvar listar alunos aprovados" << endl;
+  cout << "Digite 6 para listar alunos aprovados direto" << endl;
+  cout << "Digite 7 para listar alunos em PF ou 2a chamada" << endl;
+  cout << "Digite 8 para listar alunos com media final acima de 7.9" << endl;
+  cout << "Digite 9 para listar alunos com media maior que 4.9 e menor que 8" << endl;
+  cout << "Digite 10 para listar alunos reprovados em ordem crescente" << endl;
   cout << "Digite 'exit' para sair do programa" << endl;
+
+  cout << "Obs.: Notas ou medias ou estatisticas de valor -1 indicam que "
+       << "alunos nao fizeram uma prova ou que uma prova nao foi feita "
+       << "por nenhum aluno, o que gera estatisticas invalidas" << endl;
 }
 
 float calculateMean(std::vector<float> v)

@@ -19,6 +19,26 @@ bool sortByAverage(Aluno *a, Aluno *b)
     return (partialAverageA > partialAverageB || finalAverageA > finalAverageB);
 }
 
+bool sortByFinalAverageDescending(Aluno *a, Aluno *b)
+{
+    float finalAverageA, finalAverageB;
+
+    finalAverageA = a->calculateFinalAverage();
+    finalAverageB = b->calculateFinalAverage();
+
+    return (finalAverageA > finalAverageB);
+}
+
+bool sortByFinalAverageAscending(Aluno *a, Aluno *b)
+{
+    float finalAverageA, finalAverageB;
+
+    finalAverageA = a->calculateFinalAverage();
+    finalAverageB = b->calculateFinalAverage();
+
+    return (finalAverageB > finalAverageA);
+}
+
 bool sortByGradesAndAverage(Aluno *a, Aluno *b)
 {
     std::vector<float> gradesA(a->getGrades());

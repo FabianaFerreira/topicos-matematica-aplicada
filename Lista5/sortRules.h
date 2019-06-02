@@ -14,6 +14,10 @@ bool sortByName(Aluno *, Aluno *);
 
 bool sortByAverage(Aluno *, Aluno *);
 
+bool sortByFinalAverageDescending(Aluno *, Aluno *);
+
+bool sortByFinalAverageAscending(Aluno *, Aluno *);
+
 bool sortByGradesAndAverage(Aluno *, Aluno *);
 
 bool sortValues(float, float);
