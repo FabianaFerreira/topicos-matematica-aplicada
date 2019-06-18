@@ -7,10 +7,11 @@
 #
 # Teste 2 - 18 de junho de 2019
 #
-# Aluna: Fabiana Ferreira
-# Aluna: Jackeline Carvalho
-# Aluna: Julia Brito
-#------------------
+# Aluna: Fabiana Ferreira 115037241
+# Aluna: Jackeline Carvalho 116043481
+# Aluna: Julia Brito 117050512
+# Aluno: Lucas Galdino 119039091
+#-----------------------------------------------------------------------------
 
 import csv
 
