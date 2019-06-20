@@ -36,5 +36,8 @@ Repositório destinado à disciplina Tópicos da Matemática Avançada A: Progra
   
   #### Estudo Dirigido 2
   Desenvolvimento de uma calculadora matricial. O programa irá apresentar um menu de opções, onde o usuário poderá escolher dentre uma lista de operações matemáticas com matrizes ou de seleção de parâmetros para a lista de matrizes. Tal lista é feita com armazenamento persistente, e poderá ser alterada durante a execução do programa. Para isso, será utilizada uma estrutura de dados que será escrita novamente no arquivo ao término do programa.
+  
+  #### Estudo Dirigido 3
+  Desenvolvimento de uma calculadora matricial com uso de orientação à objeto para introdução de conceitos de polimorfismo, visando a otimização de cálculos para matrizes triangulares ou diagonais.
 
   
