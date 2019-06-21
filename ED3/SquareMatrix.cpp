@@ -12,13 +12,24 @@ SquareMatrix::SquareMatrix(const SquareMatrix &matrix) : Matrix(matrix.lines, ma
 
 SquareMatrix &SquareMatrix::operator=(const SquareMatrix &matrix)
 {
-    lines = matrix.lines;
-    columns = matrix.columns;
-    m = matrix.m;
-    return *this;
+  lines = matrix.lines;
+  columns = matrix.columns;
+  m = matrix.m;
+  return *this;
 }
 
 void SquareMatrix::print()
 {
-    std::cout << "Sou quadrada!!" << std::endl;
+  std::cout << "Sou quadrada!!" << std::endl;
+}
+
+float SquareMatrix::calculateTrace()
+{
+  float result = 0;
+  for (unsigned i = 0; i < lines; i++)
+  {
+    result += m.at(i).at(i);
+  }
+
+  return result;
 }

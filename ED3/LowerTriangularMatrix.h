@@ -21,15 +21,19 @@ public:
 
 	LowerTriangularMatrix(const LowerTriangularMatrix &);
 
-	int calculateDeterminant();
-
-	LowerTriangularMatrix operator+(LowerTriangularMatrix);
-
-	LowerTriangularMatrix operator*(LowerTriangularMatrix);
-
 	LowerTriangularMatrix &operator=(const LowerTriangularMatrix &);
 
 	void print();
+
+	LowerTriangularMatrix operator+(LowerTriangularMatrix);
+
+	LowerTriangularMatrix operator-(LowerTriangularMatrix);
+
+	LowerTriangularMatrix operator*(LowerTriangularMatrix);
+
+	// LowerTriangularMatrix operator*(float);
+
+	int calculateDeterminant();
 };
 
 #endif

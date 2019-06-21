@@ -21,15 +21,19 @@ public:
 
 	UpperTriangularMatrix(const UpperTriangularMatrix &);
 
-	int calculateDeterminant();
-
-	UpperTriangularMatrix operator+(UpperTriangularMatrix);
-
-	UpperTriangularMatrix operator*(UpperTriangularMatrix);
-
 	UpperTriangularMatrix &operator=(const UpperTriangularMatrix &);
 
 	void print();
+
+	UpperTriangularMatrix operator+(UpperTriangularMatrix);
+
+	UpperTriangularMatrix operator-(UpperTriangularMatrix);
+
+	UpperTriangularMatrix operator*(UpperTriangularMatrix);
+
+	// UpperTriangularMatrix operator*(float);
+
+	int calculateDeterminant();
 };
 
 #endif

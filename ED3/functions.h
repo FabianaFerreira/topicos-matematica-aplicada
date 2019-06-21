@@ -21,7 +21,7 @@ std::vector<std::string> parseInput(std::string, char);
 
 int getUserOption(char);
 
-TypeMatrix getMatrixFromUser();
+TypeMatrix getMatrixFromUser(unsigned, unsigned);
 
 void printMatrix(TypeMatrix);
 

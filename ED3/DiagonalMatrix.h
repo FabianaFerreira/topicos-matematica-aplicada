@@ -21,17 +21,34 @@ public:
 
 	DiagonalMatrix(const DiagonalMatrix &);
 
+	DiagonalMatrix &operator=(const DiagonalMatrix &);
+
 	void print();
 
-	DiagonalMatrix operator+(DiagonalMatrix);
+	virtual DiagonalMatrix *operator+(DiagonalMatrix matrix)
+	{
+		TypeMatrix result;
+		TypeMatrix m2 = matrix.getMatrix();
+
+		std::cout << "SOMA DIAGONAL" << std::endl;
+		//Creating m1Lines x m2Columns matrix and inserting zeros
+		for (unsigned i = 0; i < lines; i++)
+		{
+			result.push_back(std::vector<float>(columns, 0));
+		}
+
+		for (unsigned i = 0; i < lines; i++)
+		{
+			result.at(i).at(i) = m.at(i).at(i) + m2.at(i).at(i);
+		}
+		return new DiagonalMatrix(lines, columns, result);
+	};
 
 	DiagonalMatrix operator-(DiagonalMatrix);
 
 	DiagonalMatrix operator*(DiagonalMatrix);
 
-	// Matrix operator*(unsigned);
-
-	DiagonalMatrix &operator=(const DiagonalMatrix &);
+	Matrix operator*(float);
 };
 
 #endif

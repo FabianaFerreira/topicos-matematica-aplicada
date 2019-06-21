@@ -43,21 +43,11 @@ int getUserOption(char option)
   return -1;
 }
 
-TypeMatrix getMatrixFromUser()
+TypeMatrix getMatrixFromUser(unsigned lines, unsigned columns)
 {
   TypeMatrix result;
   std::string values;
-  unsigned lines, columns;
-
-  std::cout << "Digite a quantidade de linhas da matriz: ";
-  std::cin >> lines;
-  std::cin.ignore();
-  std::cout << lines << " linhas" << std::endl;
-
-  std::cout << "Digite a quantidade de colunas da matriz: ";
-  std::cin >> columns;
-  std::cin.ignore();
-  std::cout << columns << " colunas" << std::endl;
+  // unsigned lines, columns;
 
   for (int i = 0; i < lines; i++)
   {

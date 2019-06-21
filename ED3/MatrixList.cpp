@@ -45,6 +45,7 @@ MatrixList::MatrixList(std::string filename)
         switch (type)
         {
         case 'g':
+            std::cout << "geral" << std::endl;
             insert(index, new Matrix(lines, columns, m));
             break;
 
@@ -220,9 +221,9 @@ void MatrixList::list()
     }
 }
 
-Matrix MatrixList::get(char index)
+Matrix *MatrixList::get(char index)
 {
-    return *m_matrixList[index];
+    return m_matrixList[index];
 }
 
 // Add or modify a matrix of the list given an index

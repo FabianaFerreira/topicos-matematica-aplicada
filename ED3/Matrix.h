@@ -30,7 +30,7 @@ public:
 
 	~Matrix();
 
-	Matrix transposeMatrix();
+	void transpose();
 
 	unsigned getLines();
 
@@ -45,9 +45,10 @@ public:
 		std::cout << "Sou Geral" << std::endl;
 	}
 
-	// OVERLOADED OPERATOR *
-	virtual Matrix operator+(Matrix matrix)
+	// OVERLOADED OPERATOR +
+	virtual Matrix *operator+(Matrix matrix)
 	{
+		std::cout << "SOMA GERAL" << std::endl;
 		TypeMatrix result(m);
 		TypeMatrix m2 = matrix.getMatrix();
 		for (unsigned i = 0; i < lines; i++)
@@ -58,10 +59,10 @@ public:
 			}
 		}
 
-		return Matrix(lines, matrix.getColumns(), result);
+		return new Matrix(lines, matrix.getColumns(), result);
 	}
 
-	//OVERLOADED OPERATOR *
+	//OVERLOADED OPERATOR -
 	virtual Matrix operator-(Matrix matrix)
 	{
 		TypeMatrix result(m);
@@ -100,7 +101,7 @@ public:
 		return Matrix(lines, matrix.getColumns(), result);
 	}
 
-	virtual Matrix operator*(unsigned scalar)
+	virtual Matrix operator*(float scalar)
 	{
 		TypeMatrix result(m);
 		for (unsigned i = 0; i < lines; i++)

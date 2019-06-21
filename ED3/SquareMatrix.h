@@ -25,7 +25,7 @@ public:
 
 	SquareMatrix &operator=(const SquareMatrix &);
 
-	unsigned calculateTrace();
+	float calculateTrace();
 };
 
 #endif

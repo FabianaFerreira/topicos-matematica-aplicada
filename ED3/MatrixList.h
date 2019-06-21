@@ -35,7 +35,7 @@ public:
 
 	void list();
 
-	Matrix get(char);
+	Matrix *get(char);
 
 	void insert(char, Matrix *);
 
