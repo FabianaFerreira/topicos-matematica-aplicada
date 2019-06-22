@@ -91,15 +91,17 @@ void printMenu()
   std::cout << "2. Multiplicação por escalar " << std::endl;
   std::cout << "3. Multiplicação de duas matrizes " << std::endl;
   std::cout << "4. Transposição" << std::endl;
+  std::cout << "5. Determinante de uma matriz triangular" << std::endl;
+  std::cout << "6. Traco de uma matriz quadrada" << std::endl;
   std::cout << "**-- Opções --**" << std::endl;
-  std::cout << "5. Imprimir uma ou mais matrizes da lista" << std::endl;
-  std::cout << "6. Inserir uma nova matriz" << std::endl;
-  std::cout << "7. Inserir uma matriz identidade n x n" << std::endl;
-  std::cout << "8. Alterar ou remover uma ou mais matrizes da lista" << std::endl;
-  std::cout << "9. Listar todas as matrizes da lista" << std::endl;
-  std::cout << "10. Fazer um backup da lista" << std::endl;
-  std::cout << "11. Ler uma outra lista de matrizes (adicionar à existente ou substituir)" << std::endl;
-  std::cout << "12. Zerar a lista de matrizes" << std::endl;
+  std::cout << "7. Imprimir uma ou mais matrizes da lista" << std::endl;
+  std::cout << "8. Inserir uma nova matriz" << std::endl;
+  std::cout << "9. Inserir uma matriz identidade n x n" << std::endl;
+  std::cout << "10. Alterar ou remover uma ou mais matrizes da lista" << std::endl;
+  std::cout << "11. Listar todas as matrizes da lista" << std::endl;
+  std::cout << "12. Fazer um backup da lista" << std::endl;
+  std::cout << "13. Ler uma outra lista de matrizes (adicionar à existente ou substituir)" << std::endl;
+  std::cout << "14. Zerar a lista de matrizes" << std::endl;
   std::cout << "Digite 'exit' para sair do programa" << std::endl;
   std::cout << std::endl;
 }

@@ -17,6 +17,17 @@ void LowerTriangularMatrix::print()
     std::cout << "Sou triangular inferior!!" << std::endl;
 }
 
+float LowerTriangularMatrix::calculateDeterminant()
+{
+    float determinant = 1;
+    for (unsigned i = 0; i < lines; i++)
+    {
+        determinant *= m.at(i).at(i);
+    }
+
+    return determinant;
+}
+
 Matrix *LowerTriangularMatrix::operator+(const Matrix &matrix) const
 {
     TypeMatrix result;

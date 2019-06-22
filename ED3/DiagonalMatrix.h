@@ -7,13 +7,13 @@
 #ifndef DIAGONALMATRIX_H
 #define DIAGONALMATRIX_H
 
-#include "Matrix.h"
+#include "SquareMatrix.h"
 
 #ifndef types_h
 typedef std::vector<std::vector<float>> TypeMatrix;
 #endif
 
-class DiagonalMatrix : public Matrix
+class DiagonalMatrix : public SquareMatrix
 {
 
 public:

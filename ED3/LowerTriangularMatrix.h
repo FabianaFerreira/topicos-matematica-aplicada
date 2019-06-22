@@ -25,15 +25,15 @@ public:
 
 	void print();
 
+	float calculateDeterminant();
+
 	Matrix *operator+(const Matrix &) const;
 
 	Matrix *operator-(const Matrix &) const;
 
 	Matrix *operator*(const Matrix &) const;
 
-	Matrix *operator*(float) const;
-
-	int calculateDeterminant();
+	Matrix *operator*(float)const;
 };
 
 #endif

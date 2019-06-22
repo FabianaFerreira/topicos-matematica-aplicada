@@ -6,9 +6,9 @@
 
 #include "DiagonalMatrix.h"
 
-DiagonalMatrix::DiagonalMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : Matrix(_lines, _columns, _m){};
+DiagonalMatrix::DiagonalMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : SquareMatrix(_lines, _columns, _m){};
 
-DiagonalMatrix::DiagonalMatrix(const DiagonalMatrix &matrix) : Matrix(matrix.lines, matrix.columns, matrix.m) {}
+DiagonalMatrix::DiagonalMatrix(const DiagonalMatrix &matrix) : SquareMatrix(matrix.lines, matrix.columns, matrix.m) {}
 
 DiagonalMatrix &DiagonalMatrix::operator=(const DiagonalMatrix &matrix)
 {
@@ -21,17 +21,6 @@ DiagonalMatrix &DiagonalMatrix::operator=(const DiagonalMatrix &matrix)
 void DiagonalMatrix::print()
 {
   std::cout << "Sou diagonal!!" << std::endl;
-}
-
-float DiagonalMatrix::calculateDeterminant()
-{
-  float determinant = 1;
-  for (unsigned i = 0; i < lines; i++)
-  {
-    determinant *= m.at(i).at(i);
-  }
-
-  return determinant;
 }
 
 Matrix *DiagonalMatrix::operator+(const Matrix &matrix) const
@@ -72,7 +61,7 @@ Matrix *DiagonalMatrix::operator-(const Matrix &matrix) const
     return Matrix::operator-(matrix);
   }
 
-  Matrix matrix2 = *pointer;
+  DiagonalMatrix matrix2 = *pointer;
 
   TypeMatrix m2 = matrix2.getMatrix();
 
@@ -93,18 +82,27 @@ Matrix *DiagonalMatrix::operator*(const Matrix &matrix) const
 {
   TypeMatrix result;
 
-  std::cout << "MULTIPLICACAO DIAGONAL" << std::endl;
+  const DiagonalMatrix *pointer = dynamic_cast<const DiagonalMatrix *>(&matrix);
+
+  if (!pointer)
+  {
+    return Matrix::operator-(matrix);
+  }
+
+  DiagonalMatrix matrix2 = *pointer;
+
+  TypeMatrix m2 = matrix2.getMatrix();
 
   for (unsigned i = 0; i < lines; i++)
   {
-    result.push_back(std::vector<float>(matrix.getColumns(), 0));
+    result.push_back(std::vector<float>(columns, 0));
   }
 
   for (unsigned i = 0; i < lines; i++)
   {
-    result.at(i).at(i) = m.at(i).at(i) * matrix.getMatrix().at(i).at(i);
+    result.at(i).at(i) = m.at(i).at(i) * m2.at(i).at(i);
   }
-  return new DiagonalMatrix(lines, matrix.getColumns(), result);
+  return new DiagonalMatrix(lines, columns, result);
 }
 
 //OVERLOADED OPERATOR *

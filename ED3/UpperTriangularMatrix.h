@@ -25,6 +25,8 @@ public:
 
 	void print();
 
+	float calculateDeterminant();
+
 	Matrix *operator+(const Matrix &) const;
 
 	Matrix *operator-(const Matrix &) const;
@@ -32,8 +34,6 @@ public:
 	Matrix *operator*(const Matrix &)const;
 
 	Matrix *operator*(float) const;
-
-	int calculateDeterminant();
 };
 
 #endif

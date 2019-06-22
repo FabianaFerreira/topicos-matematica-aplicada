@@ -23,6 +23,17 @@ void UpperTriangularMatrix::print()
     std::cout << "Sou triangular superior!!" << std::endl;
 }
 
+float UpperTriangularMatrix::calculateDeterminant()
+{
+    float determinant = 1;
+    for (unsigned i = 0; i < lines; i++)
+    {
+        determinant *= m.at(i).at(i);
+    }
+
+    return determinant;
+}
+
 Matrix *UpperTriangularMatrix::operator+(const Matrix &matrix) const
 {
     TypeMatrix result;

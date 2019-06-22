@@ -165,8 +165,68 @@ int main()
 		}
 		break;
 
-			/*Imprimir uma ou mais matrizes da lista*/
+		/*Determinante de uma matriz triangular*/
 		case 5:
+		{
+			cout << "Digite o identificador da matriz: ";
+			cin >> index;
+
+			const UpperTriangularMatrix *pointer1 = dynamic_cast<const UpperTriangularMatrix *>(matrixList.get(index));
+
+			const LowerTriangularMatrix *pointer2 = dynamic_cast<const LowerTriangularMatrix *>(matrixList.get(index));
+
+			if (!pointer1 && !pointer2)
+			{
+				cout << "A matriz selecionada nao eh triangular" << endl;
+			}
+			else
+			{
+				float determinant = 0;
+				if (pointer1)
+				{
+					UpperTriangularMatrix matrix = *pointer1;
+					determinant = matrix.calculateDeterminant();
+				}
+
+				else if (pointer2)
+				{
+					LowerTriangularMatrix matrix = *pointer2;
+					determinant = matrix.calculateDeterminant();
+				}
+
+				cout << "** Resultado **" << endl;
+				cout << "Determinante: " << determinant << endl;
+				cout << endl;
+			}
+			break;
+		}
+
+		/*Traco de uma matriz quadrada*/
+		case 6:
+		{
+			cout << "Digite o identificador da matriz: ";
+			cin >> index;
+
+			const SquareMatrix *pointer = dynamic_cast<const SquareMatrix *>(matrixList.get(index));
+
+			if (!pointer)
+			{
+				cout << "A matriz selecionada nao eh quadrada" << endl;
+			}
+			else
+			{
+				SquareMatrix matrix = *pointer;
+				float trace = matrix.calculateTrace();
+
+				cout << "** Resultado **" << endl;
+				cout << "Traco: " << trace << endl;
+				cout << endl;
+			}
+		}
+		break;
+
+			/*Imprimir uma ou mais matrizes da lista*/
+		case 7:
 		{
 			std::string id;
 			cout << "Digite o(s) identificador(es) da(s) matriz(es) a ser(em) listada(s) separados por espaco: ";
@@ -183,7 +243,7 @@ int main()
 		break;
 
 		/*Inserir matriz qualquer*/
-		case 6:
+		case 8:
 		{
 			unsigned lines, columns;
 			cout << "Digite uma letra para identificar a nova matriz: ";
@@ -214,7 +274,7 @@ int main()
 		break;
 
 		/*Inserir matriz identidade n x n*/
-		case 7:
+		case 9:
 		{
 			char identifier;
 			unsigned dimension;
@@ -228,8 +288,9 @@ int main()
 			matrixList.list();
 		}
 		break;
+
 		/*Alterar ou remover uma ou mais matrizes da lista*/
-		case 8:
+		case 10:
 		{
 			std::string id;
 			char option;
@@ -288,14 +349,14 @@ int main()
 		break;
 
 		/*Lista todas as matrizes*/
-		case 9:
+		case 11:
 		{
 			matrixList.list();
 		}
 		break;
 
 		/*Fazer backup*/
-		case 10:
+		case 12:
 		{
 			string filename;
 			cout << "Digite o nome do arquivo de backup: ";
@@ -309,7 +370,7 @@ int main()
 		break;
 
 		/*Alterar arquivo de matrizes*/
-		case 11:
+		case 13:
 		{
 			string filename;
 			char option;
@@ -335,7 +396,7 @@ int main()
 		break;
 
 		/*Zera lista*/
-		case 12:
+		case 14:
 		{
 			matrixList.clear();
 			matrixList.save("matrix.txt");
@@ -352,23 +413,24 @@ int main()
 		}
 		break;
 		}
+		// cin.ignore();
 	}
 	cout << "Obrigada por testar!" << endl;
 
-	if (result != NULL)
-	{
-		delete result;
-	}
+	// if (result != NULL)
+	// {
+	// 	delete result;
+	// }
 
-	if (m1 != NULL)
-	{
-		delete m1;
-	}
+	// if (m1 != NULL)
+	// {
+	// 	delete m1;
+	// }
 
-	if (m2 != NULL)
-	{
-		delete m2;
-	}
+	// if (m2 != NULL)
+	// {
+	// 	delete m2;
+	// }
 
 	return 0;
 }
