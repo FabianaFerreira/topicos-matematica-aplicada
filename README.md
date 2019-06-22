@@ -48,4 +48,4 @@ Desenvolvimento de uma calculadora matricial. O programa irá apresentar um menu
 
 Desenvolvimento de uma calculadora matricial com uso de orientação à objeto para introdução de conceitos de polimorfismo, visando a otimização de cálculos para matrizes triangulares ou diagonais.
 
-- [TODO] Lógica otimizada para multiplicação de matrizes triangulares
+- [TODO] A lógica otimizada para multiplicação de matrizes triangulares está implementada, mas seria interessante adicionar também uma sobrecarga que considere otimizações inclusive para operações que envolvam uma matriz triangular e uma matriz genérica.
