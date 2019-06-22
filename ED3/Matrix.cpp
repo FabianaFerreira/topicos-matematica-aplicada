@@ -45,7 +45,6 @@ TypeMatrix Matrix::getMatrix() const
 
 void Matrix::setMatrix(TypeMatrix newMatrix)
 {
-  //posso fazer isso?
   m = newMatrix;
 }
 

@@ -45,7 +45,6 @@ MatrixList::MatrixList(std::string filename)
         switch (type)
         {
         case 'g':
-            std::cout << "geral" << std::endl;
             insert(index, new Matrix(lines, columns, m));
             break;
 

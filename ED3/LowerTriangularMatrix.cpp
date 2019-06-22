@@ -43,13 +43,17 @@ Matrix *LowerTriangularMatrix::operator+(const Matrix &matrix) const
 
     TypeMatrix m2 = matrix2.getMatrix();
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (unsigned i = 0; i < lines; i++)
+    {
+        for (unsigned j = 0; j <= i; j++)
         {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) + (m2.at(j).at(i));
+            result.at(i).at(j) = m.at(i).at(j) + (m2.at(i).at(j));
         }
     }
 
@@ -71,34 +75,42 @@ Matrix *LowerTriangularMatrix::operator-(const Matrix &matrix) const
 
     TypeMatrix m2 = matrix2.getMatrix();
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (unsigned i = 0; i < lines; i++)
+    {
+        for (unsigned j = 0; j <= i; j++)
         {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
+            result.at(i).at(j) = m.at(i).at(j) - (m2.at(i).at(j));
         }
     }
 
-    return new Matrix(lines, columns, result);
+    return new LowerTriangularMatrix(lines, columns, result);
 }
 
 Matrix *LowerTriangularMatrix::operator*(float scalar) const
 {
     TypeMatrix result;
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (unsigned i = 0; i < lines; i++)
+    {
+        for (unsigned j = 0; j <= i; j++)
         {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) * scalar;
+            result.at(i).at(j) = m.at(i).at(j) * scalar;
         }
     }
 
-    return new Matrix(lines, columns, result);
+    return new LowerTriangularMatrix(lines, columns, result);
 }
 
 Matrix *LowerTriangularMatrix::operator*(const Matrix &matrix) const
@@ -116,13 +128,20 @@ Matrix *LowerTriangularMatrix::operator*(const Matrix &matrix) const
 
     TypeMatrix m2 = matrix2.getMatrix();
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (unsigned i = 0; i < lines; i++)
+    {
+        for (unsigned j = 0; j <= i; j++)
         {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) * (m2.at(j).at(i));
+            for (unsigned k = 0; k <= i; k++)
+            {
+                result.at(i).at(j) += m.at(i).at(k) * m2.at(k).at(j);
+            }
         }
     }
 

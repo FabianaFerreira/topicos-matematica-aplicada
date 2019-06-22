@@ -49,14 +49,20 @@ Matrix *UpperTriangularMatrix::operator+(const Matrix &matrix) const
 
     TypeMatrix m2 = matrix2.getMatrix();
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
         {
-            if (i < j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) + (m2.at(j).at(i));
-        }
+            result.at(i).at(j) = m.at(i).at(j) - m2.at(i).at(j);
+            j--;
+        } while (j >= i);
     }
 
     return new UpperTriangularMatrix(lines, columns, result);
@@ -76,14 +82,21 @@ Matrix *UpperTriangularMatrix::operator-(const Matrix &matrix) const
     UpperTriangularMatrix matrix2 = *pointer;
 
     TypeMatrix m2 = matrix2.getMatrix();
-    for (unsigned i = 0; i < columns; i++)
+
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
         {
-            if (i < j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
-        }
+            result.at(i).at(j) = m.at(i).at(j) - m2.at(i).at(j);
+            j--;
+        } while (j >= i);
     }
 
     return new UpperTriangularMatrix(lines, columns, result);
@@ -104,14 +117,23 @@ Matrix *UpperTriangularMatrix::operator*(const Matrix &matrix) const
 
     TypeMatrix m2 = matrix2.getMatrix();
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
         {
-            if (i < j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
-        }
+            for (int k = columns - 1; k >= i; k--)
+            {
+                result.at(i).at(j) += m.at(i).at(k) * m2.at(k).at(j);
+            }
+            j--;
+        } while (j >= i);
     }
 
     return new UpperTriangularMatrix(lines, columns, result);
@@ -121,14 +143,20 @@ Matrix *UpperTriangularMatrix::operator*(float scalar) const
 {
     TypeMatrix result;
 
-    for (unsigned i = 0; i < columns; i++)
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
         {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) * scalar;
-        }
+            result.at(i).at(j) = m.at(i).at(j) * scalar;
+            j--;
+        } while (j >= i);
     }
 
     return new UpperTriangularMatrix(lines, columns, result);
