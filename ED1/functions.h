@@ -16,4 +16,4 @@ int getUserOption(std::string);
 
 std::vector<float> getVectorFromUser(bool);
 
-void printMenu();
+    void printMenu();
