@@ -75,7 +75,7 @@ Matrix *LowerTriangularMatrix::operator-(const Matrix &matrix) const
 
 Matrix *LowerTriangularMatrix::operator*(float scalar) const
 {
-    TypeMatrix result(m);
+    TypeMatrix result;
 
     for (unsigned i = 0; i < columns; i++)
     {
@@ -111,7 +111,7 @@ Matrix *LowerTriangularMatrix::operator*(const Matrix &matrix) const
         {
             if (i > j)
                 continue;
-            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
+            result.at(j).at(i) = m.at(j).at(i) * (m2.at(j).at(i));
         }
     }
 

@@ -9,10 +9,7 @@
 
 Matrix::Matrix() {}
 
-Matrix::Matrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : lines(_lines), columns(_columns), m(_m)
-{
-  std::cout << "Construtor Geral" << std::endl;
-}
+Matrix::Matrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : lines(_lines), columns(_columns), m(_m) {}
 
 Matrix::Matrix(const Matrix &matrix)
 {

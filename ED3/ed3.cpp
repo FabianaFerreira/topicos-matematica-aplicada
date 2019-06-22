@@ -127,7 +127,7 @@ int main()
 			cout << "Digite o identificador da primeira matriz: ";
 			cin >> index;
 
-			cout << "Digite o identificador da segunda matriz: " << endl;
+			cout << "Digite o identificador da segunda matriz: ";
 			cin >> index2;
 
 			//Copy constructor
@@ -138,7 +138,7 @@ int main()
 
 			if (m1->getLines() == m2->getColumns())
 			{
-				// result = *matrixList.get(index) * (*matrixList.get(index2));
+				result = *matrixList.get(index) * (*matrixList.get(index2));
 			}
 			else
 			{
@@ -355,20 +355,20 @@ int main()
 	}
 	cout << "Obrigada por testar!" << endl;
 
-	// if (result != NULL)
-	// {
-	// 	delete result;
-	// }
+	if (result != NULL)
+	{
+		delete result;
+	}
 
-	// if (m1 != NULL)
-	// {
-	// 	delete m1;
-	// }
+	if (m1 != NULL)
+	{
+		delete m1;
+	}
 
-	// if (m2 != NULL)
-	// {
-	// 	delete m2;
-	// }
+	if (m2 != NULL)
+	{
+		delete m2;
+	}
 
 	return 0;
 }

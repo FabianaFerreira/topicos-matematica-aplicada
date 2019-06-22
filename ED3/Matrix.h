@@ -48,8 +48,7 @@ public:
 	// OVERLOADED OPERATOR +
 	virtual Matrix *operator+(const Matrix &matrix) const
 	{
-		std::cout << "SOMA GERAL" << std::endl;
-		TypeMatrix result(m);
+		TypeMatrix result;
 		TypeMatrix m2 = matrix.getMatrix();
 		for (unsigned i = 0; i < lines; i++)
 		{
@@ -65,7 +64,7 @@ public:
 	//OVERLOADED OPERATOR -
 	virtual Matrix *operator-(const Matrix &matrix) const
 	{
-		TypeMatrix result(m);
+		TypeMatrix result;
 		TypeMatrix m2 = matrix.getMatrix();
 		for (unsigned i = 0; i < lines; i++)
 		{
@@ -82,7 +81,6 @@ public:
 	virtual Matrix *operator*(const Matrix &matrix) const
 	{
 		TypeMatrix result;
-		//Creating m1Lines x m2Columns matrix and inserting zeros
 		for (unsigned i = 0; i < lines; i++)
 		{
 			result.push_back(std::vector<float>(matrix.getColumns(), 0));
@@ -103,7 +101,7 @@ public:
 
 	virtual Matrix *operator*(float scalar) const
 	{
-		TypeMatrix result(m);
+		TypeMatrix result;
 		for (unsigned i = 0; i < lines; i++)
 		{
 			for (unsigned j = 0; j < columns; j++)

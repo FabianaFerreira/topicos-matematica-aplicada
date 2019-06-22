@@ -6,10 +6,7 @@
 
 #include "DiagonalMatrix.h"
 
-DiagonalMatrix::DiagonalMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : Matrix(_lines, _columns, _m)
-{
-  std::cout << "Construtor diagonal" << std::endl;
-};
+DiagonalMatrix::DiagonalMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : Matrix(_lines, _columns, _m){};
 
 DiagonalMatrix::DiagonalMatrix(const DiagonalMatrix &matrix) : Matrix(matrix.lines, matrix.columns, matrix.m) {}
 
@@ -39,8 +36,6 @@ float DiagonalMatrix::calculateDeterminant()
 
 Matrix *DiagonalMatrix::operator+(const Matrix &matrix) const
 {
-  std::cout << "SOMA DIAGONAL" << std::endl;
-
   TypeMatrix result;
 
   const DiagonalMatrix *pointer = dynamic_cast<const DiagonalMatrix *>(&matrix);
@@ -54,7 +49,6 @@ Matrix *DiagonalMatrix::operator+(const Matrix &matrix) const
 
   TypeMatrix m2 = matrix2.getMatrix();
 
-  //Creating m1Lines x m2Columns matrix and inserting zeros
   for (unsigned i = 0; i < lines; i++)
   {
     result.push_back(std::vector<float>(columns, 0));
@@ -69,8 +63,6 @@ Matrix *DiagonalMatrix::operator+(const Matrix &matrix) const
 
 Matrix *DiagonalMatrix::operator-(const Matrix &matrix) const
 {
-  std::cout << "SUBTRACAO DIAGONAL" << std::endl;
-
   TypeMatrix result;
 
   const DiagonalMatrix *pointer = dynamic_cast<const DiagonalMatrix *>(&matrix);
