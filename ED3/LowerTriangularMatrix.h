@@ -25,13 +25,13 @@ public:
 
 	void print();
 
-	LowerTriangularMatrix operator+(LowerTriangularMatrix);
+	Matrix *operator+(const Matrix &) const;
 
-	LowerTriangularMatrix operator-(LowerTriangularMatrix);
+	Matrix *operator-(const Matrix &) const;
 
-	LowerTriangularMatrix operator*(LowerTriangularMatrix);
+	Matrix *operator*(const Matrix &) const;
 
-	// LowerTriangularMatrix operator*(float);
+	Matrix *operator*(float) const;
 
 	int calculateDeterminant();
 };

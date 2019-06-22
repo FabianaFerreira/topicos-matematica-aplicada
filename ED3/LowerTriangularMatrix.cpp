@@ -1,9 +1,6 @@
 #include "LowerTriangularMatrix.h"
 
-LowerTriangularMatrix::LowerTriangularMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : SquareMatrix(_lines, _columns, _m)
-{
-    std::cout << "Construtor Triangular Inferior" << std::endl;
-};
+LowerTriangularMatrix::LowerTriangularMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : SquareMatrix(_lines, _columns, _m){};
 
 LowerTriangularMatrix::LowerTriangularMatrix(const LowerTriangularMatrix &matrix) : SquareMatrix(matrix.lines, matrix.columns, matrix.m){};
 
@@ -20,10 +17,20 @@ void LowerTriangularMatrix::print()
     std::cout << "Sou triangular inferior!!" << std::endl;
 }
 
-LowerTriangularMatrix LowerTriangularMatrix::operator+(LowerTriangularMatrix matrix)
+Matrix *LowerTriangularMatrix::operator+(const Matrix &matrix) const
 {
-    TypeMatrix result(m);
-    TypeMatrix m2 = matrix.getMatrix();
+    TypeMatrix result;
+
+    const LowerTriangularMatrix *pointer = dynamic_cast<const LowerTriangularMatrix *>(&matrix);
+
+    if (!pointer)
+    {
+        return Matrix::operator+(matrix);
+    }
+
+    LowerTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
 
     for (unsigned i = 0; i < columns; i++)
     {
@@ -35,13 +42,23 @@ LowerTriangularMatrix LowerTriangularMatrix::operator+(LowerTriangularMatrix mat
         }
     }
 
-    return LowerTriangularMatrix(lines, columns, result);
+    return new LowerTriangularMatrix(lines, columns, result);
 }
 
-LowerTriangularMatrix LowerTriangularMatrix::operator-(LowerTriangularMatrix matrix)
+Matrix *LowerTriangularMatrix::operator-(const Matrix &matrix) const
 {
-    TypeMatrix result(m);
-    TypeMatrix m2 = matrix.getMatrix();
+    TypeMatrix result;
+
+    const LowerTriangularMatrix *pointer = dynamic_cast<const LowerTriangularMatrix *>(&matrix);
+
+    if (!pointer)
+    {
+        return Matrix::operator-(matrix);
+    }
+
+    LowerTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
 
     for (unsigned i = 0; i < columns; i++)
     {
@@ -53,40 +70,50 @@ LowerTriangularMatrix LowerTriangularMatrix::operator-(LowerTriangularMatrix mat
         }
     }
 
-    return LowerTriangularMatrix(lines, columns, result);
+    return new Matrix(lines, columns, result);
 }
 
-// LowerTriangularMatrix LowerTriangularMatrix::operator*(float scalar)
-// {
-//     TypeMatrix result(m);
+Matrix *LowerTriangularMatrix::operator*(float scalar) const
+{
+    TypeMatrix result(m);
 
-//     for (unsigned i = 0; i < columns; i++)
-//     {
-//         for (unsigned j = 0; j < lines; j++)
-//         {
-//             if (i > j)
-//                 continue;
-//             result.at(j).at(i) = m.at(j).at(i) * scalar;
-//         }
-//     }
+    for (unsigned i = 0; i < columns; i++)
+    {
+        for (unsigned j = 0; j < lines; j++)
+        {
+            if (i > j)
+                continue;
+            result.at(j).at(i) = m.at(j).at(i) * scalar;
+        }
+    }
 
-//     return LowerTriangularMatrix(lines, columns, result);
-// }
+    return new Matrix(lines, columns, result);
+}
 
-// LowerTriangularMatrix LowerTriangularMatrix::operator-(LowerTriangularMatrix matrix)
-// {
-//     TypeMatrix result(m);
-//     TypeMatrix m2 = matrix.getMatrix();
+Matrix *LowerTriangularMatrix::operator*(const Matrix &matrix) const
+{
+    TypeMatrix result;
 
-//     for (unsigned i = 0; i < columns; i++)
-//     {
-//         for (unsigned j = 0; j < lines; j++)
-//         {
-//             if (i > j)
-//                 continue;
-//             result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
-//         }
-//     }
+    const LowerTriangularMatrix *pointer = dynamic_cast<const LowerTriangularMatrix *>(&matrix);
 
-//     return LowerTriangularMatrix(lines, columns, result);
-// }
+    if (!pointer)
+    {
+        return Matrix::operator*(matrix);
+    }
+
+    LowerTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
+
+    for (unsigned i = 0; i < columns; i++)
+    {
+        for (unsigned j = 0; j < lines; j++)
+        {
+            if (i > j)
+                continue;
+            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
+        }
+    }
+
+    return new LowerTriangularMatrix(lines, columns, result);
+}

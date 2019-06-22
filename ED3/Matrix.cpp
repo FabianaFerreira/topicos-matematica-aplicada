@@ -31,17 +31,17 @@ Matrix::~Matrix() {}
 //   return *this;
 // }
 
-unsigned Matrix::getLines()
+unsigned Matrix::getLines() const
 {
   return lines;
 }
 
-unsigned Matrix::getColumns()
+unsigned Matrix::getColumns() const
 {
   return columns;
 }
 
-TypeMatrix Matrix::getMatrix()
+TypeMatrix Matrix::getMatrix() const
 {
   return m;
 }

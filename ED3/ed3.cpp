@@ -28,13 +28,13 @@ int main()
 	cout << "Digite o nome da lista de matrizes a ser lido (.txt): ";
 	cin >> filename;
 	cout << endl
-		  << endl;
+		 << endl;
 
 	MatrixList matrixList(filename);
 
-	// matrixList.list();
-
-	// return 0;
+	Matrix *result;
+	Matrix *m1;
+	Matrix *m2;
 
 	printMenu();
 
@@ -72,31 +72,29 @@ int main()
 			else
 			{
 				//Copy constructor
-				Matrix *m1 = matrixList.get(index);
+				m1 = matrixList.get(index);
 
 				//Copy constructor
-				Matrix *m2 = matrixList.get(index2);
+				m2 = matrixList.get(index2);
 
 				if (m1->getLines() == m2->getLines() && m1->getColumns() == m2->getColumns())
 				{
-					Matrix *result;
 					if (isSub == 1)
 					{
-						// result = &(*m1 - *m2);
+						result = *m1 - *m2;
 					}
 					else if (isSub == 0)
 					{
 						result = *m1 + *m2;
 					}
 
-	
 					cout << "Resultado: " << endl;
 
 					printMatrix(result->getMatrix());
 				}
 
 				else
-					cout << "Numero de linhas da matriz 1 eh diferente do numero de colunas da matriz 2. Nao eh possivel realizar a operacao" << endl;
+					cout << "Dimensoes da matriz 1 sao diferentes da matriz 2. Nao eh possivel realizar a operacao" << endl;
 			}
 		}
 		break;
@@ -112,10 +110,10 @@ int main()
 			cout << "Digite o escalar: " << endl;
 			cin >> scalar;
 
-			Matrix result = *matrixList.get(index) * scalar;
+			result = *matrixList.get(index) * scalar;
 
 			cout << "** Resultado **" << endl;
-			printMatrix(result.getMatrix());
+			printMatrix(result->getMatrix());
 			cout << endl;
 		}
 
@@ -133,16 +131,14 @@ int main()
 			cin >> index2;
 
 			//Copy constructor
-			Matrix *m1 = matrixList.get(index);
+			m1 = matrixList.get(index);
 
 			//Copy constructor
-			Matrix *m2 = matrixList.get(index2);
-
-			Matrix result;
+			m2 = matrixList.get(index2);
 
 			if (m1->getLines() == m2->getColumns())
 			{
-				result = *matrixList.get(index) * (*matrixList.get(index2));
+				// result = *matrixList.get(index) * (*matrixList.get(index2));
 			}
 			else
 			{
@@ -150,7 +146,7 @@ int main()
 				break;
 			}
 			cout << "** Resultado **" << endl;
-			printMatrix(result.getMatrix());
+			printMatrix(result->getMatrix());
 			cout << endl;
 		}
 		break;
@@ -208,7 +204,6 @@ int main()
 
 			cout << endl;
 			cout << "Lista alterada com sucesso!" << endl;
-			;
 			cout << endl;
 
 			cout << "** -- Lista atual -- **" << endl;
@@ -285,7 +280,7 @@ int main()
 			}
 
 			cout << endl
-				  << "Lista alterada com sucesso!" << endl;
+				 << "Lista alterada com sucesso!" << endl;
 			cout << endl;
 			matrixList.list();
 			cin.ignore();
@@ -359,6 +354,21 @@ int main()
 		}
 	}
 	cout << "Obrigada por testar!" << endl;
+
+	// if (result != NULL)
+	// {
+	// 	delete result;
+	// }
+
+	// if (m1 != NULL)
+	// {
+	// 	delete m1;
+	// }
+
+	// if (m2 != NULL)
+	// {
+	// 	delete m2;
+	// }
 
 	return 0;
 }

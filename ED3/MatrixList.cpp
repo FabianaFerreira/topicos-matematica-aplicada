@@ -215,7 +215,6 @@ void MatrixList::list()
         unsigned columns = x.second->getColumns();
 
         std::cout << "Matrix " << x.first << " (" << lines << "," << columns << ")\n";
-        x.second->print();
         printMatrix(x.second->getMatrix());
         std::cout << std::endl;
     }

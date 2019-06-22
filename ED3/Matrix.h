@@ -32,11 +32,11 @@ public:
 
 	void transpose();
 
-	unsigned getLines();
+	unsigned getLines() const;
 
-	unsigned getColumns();
+	unsigned getColumns() const;
 
-	TypeMatrix getMatrix();
+	TypeMatrix getMatrix() const;
 
 	void setMatrix(TypeMatrix);
 
@@ -46,7 +46,7 @@ public:
 	}
 
 	// OVERLOADED OPERATOR +
-	virtual Matrix *operator+(Matrix matrix)
+	virtual Matrix *operator+(const Matrix &matrix) const
 	{
 		std::cout << "SOMA GERAL" << std::endl;
 		TypeMatrix result(m);
@@ -63,7 +63,7 @@ public:
 	}
 
 	//OVERLOADED OPERATOR -
-	virtual Matrix operator-(Matrix matrix)
+	virtual Matrix *operator-(const Matrix &matrix) const
 	{
 		TypeMatrix result(m);
 		TypeMatrix m2 = matrix.getMatrix();
@@ -75,11 +75,11 @@ public:
 			}
 		}
 
-		return Matrix(lines, matrix.getColumns(), result);
+		return new Matrix(lines, matrix.getColumns(), result);
 	}
 
 	//OVERLOADED OPERATOR *
-	virtual Matrix operator*(Matrix matrix)
+	virtual Matrix *operator*(const Matrix &matrix) const
 	{
 		TypeMatrix result;
 		//Creating m1Lines x m2Columns matrix and inserting zeros
@@ -98,10 +98,10 @@ public:
 				}
 			}
 		}
-		return Matrix(lines, matrix.getColumns(), result);
+		return new Matrix(lines, matrix.getColumns(), result);
 	}
 
-	virtual Matrix operator*(float scalar)
+	virtual Matrix *operator*(float scalar) const
 	{
 		TypeMatrix result(m);
 		for (unsigned i = 0; i < lines; i++)
@@ -109,7 +109,7 @@ public:
 			for (unsigned j = 0; j < columns; j++)
 				result.at(i).at(j) = m.at(i).at(j) * scalar;
 		}
-		return Matrix(lines, columns, result);
+		return new Matrix(lines, columns, result);
 	}
 
 protected:
