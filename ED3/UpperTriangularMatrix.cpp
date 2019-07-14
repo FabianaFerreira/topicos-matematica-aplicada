@@ -6,10 +6,7 @@
 
 #include "UpperTriangularMatrix.h"
 
-UpperTriangularMatrix::UpperTriangularMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : SquareMatrix(_lines, _columns, _m)
-{
-    std::cout << "Construtor Triangular Superior" << std::endl;
-}
+UpperTriangularMatrix::UpperTriangularMatrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : SquareMatrix(_lines, _columns, _m) {}
 
 UpperTriangularMatrix::UpperTriangularMatrix(const UpperTriangularMatrix &matrix) : SquareMatrix(matrix.lines, matrix.columns, matrix.m) {}
 
@@ -26,55 +23,141 @@ void UpperTriangularMatrix::print()
     std::cout << "Sou triangular superior!!" << std::endl;
 }
 
-UpperTriangularMatrix UpperTriangularMatrix::operator+(UpperTriangularMatrix matrix)
+float UpperTriangularMatrix::calculateDeterminant()
 {
-    TypeMatrix result(m);
-    TypeMatrix m2 = matrix.getMatrix();
-
-    for (unsigned i = 0; i < columns; i++)
+    float determinant = 1;
+    for (unsigned i = 0; i < lines; i++)
     {
-        for (unsigned j = 0; j < lines; j++)
-        {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) + (m2.at(j).at(i));
-        }
+        determinant *= m.at(i).at(i);
     }
 
-    return UpperTriangularMatrix(lines, columns, result);
+    return determinant;
 }
 
-UpperTriangularMatrix UpperTriangularMatrix::operator-(UpperTriangularMatrix matrix)
+Matrix *UpperTriangularMatrix::operator+(const Matrix &matrix) const
 {
-    TypeMatrix result(m);
-    TypeMatrix m2 = matrix.getMatrix();
+    TypeMatrix result;
 
-    for (unsigned i = 0; i < columns; i++)
+    const UpperTriangularMatrix *pointer = dynamic_cast<const UpperTriangularMatrix *>(&matrix);
+
+    if (!pointer)
     {
-        for (unsigned j = 0; j < lines; j++)
-        {
-            if (i > j)
-                continue;
-            result.at(j).at(i) = m.at(j).at(i) - (m2.at(j).at(i));
-        }
+        return Matrix::operator+(matrix);
     }
 
-    return UpperTriangularMatrix(lines, columns, result);
+    UpperTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
+
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
+    {
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
+        {
+            result.at(i).at(j) = m.at(i).at(j) - m2.at(i).at(j);
+            j--;
+        } while (j >= i);
+    }
+
+    return new UpperTriangularMatrix(lines, columns, result);
 }
 
-// UpperTriangularMatrix UpperTriangularMatrix::operator*(float scalar)
-// {
-//     TypeMatrix result(m);
+Matrix *UpperTriangularMatrix::operator-(const Matrix &matrix) const
+{
+    TypeMatrix result;
 
-//     for (unsigned i = 0; i < columns; i++)
-//     {
-//         for (unsigned j = 0; j < lines; j++)
-//         {
-//             if (i > j)
-//                 continue;
-//             result.at(j).at(i) = m.at(j).at(i) * scalar;
-//         }
-//     }
+    const UpperTriangularMatrix *pointer = dynamic_cast<const UpperTriangularMatrix *>(&matrix);
 
-//     return UpperTriangularMatrix(lines, columns, result);
-// }
+    if (!pointer)
+    {
+        return Matrix::operator-(matrix);
+    }
+
+    UpperTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
+
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
+    {
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
+        {
+            result.at(i).at(j) = m.at(i).at(j) - m2.at(i).at(j);
+            j--;
+        } while (j >= i);
+    }
+
+    return new UpperTriangularMatrix(lines, columns, result);
+}
+
+Matrix *UpperTriangularMatrix::operator*(const Matrix &matrix) const
+{
+    TypeMatrix result;
+
+    const UpperTriangularMatrix *pointer = dynamic_cast<const UpperTriangularMatrix *>(&matrix);
+
+    if (!pointer)
+    {
+        return Matrix::operator*(matrix);
+    }
+
+    UpperTriangularMatrix matrix2 = *pointer;
+
+    TypeMatrix m2 = matrix2.getMatrix();
+
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
+    {
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
+        {
+            for (int k = columns - 1; k >= i; k--)
+            {
+                result.at(i).at(j) += m.at(i).at(k) * m2.at(k).at(j);
+            }
+            j--;
+        } while (j >= i);
+    }
+
+    return new UpperTriangularMatrix(lines, columns, result);
+}
+
+Matrix *UpperTriangularMatrix::operator*(float scalar) const
+{
+    TypeMatrix result;
+
+    //Initializing result matrix with zeros
+    for (unsigned i = 0; i < lines; i++)
+    {
+        result.push_back(std::vector<float>(columns, 0));
+    }
+
+    for (int i = 0; i < lines; i++)
+    {
+        int j = columns - 1;
+        do
+        {
+            result.at(i).at(j) = m.at(i).at(j) * scalar;
+            j--;
+        } while (j >= i);
+    }
+
+    return new UpperTriangularMatrix(lines, columns, result);
+}

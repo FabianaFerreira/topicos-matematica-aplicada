@@ -9,10 +9,7 @@
 
 Matrix::Matrix() {}
 
-Matrix::Matrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : lines(_lines), columns(_columns), m(_m)
-{
-  std::cout << "Construtor Geral" << std::endl;
-}
+Matrix::Matrix(unsigned _lines, unsigned _columns, TypeMatrix _m) : lines(_lines), columns(_columns), m(_m) {}
 
 Matrix::Matrix(const Matrix &matrix)
 {
@@ -31,24 +28,23 @@ Matrix::~Matrix() {}
 //   return *this;
 // }
 
-unsigned Matrix::getLines()
+unsigned Matrix::getLines() const
 {
   return lines;
 }
 
-unsigned Matrix::getColumns()
+unsigned Matrix::getColumns() const
 {
   return columns;
 }
 
-TypeMatrix Matrix::getMatrix()
+TypeMatrix Matrix::getMatrix() const
 {
   return m;
 }
 
 void Matrix::setMatrix(TypeMatrix newMatrix)
 {
-  //posso fazer isso?
   m = newMatrix;
 }
 

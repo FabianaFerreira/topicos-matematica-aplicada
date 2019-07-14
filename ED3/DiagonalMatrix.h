@@ -7,13 +7,13 @@
 #ifndef DIAGONALMATRIX_H
 #define DIAGONALMATRIX_H
 
-#include "Matrix.h"
+#include "SquareMatrix.h"
 
 #ifndef types_h
 typedef std::vector<std::vector<float>> TypeMatrix;
 #endif
 
-class DiagonalMatrix : public Matrix
+class DiagonalMatrix : public SquareMatrix
 {
 
 public:
@@ -25,30 +25,15 @@ public:
 
 	void print();
 
-	virtual DiagonalMatrix *operator+(DiagonalMatrix matrix)
-	{
-		TypeMatrix result;
-		TypeMatrix m2 = matrix.getMatrix();
+	float calculateDeterminant ();
 
-		std::cout << "SOMA DIAGONAL" << std::endl;
-		//Creating m1Lines x m2Columns matrix and inserting zeros
-		for (unsigned i = 0; i < lines; i++)
-		{
-			result.push_back(std::vector<float>(columns, 0));
-		}
+	Matrix *operator+(const Matrix &) const;
 
-		for (unsigned i = 0; i < lines; i++)
-		{
-			result.at(i).at(i) = m.at(i).at(i) + m2.at(i).at(i);
-		}
-		return new DiagonalMatrix(lines, columns, result);
-	};
+	Matrix *operator-(const Matrix &) const;
 
-	DiagonalMatrix operator-(DiagonalMatrix);
+	Matrix *operator*(const Matrix &) const;
 
-	DiagonalMatrix operator*(DiagonalMatrix);
-
-	Matrix operator*(float);
+	Matrix *operator*(float) const;
 };
 
 #endif
